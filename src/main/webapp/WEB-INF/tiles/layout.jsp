@@ -40,7 +40,6 @@
       </div></div>
    
     <div id="content">
-     <tiles:insertAttribute name="body"/>
       <div class="post">
         <h3 class="title">INICIO</h3>
         <p>&nbsp;</p>
@@ -55,6 +54,7 @@
           <p class="links"><a href="#">Leer más..</a><span>|</span><a href="#">Comentarios</a></p>
         </div>
       </div>
+      <tiles:insertAttribute name="body"/>
     </div>
     
     <!-- end #content -->
