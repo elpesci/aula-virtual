@@ -1,0 +1,20 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="base.definition"
+                template="/WEB-INF/tiles/layout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="meta" value="/WEB-INF/tilessegments/meta.jsp" />
+        <put-attribute name="header" value="/WEB-INF/tilessegments/header.jsp" />
+        <put-attribute name="navigation" value="/WEB-INF/tilessegments/navigation.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/tilessegments/footer.jsp" />
+    </definition>
+    
+    <definition extends="base.definition" name="home">
+        <put-attribute name="title" value="Aula Virtual" />
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+    </definition>
+
+</tiles-definitions>
