@@ -39,6 +39,7 @@
       </div></div>
    
     <div id="content">
+     <tiles:insertAttribute name="body"/>
       <div class="post">
         <h3 class="title">INICIO</h3>
         <p>&nbsp;</p>
