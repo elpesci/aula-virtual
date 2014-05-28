@@ -16,5 +16,10 @@
         <put-attribute name="title" value="Aula Virtual" />
         <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
     </definition>
+    
+    <definition extends="base.definition" name="login">
+        <put-attribute name="title" value="Aula Virtual - Inicial Sesión" />
+        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+    </definition>
 
 </tiles-definitions>
