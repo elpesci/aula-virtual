@@ -16,7 +16,9 @@
     <link href="<c:url value="/resources/css/estilo_general.css"/>" rel="stylesheet" type="text/css" media="screen" />
     <link href="<c:url value="/resources/css/SprayMenuBar.css"/>" rel="stylesheet" type="text/css" media="screen" />
     <link href="<c:url value="/resources/css/SpryCollapsiblePanel.css"/>" rel="stylesheet" type="text/css" media="screen" />
+    <link href="<c:url value="/resources/css/aulavirtual.css"/>" rel="stylesheet" type="text/css" media="screen" />
     <!--Scripts-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/SpryMenuBar.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/SpryCollapsiblePanel.js"/>" type="text/javascript"></script>
 
