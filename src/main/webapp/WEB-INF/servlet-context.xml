@@ -1,43 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"	
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context 
                            http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc 
-                           http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
-	
-	<context:component-scan base-package="com.jcs.goboax.aulavirtual" />
-	
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.tiles3.TilesView" />
-	</bean>
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-mvc-3.1.xsd">
 
-	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<property name="definitions">
-			<list>
-				<value>/WEB-INF/tiles.xml</value>
-			</list>
-		</property>
-	</bean>
-	
-	<mvc:annotation-driven/>
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+    <context:component-scan base-package="com.jcs.goboax.aulavirtual"/>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          p:driverClassName="org.h2.Driver" p:url="jdbc:h2:target/db/testdb;AUTO_SERVER=TRUE"
-          p:username="root" p:password="" p:initialSize="5" p:maxActive="10">
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+    </bean>
+
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${mysql.database.driver}"/>
+        <property name="url" value="${mysql.database.url}"/>
+        <property name="username" value="${mysql.database.user}"/>
+        <property name="password" value="${mysql.database.password}"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="persistenceUnitName" value="aulaVirtualPU" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="aulaVirtualPU"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
             </bean>
@@ -45,7 +52,6 @@
         <property name="jpaPropertyMap">
             <props>
                 <prop key="eclipselink.weaving">false</prop>
-                <prop key="eclipselink.ddl-generation">create-or-extend-tables</prop>
                 <prop key="eclipselink.create-ddl-jdbc-file-name">createDDL_ddlGeneration.jdbc</prop>
                 <prop key="eclipselink.drop-ddl-jdbc-file-name">dropDDL_ddlGeneration.jdbc</prop>
                 <prop key="eclipselink.ddl-generation.output-mode">both</prop>
@@ -56,5 +62,5 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

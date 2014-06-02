@@ -5,16 +5,16 @@
 <c:set var="path" value="<%=request.getContextPath()%>"></c:set>
 <div class="centre">
 
-<form:form action="${path}/login" >
+    <form:form action="${path}/login">
     <tr>
-		<form:label path="nombreUsuario" >Usuario: </form:label>
-        <form:input path="nombreUsuario"  placeholder="Capture usuario" />
+        <form:label path="nombreUsuario">Usuario: </form:label>
+            <form:input path="nombreUsuario" placeholder="Capture usuario"/>
 
         <form:label path="password">Contrase&ntilde;a: </form:label>
-        <form:password path="password" />
-		<br>
+            <form:password path="password"/>
+        <br>
         <input type="submit" value="Enviar" id="submitBtn"/>
 
-</form:form>
+        </form:form>
 
 </div>
