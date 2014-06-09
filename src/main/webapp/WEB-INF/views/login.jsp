@@ -4,9 +4,10 @@
 
 <c:set var="path" value="<%=request.getContextPath()%>"></c:set>
 <div class="centre">
-
+    <div>
+        <label for="message"><c:out value="${message}" /></label>
+    </div>
     <form:form action="${path}/login">
-    <tr>
         <form:label path="nombreUsuario">Usuario: </form:label>
             <form:input path="nombreUsuario" placeholder="Capture usuario"/>
 
@@ -15,6 +16,6 @@
         <br>
         <input type="submit" value="Enviar" id="submitBtn"/>
 
-        </form:form>
+    </form:form>
 
 </div>
