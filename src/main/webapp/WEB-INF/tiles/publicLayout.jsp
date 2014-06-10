@@ -28,33 +28,27 @@
 
 <div id="wrapper">
     <tiles:insertAttribute name="header" />
-    
-    <tiles:insertAttribute name="navigation" />
-  
+      
   <div id="page">
-     <div id="MenuPrincipal">
-      <div id="CollapsiblePanel1" class="CollapsiblePanel PanelFirst">
-        <div class="CollapsiblePanelTab"> <img id="btnLink" src="<c:url value="/resources/img/hacordeon.png"/>" width="215" height="38" alt="" /> </div>
-        <div class="CollapsiblePanelContent PanelColor"> 
-        <br /><br /><br /><br /><br /><br />
-        </div>
-        <div class="expand"> <img src="<c:url value="/resources/img/expand.png"/>" width="97" alt="" /> </div>
-      </div></div>
-   
+     
     <div id="content">
       <div class="post">
-        <h3 class="title">INICIO</h3>
+        <h3 class="title">Aula Virtual</h3>
         <p>&nbsp;</p>
         <p class="meta"><span class="date">
           <script type="text/javascript" src="../js/date.js"></script>
           </span></p>
         <div class="entry">
           <h3>Visión</h3>
-          <p>Ser una secretaría que desarrolle altos estándares de calidad de la manera mas eficiente, dinámica y estratégica, lo cual lleve a la excelencia en la operatividad financiera d e la administración pública del Gobierno del Estado, con acciones de legalidad y disciplina en beneficio de la sociedad oaxaqueña. </p>
-          <h3>Misión</h3>
-          <p> Administrar, modernizar y regular de manera eficaz y transparente la política financiera fiscal y administrativa de la hacienda pública a fin de consolidarse como el eje rector de financiamiento para el logro del plan estatal de desarrollo del Gobierno del Estado.</p>
-          <p class="links"><a href="#">Leer más..</a><span>|</span><a href="#">Comentarios</a></p>
-            <tiles:insertAttribute name="body"/>
+          <p>Derivado del bajo impacto social de la inversión pública en el 
+             Estado de Oaxaca, para el Gobierno es fundamental mejorar las 
+             capacidades de la Administración Pública Estatal en la 
+             identificación de las necesidades de inversión y eficientar la 
+             planeación y análisis de alternativas que resuelvan adecuadamente 
+             dichas necesidades, a través de proyectos pertinentes y de calidad; 
+             así como fortalecer los procesos de toma de decisiones y de gestión.
+          </p>
+          <tiles:insertAttribute name="body"/>
         </div>
       </div>
     </div>

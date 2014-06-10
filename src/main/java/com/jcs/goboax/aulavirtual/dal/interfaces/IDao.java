@@ -6,6 +6,8 @@
 
 package com.jcs.goboax.aulavirtual.dal.interfaces;
 
+import javax.persistence.Query;
+
 /**
  *
  * @author julio
@@ -16,4 +18,5 @@ public interface IDao<K, E> {
     void persist(E entity);
     void remove(E entity);
     E findByKey(K entityId);
+    E getSingleResult(Query q);
 }

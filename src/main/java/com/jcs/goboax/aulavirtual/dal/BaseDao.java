@@ -6,10 +6,16 @@
 
 package com.jcs.goboax.aulavirtual.dal;
 
+import com.jcs.goboax.aulavirtual.controller.LoginController;
 import com.jcs.goboax.aulavirtual.dal.interfaces.IDao;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,6 +25,8 @@ import java.lang.reflect.ParameterizedType;
  */
 public abstract class BaseDao<K, E> implements IDao<K, E> {
 
+    private final static Logger LOG = LoggerFactory.getLogger(BaseDao.class);
+    
     protected Class<E> entityClass;
     
     @PersistenceContext
@@ -54,5 +62,25 @@ public abstract class BaseDao<K, E> implements IDao<K, E> {
      */
     public E findByKey(K entityId) {
         return entityManager.find(entityClass, entityId);
+    }
+    
+    /**
+     * 
+     * @param q Executable query
+     * @return Entity object
+     */
+    public E getSingleResult(Query q) {
+        try {
+            return (E)q.getSingleResult();
+        } catch (NoResultException noResult) {
+            LOG.info("Ejecucion del query no produjo resultados.", q, noResult);
+            return null;
+        } catch (NonUniqueResultException multiResult) {
+            LOG.info("Ejecucion del query produjo multiples resultados.", q, multiResult);
+            return null;
+        } catch (Exception exc) {
+            LOG.error("Excepcion al ejecutar el query ", q, exc);
+            return null;
+        }
     }
 }

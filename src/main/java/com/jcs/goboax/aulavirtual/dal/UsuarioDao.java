@@ -8,25 +8,25 @@ package com.jcs.goboax.aulavirtual.dal;
 
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import javax.persistence.Query;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author julio
  */
-@Service
+@Repository
 public class UsuarioDao extends BaseDao<Integer, Usuario> {
     
-    public Usuario tryLogin(String username, String password) {
+    public Usuario tryLogin(Usuario usr) {
         Query q;
         Usuario user;
         
         q = entityManager.createQuery(
                 "SELECT e FROM " + entityClass.getName() + " e WHERE e.username = :_username AND e.password = :_password");
-        q.setParameter("_username", username);
-        q.setParameter("_password", password);
+        q.setParameter("_username", usr.getUsername());
+        q.setParameter("_password", usr.getPassword());
         
-        user = (Usuario)q.getSingleResult();
+        user = this.getSingleResult(q);
         
         return user;
     }
