@@ -5,3 +5,4 @@ target/
 *.project
 *.classpath
 *.checkclipse
+/src/main/webapp/WEB-INF/rescue_servlet-context.xml

@@ -11,6 +11,8 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 public class LoginViewModel {
     private String nombreUsuario;
     private String password;
+    private boolean isSuccess;
+    private String message;
 
     /**
      * @return the nombreUsuario
@@ -38,6 +40,34 @@ public class LoginViewModel {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the isSuccess
+     */
+    public boolean isIsSuccess() {
+        return isSuccess;
+    }
+
+    /**
+     * @param isSuccess the isSuccess to set
+     */
+    public void setIsSuccess(boolean isSuccess) {
+        this.isSuccess = isSuccess;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
     
     
