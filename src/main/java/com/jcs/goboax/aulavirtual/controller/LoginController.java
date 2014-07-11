@@ -4,10 +4,8 @@
  */
 package com.jcs.goboax.aulavirtual.controller;
 
-import com.jcs.goboax.aulavirtual.dal.UsuarioDao;
+import com.jcs.goboax.aulavirtual.bll.Authenticate;
 import com.jcs.goboax.aulavirtual.model.Usuario;
-import java.util.HashMap;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ public class LoginController {
     private final static Logger LOG = LoggerFactory.getLogger(LoginController.class);
     
     @Autowired
-    private UsuarioDao usuarioDao;
+    private Authenticate loginService;
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() 
@@ -48,11 +46,11 @@ public class LoginController {
     
     /* Private Methods */
     private Usuario tryLogin(Usuario usr) 
-    {
+    {        
         LOG.debug("private tryLogin {}", usr.getUsername());
         Usuario usuario;
         
-        usuario = usuarioDao.tryLogin(usr);
+        usuario = loginService.Login(usr);
             
         return usuario;
     }
