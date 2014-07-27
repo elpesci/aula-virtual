@@ -1,6 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-
 import java.io.Serializable;
 
 import java.lang.Boolean;
