@@ -46,7 +46,7 @@ public  class Contenido implements Serializable {
 
     @Column(name="contenidoId",table="Contenido",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer contenidoId;
 
 

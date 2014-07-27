@@ -38,7 +38,7 @@ public  class Perfil implements Serializable {
 
     @Column(name="perfilId",table="Perfil",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer perfilId;
 
 

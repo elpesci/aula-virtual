@@ -24,7 +24,7 @@ public  class RegistroAcceso implements Serializable {
 
     @Column(name="registroAccesoId",table="RegistroAcceso",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer registroAccesoId;
 
 

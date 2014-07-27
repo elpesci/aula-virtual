@@ -43,7 +43,7 @@ public  class Persona implements Serializable {
 
     @Column(name="personaId",table="Persona",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer personaId;
 
 

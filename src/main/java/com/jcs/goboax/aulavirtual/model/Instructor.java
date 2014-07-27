@@ -35,7 +35,7 @@ public  class Instructor implements Serializable {
 
     @Column(name="instructorId",table="Instructor",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer instructorId;
 
 

@@ -5,7 +5,10 @@
 package com.jcs.goboax.aulavirtual.controller;
 
 import com.jcs.goboax.aulavirtual.bll.Authenticate;
+import com.jcs.goboax.aulavirtual.model.RegistroAcceso;
 import com.jcs.goboax.aulavirtual.model.Usuario;
+import java.util.Date;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +33,12 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView processForm(Usuario usr, BindingResult result) 
+    public ModelAndView processForm(HttpSession session, Usuario usr, BindingResult result) 
     {
         LOG.debug("doLogin {}");
         Usuario usrLogin;
         
-        usrLogin = tryLogin(usr);
+        usrLogin = tryLogin(session, usr);
         
         if(usrLogin != null) {
             return new ModelAndView("home");
@@ -45,12 +48,16 @@ public class LoginController {
     }
     
     /* Private Methods */
-    private Usuario tryLogin(Usuario usr) 
+    private Usuario tryLogin(HttpSession session, Usuario usr) 
     {        
         LOG.debug("private tryLogin {}", usr.getUsername());
         Usuario usuario;
+        RegistroAcceso acceso = new RegistroAcceso();
+
+        acceso.setInicioAcceso(new Date());
+        acceso.setSessionId(session.getId());
         
-        usuario = loginService.Login(usr);
+        usuario = loginService.Login(usr, acceso);
             
         return usuario;
     }

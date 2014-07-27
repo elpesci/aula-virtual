@@ -44,7 +44,7 @@ public  class Examen implements Serializable {
 
     @Column(name="examenId",table="Examen",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer examenId;
 
 

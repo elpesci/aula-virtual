@@ -64,7 +64,7 @@ public  class Curso implements Serializable {
 
     @Column(name="cursoId",table="Curso",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer cursoId;
 
 

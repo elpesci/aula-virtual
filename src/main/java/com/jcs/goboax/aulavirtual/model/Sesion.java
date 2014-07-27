@@ -36,7 +36,7 @@ public  class Sesion implements Serializable {
 
     @Column(name="sesionId",table="Sesion",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer sesionId;
 
 
