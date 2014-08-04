@@ -6,30 +6,20 @@
 
 package com.jcs.goboax.aulavirtual.dao.impl;
 
-import com.jcs.goboax.aulavirtual.dao.BaseDao;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
+
+import com.jcs.goboax.aulavirtual.dao.BaseDao;
+import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
+import com.jcs.goboax.aulavirtual.model.Usuario;
 
 /**
  *
  * @author julio
  */
 @Repository
-public class UsuarioDaoImpl extends BaseDao<Integer, Usuario>
+public class UsuarioDaoImpl 
+    extends BaseDao<Integer, Usuario>
+    implements UsuarioDao
 {
     
-    public Usuario tryLogin(Usuario usr) {
-        Query q;
-        Usuario user;
-        
-        q = entityManager.createQuery(
-                "SELECT e FROM " + entityClass.getName() + " e WHERE e.username = :_username AND e.password = :_password");
-        q.setParameter("_username", usr.getUsername());
-        q.setParameter("_password", usr.getPassword());
-        
-        user = this.getSingleResult(q);
-        
-        return user;
-    }
 }

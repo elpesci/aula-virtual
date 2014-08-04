@@ -1,5 +1,7 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 /**
  * Created by acardenas on 8/3/14.
  */
@@ -70,5 +72,12 @@ public class Registration
     public void setConfirmPassword(String comfirmPassword)
     {
         this.confirmPassword = comfirmPassword;
+    }
+    public static void main(String[] args) {
+        String password = "Password#1";
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+ 
+        System.out.println(hashedPassword);
     }
 }

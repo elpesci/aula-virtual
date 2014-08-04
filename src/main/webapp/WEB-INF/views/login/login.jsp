@@ -3,6 +3,7 @@
 
 <c:set var="path" value="<%=request.getContextPath()%>"></c:set>
 <div class="centre">
+
     <form name='loginForm'
           action="<c:url value='j_spring_security_check' />" method='POST'>
         <fieldset>
@@ -15,9 +16,13 @@
         <div>
             <input type="submit" value="Enviar" id="submitBtn"/>
         </div>
+
     </form>
     <c:if test="${not empty param.error}">
-        <font color="red"> Invalid user name or password, try again.<br/>
-        </font>
+        <span class="error"> Invalid user name or password, try again.</span>
     </c:if>
+		<span class="error">${msg}</span>
+	<c:if test="${not empty msg}">
+		<span class="error">${msg}</span>
+	</c:if>
 </div>

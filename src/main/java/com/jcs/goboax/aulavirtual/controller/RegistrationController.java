@@ -1,7 +1,9 @@
 package com.jcs.goboax.aulavirtual.controller;
 
+import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
 import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import java.util.Map;
 
 @Controller
@@ -18,6 +21,9 @@ public class RegistrationController
 {
     @Autowired
     private RegistrationValidator registrationValidator;
+    
+    @Autowired
+    private RegistrationService registrationService;    
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -39,6 +45,9 @@ public class RegistrationController
         if (result.hasErrors()) {
             return "login/registration";
         }
+        
+        registrationService.saveRegistration(registration);
+        
         return "login";
     }
 }

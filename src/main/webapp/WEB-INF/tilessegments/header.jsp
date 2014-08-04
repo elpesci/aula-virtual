@@ -9,5 +9,11 @@
       <li><a href="#"> <img src="<c:url value="/resources/img/galeria.png"/>" title="galeria"/></a></li>
       <li><a href="#"> <img src="<c:url value="/resources/img/buscar.png"/>" title="busqueda"/></a></li>
     </ul>
+    
+<a href="<c:url value="j_spring_security_logout" />" > Logout</a>
+
+ 
   </div>
+  
+  
   <!-- end #header -->
