@@ -6,8 +6,8 @@
 
 package com.jcs.goboax.aulavirtual.bll;
 
-import com.jcs.goboax.aulavirtual.dal.RegistroAccesoDao;
-import com.jcs.goboax.aulavirtual.dal.UsuarioDao;
+import com.jcs.goboax.aulavirtual.dao.impl.RegistroAccesoDaoImpl;
+import com.jcs.goboax.aulavirtual.dao.impl.UsuarioDaoImpl;
 import com.jcs.goboax.aulavirtual.model.RegistroAcceso;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ import org.springframework.stereotype.Service;
 public class Authenticate {
     
     @Autowired
-    private UsuarioDao usuarioDao;
+    private UsuarioDaoImpl usuarioDao;
     
     @Autowired
-    private RegistroAccesoDao registroAccesoDao;
+    private RegistroAccesoDaoImpl registroAccesoDao;
     
     public Usuario Login(Usuario user, RegistroAcceso acceso) {
         Usuario usr = usuarioDao.tryLogin(user);

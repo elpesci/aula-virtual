@@ -42,25 +42,9 @@
       </div></div>
    
     <div id="content">
-      <div class="post">
-        <h3 class="title">INICIO</h3>
-        <p>&nbsp;</p>
-        <p class="meta"><span class="date">
-          <script type="text/javascript" src="../js/date.js"></script>
-          </span></p>
-        <div class="entry">
-          <h3>Visión</h3>
-          <p>Ser una secretaría que desarrolle altos estándares de calidad de la manera mas eficiente, dinámica y estratégica, lo cual lleve a la excelencia en la operatividad financiera d e la administración pública del Gobierno del Estado, con acciones de legalidad y disciplina en beneficio de la sociedad oaxaqueña. </p>
-          <h3>Misión</h3>
-          <p> Administrar, modernizar y regular de manera eficaz y transparente la política financiera fiscal y administrativa de la hacienda pública a fin de consolidarse como el eje rector de financiamiento para el logro del plan estatal de desarrollo del Gobierno del Estado.</p>
-          <p class="links"><a href="#">Leer más..</a><span>|</span><a href="#">Comentarios</a></p>
             <tiles:insertAttribute name="body"/>
-        </div>
-      </div>
-    </div>
-    
     <!-- end #content -->
-  </div>
+    </div>
   <!-- end #page -->
   <ul class="MainFooter" style="height:100px;">
     <li><a href="#"></a></li>

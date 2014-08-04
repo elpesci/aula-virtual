@@ -32,33 +32,5 @@ public class LoginController {
         return new ModelAndView("login", "command", new Usuario());
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView processForm(HttpSession session, Usuario usr, BindingResult result) 
-    {
-        LOG.debug("doLogin {}");
-        Usuario usrLogin;
-        
-        usrLogin = tryLogin(session, usr);
-        
-        if(usrLogin != null) {
-            return new ModelAndView("home");
-        } else {
-            return new ModelAndView("login", "command", usr);
-        }
-    }
-    
-    /* Private Methods */
-    private Usuario tryLogin(HttpSession session, Usuario usr) 
-    {        
-        LOG.debug("private tryLogin {}", usr.getUsername());
-        Usuario usuario;
-        RegistroAcceso acceso = new RegistroAcceso();
 
-        acceso.setInicioAcceso(new Date());
-        acceso.setSessionId(session.getId());
-        
-        usuario = loginService.Login(usr, acceso);
-            
-        return usuario;
-    }
 }

@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jcs.goboax.aulavirtual.dal;
+package com.jcs.goboax.aulavirtual.dao.impl;
 
+import com.jcs.goboax.aulavirtual.dao.BaseDao;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Repository;
  * @author julio
  */
 @Repository
-public class UsuarioDao extends BaseDao<Integer, Usuario> {
+public class UsuarioDaoImpl extends BaseDao<Integer, Usuario>
+{
     
     public Usuario tryLogin(Usuario usr) {
         Query q;

@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jcs.goboax.aulavirtual.dal;
+package com.jcs.goboax.aulavirtual.dao;
 
-import com.jcs.goboax.aulavirtual.controller.LoginController;
-import com.jcs.goboax.aulavirtual.dal.interfaces.IDao;
+import com.jcs.goboax.aulavirtual.dao.api.IDao;
 import java.lang.reflect.ParameterizedType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

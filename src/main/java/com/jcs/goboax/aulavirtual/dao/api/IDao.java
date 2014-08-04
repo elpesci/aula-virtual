@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jcs.goboax.aulavirtual.dal.interfaces;
+package com.jcs.goboax.aulavirtual.dao.api;
 
 import javax.persistence.Query;
 
