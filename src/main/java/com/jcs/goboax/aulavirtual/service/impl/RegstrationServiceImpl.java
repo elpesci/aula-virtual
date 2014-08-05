@@ -1,5 +1,7 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
+import com.jcs.goboax.aulavirtual.dao.api.PersonaDao;
+import com.jcs.goboax.aulavirtual.model.Persona;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +26,22 @@ public class RegstrationServiceImpl
     @Autowired
     private UsuarioDao usuarioDao;
 
+    @Autowired
+    private PersonaDao personaDao;
+
+
     @Transactional
     @Override
-    public boolean saveRegistration(Registration aRegistration) {        
+    public boolean saveRegistration(Registration aRegistration) {
+        Persona myPersona = conversionService.convert(aRegistration, Persona.class);
         Usuario myUsuario = conversionService.convert(aRegistration, Usuario.class);
-        LOG.debug("usuario : {}", myUsuario.getUsername());
+
+        personaDao.persist(myPersona);
+        myUsuario.setPersonaId(myPersona);
         usuarioDao.persist(myUsuario);
-        // TODO Auto-generated method stub
+
+
+
         return false;
     }
 

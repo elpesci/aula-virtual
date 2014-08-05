@@ -1,5 +1,9 @@
 package com.jcs.goboax.aulavirtual.dao.api;
 
-public interface PersonaDao {
+import com.jcs.goboax.aulavirtual.model.Persona;
+
+public interface PersonaDao
+    extends IDao<Integer, Persona>
+{
 
 }

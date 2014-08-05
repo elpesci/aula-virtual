@@ -21,6 +21,7 @@ public class RegistrationValidator
     public void validate(Object anObject, Errors anErrors)
     {
         ValidationUtils.rejectIfEmpty(anErrors, "name", "name.empty");
+        ValidationUtils.rejectIfEmpty(anErrors, "email", "email.empty");
         Registration myRegistration = (Registration) anObject;
     }
 }
