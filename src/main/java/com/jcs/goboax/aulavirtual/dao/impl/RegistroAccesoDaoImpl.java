@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.jcs.goboax.aulavirtual.dal;
+package com.jcs.goboax.aulavirtual.dao.impl;
 
+import com.jcs.goboax.aulavirtual.dao.BaseDao;
 import com.jcs.goboax.aulavirtual.model.RegistroAcceso;
 import javax.persistence.Query;
 import org.slf4j.Logger;
@@ -17,7 +18,8 @@ import org.springframework.stereotype.Repository;
  * @author julio
  */
 @Repository
-public class RegistroAccesoDao extends BaseDao<Integer, RegistroAcceso> {
+public class RegistroAccesoDaoImpl extends BaseDao<Integer, RegistroAcceso>
+{
     
     private final static Logger LOG = LoggerFactory.getLogger(BaseDao.class);
     
