@@ -1,6 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-
 import java.io.Serializable;
 
 import java.lang.Boolean;
@@ -42,7 +41,7 @@ public  class Respuesta implements Serializable {
 
     @Column(name="respuestaId",table="Respuesta",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer respuestaId;
 
 

@@ -1,6 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-
 import java.io.Serializable;
 
 import java.lang.Integer;
@@ -27,6 +26,10 @@ public  class Usuario implements Serializable {
 
     @OneToMany(targetEntity=UsuarioPerfil.class,mappedBy="usuario")
     private Collection<UsuarioPerfil> usuarioPerfilCollection;
+
+
+    @OneToMany(targetEntity=RegistroAcceso.class,mappedBy="usuarioId")
+    private Collection<RegistroAcceso> registroAccesoCollection;
 
 
     @Column(name="username",table="Usuario",nullable=false,length=45)
@@ -68,7 +71,7 @@ public  class Usuario implements Serializable {
 
     @Column(name="usuarioId",table="Usuario",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer usuarioId;
 
 
@@ -88,6 +91,17 @@ public  class Usuario implements Serializable {
 
   public void setUsuarioPerfilCollection (Collection<UsuarioPerfil> usuarioPerfilCollection) {
         this.usuarioPerfilCollection = usuarioPerfilCollection;
+    }
+
+
+
+   public Collection<RegistroAcceso> getRegistroAccesoCollection() {
+        return this.registroAccesoCollection;
+    }
+
+
+  public void setRegistroAccesoCollection (Collection<RegistroAcceso> registroAccesoCollection) {
+        this.registroAccesoCollection = registroAccesoCollection;
     }
 
 

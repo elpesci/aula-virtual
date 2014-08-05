@@ -1,6 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-
 import java.io.Serializable;
 
 import java.lang.Integer;
@@ -39,7 +38,7 @@ public  class Perfil implements Serializable {
 
     @Column(name="perfilId",table="Perfil",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer perfilId;
 
 

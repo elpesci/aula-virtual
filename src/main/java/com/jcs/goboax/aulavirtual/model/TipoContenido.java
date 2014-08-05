@@ -1,6 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-
 import java.io.Serializable;
 
 import java.lang.Integer;
@@ -52,8 +51,12 @@ public  class TipoContenido implements Serializable {
 
     @Column(name="tipoContenidoId",table="TipoContenido",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer tipoContenidoId;
+
+
+    @OneToMany(targetEntity=ExtensionContenido.class,mappedBy="tipoContenidoId")
+    private Collection<ExtensionContenido> extensionContenidoCollection;
 
 
     @OneToMany(targetEntity=Contenido.class,mappedBy="tipoContenidoId")
@@ -126,6 +129,17 @@ public  class TipoContenido implements Serializable {
 
   public void setTipoContenidoId (Integer tipoContenidoId) {
         this.tipoContenidoId = tipoContenidoId;
+    }
+
+
+
+   public Collection<ExtensionContenido> getExtensionContenidoCollection() {
+        return this.extensionContenidoCollection;
+    }
+
+
+  public void setExtensionContenidoCollection (Collection<ExtensionContenido> extensionContenidoCollection) {
+        this.extensionContenidoCollection = extensionContenidoCollection;
     }
 
 
