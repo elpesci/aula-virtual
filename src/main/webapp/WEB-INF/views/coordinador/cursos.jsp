@@ -54,9 +54,9 @@
                 <table id="example" class="display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="paths.path.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="paths.goal.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="paths.actions.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.course.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.goal.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.actions.label"/></th>
                     </tr>
                     </thead>
                 </table>

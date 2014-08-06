@@ -1,11 +1,9 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-
-import java.lang.Integer;
-import java.lang.String;
 import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +30,7 @@ public  class Persona implements Serializable {
     private String correoElectronico;
 
 
-    @OneToMany(targetEntity=Usuario.class,mappedBy="personaId")
+    @OneToMany(targetEntity=Usuario.class,mappedBy="persona")
     private Collection<Usuario> usuarioCollection;
 
 

@@ -1,14 +1,17 @@
 package com.jcs.goboax.aulavirtual.service.api;
 
+import java.util.List;
+
 import com.jcs.goboax.aulavirtual.model.Perfil;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 
 public interface UsuarioService
 {
     /**
-     * Retrieves a Profile given a User.
-     * @param aUsuario
+     * Read all the profiles stored into the data source.
      * @return
      */
-    Perfil getPerfil(Usuario aUsuario);
+    List<Perfil> readPerfiles();
+    
+    void createUser(Usuario aUsuario);
 }

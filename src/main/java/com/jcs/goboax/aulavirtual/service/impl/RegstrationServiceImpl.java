@@ -1,11 +1,9 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
-import javax.security.sasl.AuthenticationException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.jcs.goboax.aulavirtual.dao.api.PersonaDao;
-import com.jcs.goboax.aulavirtual.model.Persona;
-
-import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +11,13 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
+import com.jcs.goboax.aulavirtual.dao.api.PersonaDao;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
+import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Persona;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
 import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 
 @Service
@@ -30,7 +31,7 @@ public class RegstrationServiceImpl
     private ConversionService conversionService;
 
     @Autowired
-    private UsuarioDao usuarioDao;
+    private UsuarioService usuarioService;
 
     @Autowired
     private PersonaDao personaDao;
@@ -38,7 +39,7 @@ public class RegstrationServiceImpl
 
     @Transactional
     @Override
-    public void saveRegistration(Registration aRegistration)
+    public void createRegistration(Registration aRegistration)
     {
         try
         {
@@ -49,18 +50,30 @@ public class RegstrationServiceImpl
 
             LOG.debug("Persist Persona {}", myPersona.getCorreoElectronico());
             personaDao.persist(myPersona);
-            myUsuario.setPersonaId(myPersona);
+            myUsuario.setPersona(myPersona);
             LOG.debug("Persist Usurio related to Persona [{}, {}]",
                     myUsuario.getUsername(), myPersona.getPersonaId());
-            usuarioDao.persist(myUsuario);
+            usuarioService.createUser(myUsuario);
 
-            UsuarioPerfilPK myUsuarioPerfilPK = new UsuarioPerfilPK();
+//            UsuarioPerfilPK myUsuarioPerfilPK = new UsuarioPerfilPK();
         }
         catch (RuntimeException e)
         {
             LOG.error("The system can not save the Registration request", e);
-            throw new AulaVirtualException("The system can not save the Registration request", e);
+            throw new AulaVirtualRegistrationException("The system can not save the Registration request", e);
         }
     }
 
+
+    @Override
+    public Map<String, String> convertProfilesToMap(List<Perfil> aProfiles)
+    {
+        Map<String, String> myReturn = new HashMap<String, String>();
+        for (Perfil myPerfil : aProfiles)
+        {
+            myReturn.put(myPerfil.getCodigo(), myPerfil.getNombre());
+        }
+        
+        return myReturn;
+    }
 }

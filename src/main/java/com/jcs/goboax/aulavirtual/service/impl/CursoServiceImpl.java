@@ -16,7 +16,7 @@ public class CursoServiceImpl
     private CursoDao cursoDao;
 
     @Override
-    public List<Curso> getCursos()
+    public List<Curso> readCursos()
     {
         return cursoDao.findWithNamedQuery(Curso.CURSO_ALL_QUERYNAME);
     }

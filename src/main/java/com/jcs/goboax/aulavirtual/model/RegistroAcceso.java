@@ -1,111 +1,90 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-
-import java.lang.Integer;
-import java.lang.String;
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the RegistroAcceso database table.
+ * 
+ */
 @Entity
+@NamedQuery(name = "RegistroAcceso.findAll", query = "SELECT r FROM RegistroAcceso r")
 @Table(name="RegistroAcceso")
-public  class RegistroAcceso implements Serializable {
+public class RegistroAcceso
+        implements Serializable
+{
+    private static final long serialVersionUID = 1L;
 
-
-    @Column(name="registroAccesoId",table="RegistroAcceso",nullable=false)
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer registroAccesoId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int registroAccesoId;
 
-
-    @Column(name="sessionId",table="RegistroAcceso",length=45)
-    @Basic
-    private String sessionId;
-
-
-    @Column(name="finAcceso",table="RegistroAcceso")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date finAcceso;
 
-
-    @Column(name="inicioAcceso",table="RegistroAcceso")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date inicioAcceso;
 
+    private String sessionId;
 
-    @ManyToOne(optional=false,targetEntity=Usuario.class)
-    @JoinColumn(name="usuarioId",referencedColumnName="usuarioId",insertable=true,nullable=true,unique=false,updatable=true)
-    private Usuario usuarioId;
+    // bi-directional many-to-one association to Usuario
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuario;
 
-    public RegistroAcceso(){
-
+    public RegistroAcceso()
+    {
     }
 
-
-   public Integer getRegistroAccesoId() {
+    public int getRegistroAccesoId()
+    {
         return this.registroAccesoId;
     }
 
-
-  public void setRegistroAccesoId (Integer registroAccesoId) {
+    public void setRegistroAccesoId(int registroAccesoId)
+    {
         this.registroAccesoId = registroAccesoId;
     }
 
-
-
-   public String getSessionId() {
-        return this.sessionId;
-    }
-
-
-  public void setSessionId (String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-
-
-   public Date getFinAcceso() {
+    public Date getFinAcceso()
+    {
         return this.finAcceso;
     }
 
-
-  public void setFinAcceso (Date finAcceso) {
+    public void setFinAcceso(Date finAcceso)
+    {
         this.finAcceso = finAcceso;
     }
 
-
-
-   public Date getInicioAcceso() {
+    public Date getInicioAcceso()
+    {
         return this.inicioAcceso;
     }
 
-
-  public void setInicioAcceso (Date inicioAcceso) {
+    public void setInicioAcceso(Date inicioAcceso)
+    {
         this.inicioAcceso = inicioAcceso;
     }
 
-
-
-   public Usuario getUsuarioId() {
-        return this.usuarioId;
+    public String getSessionId()
+    {
+        return this.sessionId;
     }
 
+    public void setSessionId(String sessionId)
+    {
+        this.sessionId = sessionId;
+    }
 
-  public void setUsuarioId (Usuario usuarioId) {
-        this.usuarioId = usuarioId;
+    public Usuario getUsuario()
+    {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario)
+    {
+        this.usuario = usuario;
     }
 
 }
-

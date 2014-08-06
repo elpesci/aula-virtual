@@ -1,21 +1,21 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.jcs.goboax.aulavirtual.dao.api.CursoDao;
-import com.jcs.goboax.aulavirtual.model.Curso;
-import com.jcs.goboax.aulavirtual.service.api.CursoService;
-import com.jcs.goboax.aulavirtual.viewmodel.CursoToJsonObject;
-import com.jcs.goboax.aulavirtual.viewmodel.PathModel;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.service.api.CursoService;
+import com.jcs.goboax.aulavirtual.viewmodel.CursoToJsonObject;
+import com.jcs.goboax.aulavirtual.viewmodel.PathModel;
 
 @Controller
 @RequestMapping("/cursos")
@@ -34,7 +34,7 @@ public class CursosController
     public @ResponseBody
     String cursosList() throws IOException
     {
-        List<Curso> myCursos = cursoService.getCursos();
+        List<Curso> myCursos = cursoService.readCursos();
 
         CursoToJsonObject myCursoToJsonObject = new CursoToJsonObject();
 

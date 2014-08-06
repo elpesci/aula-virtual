@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CursoService
 {
-    List<Curso> getCursos();
+    List<Curso> readCursos();
 }

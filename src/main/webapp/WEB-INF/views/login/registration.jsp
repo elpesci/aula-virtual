@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div id="registration_form">
     <fieldset>
@@ -40,8 +42,21 @@
                 <span class="error"><form:errors path="confirmPassword"/></span>
             </form:label>
             <form:password path="confirmPassword"/>
+            
+            <sec:authorize access="hasRole('SUPER_ADMIN')">
+                <form:select path="profile" items="${profiles}" />
+            </sec:authorize>
 
             <input type="submit" value="Submit"/>
+            <span class="error">
+                <spring:hasBindErrors name="registration">
+                <c:forEach items="${errors.globalErrors}" var="errorMessage">
+                    <div id="errors" class="errors">
+                        <spring:message htmlEscape="true" code="${errorMessage.code}" />
+                    </div>
+                </c:forEach>
+                </spring:hasBindErrors>
+            </span>
         </form:form>
     </fieldset>
 </div>
