@@ -73,11 +73,5 @@ public class Registration
     {
         this.confirmPassword = comfirmPassword;
     }
-    public static void main(String[] args) {
-        String password = "Password#1";
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
- 
-        System.out.println(hashedPassword);
-    }
+
 }

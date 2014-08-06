@@ -4,6 +4,8 @@ import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
 import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,8 @@ import java.util.Map;
 @RequestMapping("/login/registration")
 public class RegistrationController
 {
+    private static final Logger LOG = LoggerFactory.getLogger(RegistrationController.class);
+
     @Autowired
     private RegistrationValidator registrationValidator;
     
@@ -32,9 +36,9 @@ public class RegistrationController
 
     // Display the form on the get request
     @RequestMapping(method = RequestMethod.GET)
-    public String showRegistration(Map model) {
+    public String showRegistration(Map aModel) {
         Registration registration = new Registration();
-        model.put("registration", registration);
+        aModel.put("registration", registration);
         return "login/registration";
     }
 
@@ -42,10 +46,11 @@ public class RegistrationController
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@Validated Registration registration,
                                       BindingResult result) {
+
         if (result.hasErrors()) {
             return "login/registration";
         }
-        
+        LOG.debug("Processing Registration....");
         registrationService.saveRegistration(registration);
         
         return "login";
