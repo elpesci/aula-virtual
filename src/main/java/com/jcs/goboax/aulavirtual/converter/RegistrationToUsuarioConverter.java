@@ -1,5 +1,6 @@
 package com.jcs.goboax.aulavirtual.converter;
 
+import com.jcs.goboax.aulavirtual.util.Helper;
 import org.springframework.core.convert.converter.Converter;
 
 import com.jcs.goboax.aulavirtual.model.Usuario;
@@ -16,7 +17,7 @@ public class RegistrationToUsuarioConverter
         myUsuario.setFechaCreacion(new Date());
         myUsuario.setHabilitado(true);
         myUsuario.setUsername(aRegistration.getEmail());
-        // TODO Auto-generated method stub
+        myUsuario.setPassword(Helper.encodePassword(aRegistration.getPassword()));
         return myUsuario;
     }
 

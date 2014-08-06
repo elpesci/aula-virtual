@@ -4,6 +4,6 @@ import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 
 public interface RegistrationService {
     
-    boolean saveRegistration(Registration aRegistration);
+    void saveRegistration(Registration aRegistration);
 
 }

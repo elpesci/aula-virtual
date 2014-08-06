@@ -11,11 +11,23 @@
             </form:label>
             <form:input path="name"/>
 
+            <form:label path="lastName">
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.lastName.label"/>
+                <span class="error"><form:errors path="lastName"/></span>
+            </form:label>
+            <form:input path="lastName"/>
+
+            <form:label path="secondLastName">
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.secondLastName.label"/>
+                <span class="error"><form:errors path="secondLastName"/></span>
+            </form:label>
+            <form:input path="secondLastName"/>
+
             <form:label path="email">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.email.label"/>
                 <span class="error"><form:errors path="email"/></span>
             </form:label>
-            <form:password path="email"/>
+            <form:input path="email"/>
 
             <form:label path="password">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.password.label"/>
