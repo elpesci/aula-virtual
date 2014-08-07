@@ -12,13 +12,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@NamedQuery(name = Perfil.PROFILE_ALL_QUERYNAME, query = "SELECT p FROM Perfil p")
+@NamedQueries({
+        @NamedQuery(name = Perfil.PROFILE_ALL_QUERYNAME, query = "SELECT p FROM Perfil p"),
+        @NamedQuery(name = Perfil.PROFILE_BY_CODE_QUERYNAME,
+                query = "SELECT p FROM Perfil p WHERE p.codigo = :" + Perfil.PROFILE_BY_CODE_PARAMETER)
+})
 @Entity
 @Table(name = "Perfil")
 public class Perfil
@@ -27,6 +32,9 @@ public class Perfil
     private static final long serialVersionUID = 7915160426517813587L;
 
     public static final String PROFILE_ALL_QUERYNAME = "perfil.findAll";
+    public static final String PROFILE_BY_CODE_QUERYNAME = "perfil.byCode";
+
+    public static final String PROFILE_BY_CODE_PARAMETER = "code";
 
     @Column(name = "nombre", table = "Perfil", nullable = false, length = 45)
     @Basic

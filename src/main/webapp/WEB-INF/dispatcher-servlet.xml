@@ -75,6 +75,7 @@
             <list>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToUsuarioConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPersonaConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPerfilConverter"/>
             </list>
         </property>
     </bean>

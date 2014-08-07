@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jcs.goboax.aulavirtual.dao;
+package com.jcs.goboax.aulavirtual.dao.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.IDao;
 import java.lang.reflect.ParameterizedType;
@@ -25,16 +25,16 @@ import org.slf4j.LoggerFactory;
  * @param <K> Type to use as the key
  * @param <E> Type of the entity
  */
-public abstract class BaseDao<K, E> implements IDao<K, E> {
+public abstract class BaseDaoImpl<K, E> implements IDao<K, E> {
 
-    private final static Logger LOG = LoggerFactory.getLogger(BaseDao.class);
+    private final static Logger LOG = LoggerFactory.getLogger(BaseDaoImpl.class);
     
     protected Class<E> entityClass;
     
     @PersistenceContext
     protected EntityManager entityManager;
 
-    public BaseDao() {
+    public BaseDaoImpl() {
         ParameterizedType genericSuperclass;
         genericSuperclass = (ParameterizedType)getClass().getGenericSuperclass();
         
