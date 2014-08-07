@@ -14,10 +14,10 @@ public class SesionAlumnoPK
 
     private static final long serialVersionUID = 8805568274618481171L;
 
-    @Column(name = "Sesion_sesionId", insertable = false, updatable = false)
+    @Column(name = "Sesion_sesionId")
     private int sesionsesionId;
 
-    @Column(name = "Alumno_alumnoId", insertable = false, updatable = false)
+    @Column(name = "Alumno_alumnoId")
     private int alumnoalumnoId;
 
     public int getSesionsesionId() {

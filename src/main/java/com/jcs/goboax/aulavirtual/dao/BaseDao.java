@@ -4,16 +4,18 @@
  * and open the template in the editor.
  */
 
-package com.jcs.goboax.aulavirtual.dal;
+package com.jcs.goboax.aulavirtual.dao;
 
-import com.jcs.goboax.aulavirtual.controller.LoginController;
-import com.jcs.goboax.aulavirtual.dal.interfaces.IDao;
+import com.jcs.goboax.aulavirtual.dao.api.IDao;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,5 +84,32 @@ public abstract class BaseDao<K, E> implements IDao<K, E> {
             LOG.error("Excepcion al ejecutar el query ", q, exc);
             return null;
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<E> findWithNamedQuery(String queryName)
+    {
+        return entityManager.createNamedQuery(queryName, entityClass).
+                getResultList();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<E> findWithNamedQuery(String queryName, int resultLimit)
+    {
+        return entityManager.createNamedQuery(queryName, entityClass).
+                setMaxResults(resultLimit).
+                getResultList();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<E> findWithNamedQuery(String namedQueryName, int start, int end)
+    {
+        TypedQuery<E> query = entityManager.createNamedQuery(namedQueryName, entityClass);
+        query.setMaxResults(end - start);
+        query.setFirstResult(start);
+        return query.getResultList();
     }
 }

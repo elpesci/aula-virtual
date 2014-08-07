@@ -25,15 +25,25 @@
         <put-attribute name="body" value="" />
         <put-attribute name="footer" value="/WEB-INF/tilessegments/footer.jsp" />
     </definition>
-    
-<!--    <definition extends="base.definition" name="home">
-        <put-attribute name="title" value="Aula Virtual" />
-        <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-    </definition>-->
-    
+
     <definition extends="base.definition" name="login">
         <put-attribute name="title" value="Aula Virtual - Iniciar Sesión" />
-        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/login/login.jsp" />
+    </definition>
+
+    <definition extends="base.definition" name="login/registration">
+        <put-attribute name="title" value="Aula Virtual - Iniciar Sesión" />
+        <put-attribute name="body" value="/WEB-INF/views/login/registration.jsp" />
+    </definition>
+
+    <definition extends="base.definition" name="cursos">
+        <put-attribute name="title" value="Aula Virtual - Lista de Cursos" />
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/cursos.jsp" />
+    </definition>
+
+    <definition extends="base.definition" name="cursos/add">
+        <put-attribute name="title" value="Aula Virtual - Agegar Curso" />
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/addCurso.jsp" />
     </definition>
 
 </tiles-definitions>
