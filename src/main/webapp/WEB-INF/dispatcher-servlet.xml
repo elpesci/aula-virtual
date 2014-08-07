@@ -61,10 +61,15 @@
         </property>
         <property name="jpaPropertyMap">
             <props>
-                <prop key="eclipselink.weaving">false</prop>
+                <prop key="eclipselink.weaving">true</prop>
             </props>
         </property>
+        <property name="loadTimeWeaver">
+  <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+</property>
     </bean>
+    
+    
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
@@ -77,9 +82,16 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPersonaConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPerfilConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.CourseModelToCursoConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ContentModelToContenidoConverter"/>
             </list>
         </property>
     </bean>
+
+   <!-- Configure the multipart resolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="10000000"/>
+    </bean>    
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

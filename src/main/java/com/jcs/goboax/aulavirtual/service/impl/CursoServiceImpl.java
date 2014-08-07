@@ -2,11 +2,14 @@ package com.jcs.goboax.aulavirtual.service.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.dao.api.CursoDao;
+import com.jcs.goboax.aulavirtual.dao.api.TipoContenidoDao;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.model.TipoContenido;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ public class CursoServiceImpl
 
     @Autowired
     private ContenidoDao contenidoDao;
+    
+    @Autowired
+    private TipoContenidoDao tipoContenidoDao;
 
     @Autowired
     private ConversionService conversionService;
@@ -53,9 +59,16 @@ public class CursoServiceImpl
 
     @Transactional
     @Override
-    public void createContent(ContentModel aContentModel)
+    public void createContent(ContentModel aContentModel, Integer aCourseId)
     {
+        
         Contenido myContenido = conversionService.convert(aContentModel, Contenido.class);
+        Curso myCurso = cursoDao.findByKey(aCourseId);
+        myContenido.setCurso(myCurso);
+        
+        TipoContenido tipoContenido = tipoContenidoDao.findByKey(1);
+        myContenido.setTipoContenido(tipoContenido);
+        
         contenidoDao.persist(myContenido);
     }
 }

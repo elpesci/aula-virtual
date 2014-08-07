@@ -1,192 +1,145 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-
-import java.lang.Integer;
-import java.lang.String;
 import java.util.Date;
+
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+/**
+ * The persistent class for the Contenido database table.
+ * 
+ */
 @Entity
+@NamedQuery(name="Contenido.findAll", query="SELECT c FROM Contenido c")
 @Table(name="Contenido")
-public  class Contenido implements Serializable {
+public class Contenido implements Serializable {
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int contenidoId;
 
-    @Column(name="nombre",table="Contenido",length=50)
-    @Basic
-    private String nombre;
+	@Lob
+	@Basic(fetch=FetchType.LAZY)
+	private byte[] archivoMaterial;
 
+	private int creadoPor;
 
-    @Column(name="creadoPor",table="Contenido",nullable=false)
-    @Basic
-    private int creadoPor;
+	private String descripcion;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaCreacion;
 
-    @Column(name="archivoMaterial",table="Contenido")
-    @Lob
-    @Basic
-    private byte [] archivoMaterial;
+	private String fechaModificacion;
 
+	private int modificadoPor;
 
-    @Column(name="modificadoPor",table="Contenido")
-    @Basic
-    private Integer modificadoPor;
+	private String nombre;
 
+	//bi-directional many-to-one association to Curso
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cursoId")
+	private Curso curso;
 
-    @Column(name="contenidoId",table="Contenido",nullable=false)
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer contenidoId;
+	//bi-directional many-to-one association to TipoContenido
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="tipoContenidoId")
+	private TipoContenido tipoContenido;
 
+	public Contenido() {
+	}
 
-    @Column(name="descripcion",table="Contenido",length=50)
-    @Basic
-    private String descripcion;
+	public int getContenidoId() {
+		return this.contenidoId;
+	}
 
+	public void setContenidoId(int contenidoId) {
+		this.contenidoId = contenidoId;
+	}
 
-    @ManyToOne(optional=false,targetEntity=Curso.class)
-    @JoinColumn(name="cursoId",referencedColumnName="cursoId",insertable=true,nullable=true,unique=false,updatable=true)
-    private Curso cursoId;
+	public byte[] getArchivoMaterial() {
+		return this.archivoMaterial;
+	}
 
+	public void setArchivoMaterial(byte[] archivoMaterial) {
+		this.archivoMaterial = archivoMaterial;
+	}
 
-    @Column(name="fechaCreacion",table="Contenido",nullable=false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @Basic
-    private Date fechaCreacion;
+	public int getCreadoPor() {
+		return this.creadoPor;
+	}
 
+	public void setCreadoPor(int creadoPor) {
+		this.creadoPor = creadoPor;
+	}
 
-    @ManyToOne(optional=false,targetEntity=TipoContenido.class)
-    @JoinColumn(name="tipoContenidoId",referencedColumnName="tipoContenidoId",insertable=true,nullable=true,unique=false,updatable=true)
-    private TipoContenido tipoContenidoId;
+	public String getDescripcion() {
+		return this.descripcion;
+	}
 
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-    @Column(name="fechaModificacion",table="Contenido",length=45)
-    @Basic
-    private String fechaModificacion;
+	public Date getFechaCreacion() {
+		return this.fechaCreacion;
+	}
 
-    public Contenido(){
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
 
-    }
+	public String getFechaModificacion() {
+		return this.fechaModificacion;
+	}
 
+	public void setFechaModificacion(String fechaModificacion) {
+		this.fechaModificacion = fechaModificacion;
+	}
 
-   public String getNombre() {
-        return this.nombre;
-    }
+	public int getModificadoPor() {
+		return this.modificadoPor;
+	}
 
+	public void setModificadoPor(int modificadoPor) {
+		this.modificadoPor = modificadoPor;
+	}
 
-  public void setNombre (String nombre) {
-        this.nombre = nombre;
-    }
+	public String getNombre() {
+		return this.nombre;
+	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
+	public Curso getCurso() {
+		return this.curso;
+	}
 
-   public int getCreadoPor() {
-        return this.creadoPor;
-    }
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 
+	public TipoContenido getTipoContenido() {
+		return this.tipoContenido;
+	}
 
-  public void setCreadoPor (int creadoPor) {
-        this.creadoPor = creadoPor;
-    }
-
-
-
-   public byte [] getArchivoMaterial() {
-        return this.archivoMaterial;
-    }
-
-
-  public void setArchivoMaterial (byte [] archivoMaterial) {
-        this.archivoMaterial = archivoMaterial;
-    }
-
-
-
-   public Integer getModificadoPor() {
-        return this.modificadoPor;
-    }
-
-
-  public void setModificadoPor (Integer modificadoPor) {
-        this.modificadoPor = modificadoPor;
-    }
-
-
-
-   public Integer getContenidoId() {
-        return this.contenidoId;
-    }
-
-
-  public void setContenidoId (Integer contenidoId) {
-        this.contenidoId = contenidoId;
-    }
-
-
-
-   public String getDescripcion() {
-        return this.descripcion;
-    }
-
-
-  public void setDescripcion (String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-
-
-   public Curso getCursoId() {
-        return this.cursoId;
-    }
-
-
-  public void setCursoId (Curso cursoId) {
-        this.cursoId = cursoId;
-    }
-
-
-
-   public Date getFechaCreacion() {
-        return this.fechaCreacion;
-    }
-
-
-  public void setFechaCreacion (Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-
-
-   public TipoContenido getTipoContenidoId() {
-        return this.tipoContenidoId;
-    }
-
-
-  public void setTipoContenidoId (TipoContenido tipoContenidoId) {
-        this.tipoContenidoId = tipoContenidoId;
-    }
-
-
-
-   public String getFechaModificacion() {
-        return this.fechaModificacion;
-    }
-
-
-  public void setFechaModificacion (String fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
+	public void setTipoContenido(TipoContenido tipoContenido) {
+		this.tipoContenido = tipoContenido;
+	}
 
 }
-

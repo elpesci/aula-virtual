@@ -34,6 +34,7 @@ public interface CursoService
      * Create new Content.
      *
      * @param aContentModel
+     * @param aCourseId
      */
-    void createContent(ContentModel aContentModel);
+    void createContent(ContentModel aContentModel, Integer aCourseId);
 }

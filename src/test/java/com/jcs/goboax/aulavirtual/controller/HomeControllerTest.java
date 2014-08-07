@@ -26,7 +26,7 @@ public class HomeControllerTest
     private HomeController homeController;
 
     @Before
-    public void setup()
+    public void setup() throws Exception
     {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();

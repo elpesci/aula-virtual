@@ -31,12 +31,24 @@
             "bServerSide": false,
             "sort": "position",
             "sAjaxSource": "cursos/list",
+            "createdRow": function (row, data, index) {
+            	console.log(row);
+            	console.log(data);
+            	console.log(index);
+            	var contentLink = $('<a/>');
+            	myLink = "<c:url value='/cursos/" + data.cursoId + "/content/add'/>";
+            	console.log(myLink)
+            	contentLink.attr('href', myLink);
+            	contentLink.html('Contenido');
+            	$(row).find('.acciones-control').append(contentLink);
+            },
             "aoColumns": [
                 { "mData": "nombre" },
                 { "mData": "objetivo" },
                 { "mData": "cursoId",
                     "mRender": function (cursoId) {
-                        return  '<a href="' + cursoId + '">' + cursoId + '</a>';
+                        return  '<a href="' + cursoId + '">' + cursoId + '</a><div id="contentLink_' 
+                        	+ cursoId + '"/>';
                     },
                     "class": "acciones-control",
                     "orderable": false

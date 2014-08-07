@@ -8,12 +8,9 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -62,7 +59,7 @@ public class RegistrationController
 
     // Display the form on the get request
     @RequestMapping(method = RequestMethod.GET)
-    public String showRegistration(Map aModel)
+    public String showRegistration(Map<String, Object> aModel)
     {
         Registration registration = new Registration();
         aModel.put("registration", registration);
