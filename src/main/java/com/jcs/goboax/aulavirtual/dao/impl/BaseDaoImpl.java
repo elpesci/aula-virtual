@@ -7,86 +7,96 @@
 package com.jcs.goboax.aulavirtual.dao.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.IDao;
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 /**
- *
- * @author julio
  * @param <K> Type to use as the key
  * @param <E> Type of the entity
+ * @author julio
  */
-public abstract class BaseDaoImpl<K, E> implements IDao<K, E> {
+public abstract class BaseDaoImpl<K, E> implements IDao<K, E>
+{
 
     private final static Logger LOG = LoggerFactory.getLogger(BaseDaoImpl.class);
-    
+
     protected Class<E> entityClass;
-    
+
     @PersistenceContext
     protected EntityManager entityManager;
 
-    public BaseDaoImpl() {
+    public BaseDaoImpl()
+    {
         ParameterizedType genericSuperclass;
-        genericSuperclass = (ParameterizedType)getClass().getGenericSuperclass();
-        
-        this.entityClass = (Class<E>)genericSuperclass.getActualTypeArguments()[1];
+        genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+
+        this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
     }
-    
+
     /**
-     *
      * @param entity
      */
-    public void persist(E entity) {
+    public void persist(E entity)
+    {
         entityManager.persist(entity);
     }
-    
+
     /**
-     *
      * @param entity
      */
-    public void remove(E entity) {
+    public void remove(E entity)
+    {
         entityManager.remove(entity);
     }
-    
+
     /**
-     *
      * @param entityId
      * @return Entity object
      */
-    public E findByKey(K entityId) {
+    public E findByKey(K entityId)
+    {
         return entityManager.find(entityClass, entityId);
     }
-    
+
     /**
-     * 
      * @param q Executable query
      * @return Entity object
      */
-    public E getSingleResult(Query q) {
-        try {
-            return (E)q.getSingleResult();
-        } catch (NoResultException noResult) {
+    public E getSingleResult(Query q)
+    {
+        try
+        {
+            return (E) q.getSingleResult();
+        }
+        catch (NoResultException noResult)
+        {
             LOG.info("Ejecucion del query no produjo resultados.", q, noResult);
             return null;
-        } catch (NonUniqueResultException multiResult) {
+        }
+        catch (NonUniqueResultException multiResult)
+        {
             LOG.info("Ejecucion del query produjo multiples resultados.", q, multiResult);
             return null;
-        } catch (Exception exc) {
+        }
+        catch (Exception exc)
+        {
             LOG.error("Excepcion al ejecutar el query ", q, exc);
             return null;
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<E> findWithNamedQuery(String queryName)
     {
@@ -94,7 +104,9 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E> {
                 getResultList();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<E> findWithNamedQuery(String queryName, int resultLimit)
     {
@@ -103,7 +115,9 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E> {
                 getResultList();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<E> findWithNamedQuery(String namedQueryName, int start, int end)
     {
@@ -111,5 +125,11 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E> {
         query.setMaxResults(end - start);
         query.setFirstResult(start);
         return query.getResultList();
+    }
+
+    @Override
+    public E update(E anEntity)
+    {
+        return entityManager.merge(anEntity);
     }
 }

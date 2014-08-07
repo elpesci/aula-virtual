@@ -3,7 +3,7 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 /**
  * Created by acardenas on 8/6/14.
  */
-public class PathModel
+public class CourseModel
 {
     private String name;
     private String goal;

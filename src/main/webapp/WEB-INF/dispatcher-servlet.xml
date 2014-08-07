@@ -40,7 +40,7 @@
 
     <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <mvc:default-servlet-handler />
+    <mvc:default-servlet-handler/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -76,6 +76,7 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToUsuarioConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPersonaConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPerfilConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.CourseModelToCursoConverter"/>
             </list>
         </property>
     </bean>

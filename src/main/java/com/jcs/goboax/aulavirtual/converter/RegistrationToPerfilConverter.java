@@ -10,11 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
-/**
- * Created by acardenas on 8/6/14.
- */
 public class RegistrationToPerfilConverter
-    implements Converter<Registration,Perfil>
+        implements Converter<Registration, Perfil>
 {
     private static final Logger LOG = LoggerFactory.getLogger(RegistrationToPerfilConverter.class);
     @Autowired

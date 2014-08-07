@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div id="registration_form">
-    <form:form method="Post" action="/cursos/add" commandName="pathModel">
+    <form:form method="POST" action="/cursos/add" commandName="courseModel">
         <fieldset>
             <form:label path="name">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="course.name.label"/>
