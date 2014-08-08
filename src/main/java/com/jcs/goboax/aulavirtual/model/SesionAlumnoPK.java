@@ -5,59 +5,69 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
+/**
+ * The primary key class for the SesionAlumno database table.
+ * 
+ */
 @Embeddable
 public class SesionAlumnoPK
-        implements Serializable {
+        implements Serializable
+{
+    // default serial version id, required for serializable classes.
+    private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 8805568274618481171L;
+    @Column(name = "Sesion_sesionId", insertable = false, updatable = false)
+    private int sesion_sesionId;
 
-    @Column(name = "Sesion_sesionId")
-    private int sesionsesionId;
+    @Column(name = "Alumno_alumnoId", insertable = false, updatable = false)
+    private int alumno_alumnoId;
 
-    @Column(name = "Alumno_alumnoId")
-    private int alumnoalumnoId;
-
-    public int getSesionsesionId() {
-        return sesionsesionId;
+    public SesionAlumnoPK()
+    {
     }
 
-    public void setSesionsesionId(int sesionsesionId) {
-        this.sesionsesionId = sesionsesionId;
+    public int getSesion_sesionId()
+    {
+        return this.sesion_sesionId;
     }
 
-    public int getAlumnoalumnoId() {
-        return alumnoalumnoId;
+    public void setSesion_sesionId(int sesion_sesionId)
+    {
+        this.sesion_sesionId = sesion_sesionId;
     }
 
-    public void setAlumnoalumnoId(int alumnoalumnoId) {
-        this.alumnoalumnoId = alumnoalumnoId;
+    public int getAlumno_alumnoId()
+    {
+        return this.alumno_alumnoId;
     }
 
-    @Override
-    public boolean equals(Object anObject) {
-        if (anObject == null) {
+    public void setAlumno_alumnoId(int alumno_alumnoId)
+    {
+        this.alumno_alumnoId = alumno_alumnoId;
+    }
+
+    public boolean equals(Object other)
+    {
+        if (this == other)
+        {
+            return true;
+        }
+        if (!(other instanceof SesionAlumnoPK))
+        {
             return false;
         }
-
-        if (!(anObject instanceof SesionAlumnoPK)) {
-            return false;
-        }
-
-        SesionAlumnoPK mySesionAlumnoId = (SesionAlumnoPK) anObject;
-
-        return new EqualsBuilder()
-                .append(getSesionsesionId(),
-                        mySesionAlumnoId.getSesionsesionId())
-                .append(getAlumnoalumnoId(),
-                        mySesionAlumnoId.getAlumnoalumnoId()).isEquals();
+        SesionAlumnoPK castOther = (SesionAlumnoPK) other;
+        return (this.sesion_sesionId == castOther.sesion_sesionId)
+                && (this.alumno_alumnoId == castOther.alumno_alumnoId);
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(getSesionsesionId())
-                .append(getAlumnoalumnoId()).toHashCode();
+    public int hashCode()
+    {
+        final int prime = 31;
+        int hash = 17;
+        hash = hash * prime + this.sesion_sesionId;
+        hash = hash * prime + this.alumno_alumnoId;
+
+        return hash;
     }
 }

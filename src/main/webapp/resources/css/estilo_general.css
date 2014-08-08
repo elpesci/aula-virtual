@@ -286,3 +286,22 @@ ul.MainFooterCh img {
     font-weight: normal;
     font-size: 12px;
 }
+
+#form {
+  position: relative; /* labels need this on the their parent element */
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+fieldset {display: inline-block; vertical-align: middle; background: #eee;}
+fieldset {display: inline !ie7;}
+
+
+label {
+   display: block;
+   font-weight: bold;
+}

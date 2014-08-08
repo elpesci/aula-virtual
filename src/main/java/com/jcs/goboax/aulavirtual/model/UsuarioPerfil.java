@@ -3,101 +3,123 @@ package com.jcs.goboax.aulavirtual.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the UsuarioPerfil database table.
+ * 
+ */
 @Entity
+@NamedQuery(name = "UsuarioPerfil.findAll", query = "SELECT u FROM UsuarioPerfil u")
 @Table(name = "UsuarioPerfil")
 public class UsuarioPerfil
-        implements Serializable {
-
-    private static final long serialVersionUID = 8673752823188472142L;
+        implements Serializable
+{
+    private static final long serialVersionUID = 1L;
 
     @EmbeddedId
     private UsuarioPerfilPK id;
 
-    @Column(name = "creadoPor", table = "UsuarioPerfil", nullable = false)
-    @Basic
     private int creadoPor;
 
-    @ManyToOne(optional = false, targetEntity = Usuario.class)
-    @JoinColumn(name = "usuarioId", referencedColumnName = "usuarioId", insertable = false, nullable = true, unique = false, updatable = false)
-    private Usuario usuario;
-
-    @Column(name = "modificadoPor", table = "UsuarioPerfil")
-    @Basic
-    private Integer modificadoPor;
-
-    @ManyToOne(optional = false, targetEntity = Perfil.class)
-    @JoinColumn(name = "perfilId", referencedColumnName = "perfilId", insertable = false, nullable = true, unique = false, updatable = false)
-    private Perfil perfil;
-
-    @Column(name = "fechaCreacion", table = "UsuarioPerfil", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaCreacion;
 
-    @Column(name = "fechaModificacion", table = "UsuarioPerfil")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaModificacion;
 
-    public UsuarioPerfil() {
+    private int modificadoPor;
 
+    // bi-directional many-to-one association to Perfil
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfilId")
+    private Perfil perfil;
+
+    // bi-directional many-to-one association to Usuario
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuario;
+
+    public UsuarioPerfil()
+    {
     }
 
-    public int getCreadoPor() {
+    public UsuarioPerfilPK getId()
+    {
+        return this.id;
+    }
+
+    public void setId(UsuarioPerfilPK id)
+    {
+        this.id = id;
+    }
+
+    public int getCreadoPor()
+    {
         return this.creadoPor;
     }
 
-    public void setCreadoPor(int creadoPor) {
+    public void setCreadoPor(int creadoPor)
+    {
         this.creadoPor = creadoPor;
     }
 
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Integer getModificadoPor() {
-        return this.modificadoPor;
-    }
-
-    public void setModificadoPor(Integer modificadoPor) {
-        this.modificadoPor = modificadoPor;
-    }
-
-    public Perfil getPerfil() {
-        return this.perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
-    }
-
-    public Date getFechaCreacion() {
+    public Date getFechaCreacion()
+    {
         return this.fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion)
+    {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getFechaModificacion() {
+    public Date getFechaModificacion()
+    {
         return this.fechaModificacion;
     }
 
-    public void setFechaModificacion(Date fechaModificacion) {
+    public void setFechaModificacion(Date fechaModificacion)
+    {
         this.fechaModificacion = fechaModificacion;
     }
+
+    public int getModificadoPor()
+    {
+        return this.modificadoPor;
+    }
+
+    public void setModificadoPor(int modificadoPor)
+    {
+        this.modificadoPor = modificadoPor;
+    }
+
+    public Perfil getPerfil()
+    {
+        return this.perfil;
+    }
+
+    public void setPerfil(Perfil perfil)
+    {
+        this.perfil = perfil;
+    }
+
+    public Usuario getUsuario()
+    {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario)
+    {
+        this.usuario = usuario;
+    }
+
 }

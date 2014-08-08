@@ -1,6 +1,5 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Created by acardenas on 8/3/14.
@@ -13,6 +12,7 @@ public class Registration
     private String email;
     private String password;
     private String confirmPassword;
+    private String profile;
 
     public String getName()
     {
@@ -72,6 +72,16 @@ public class Registration
     public void setConfirmPassword(String comfirmPassword)
     {
         this.confirmPassword = comfirmPassword;
+    }
+
+    public String getProfile()
+    {
+        return profile;
+    }
+
+    public void setProfile(String profile)
+    {
+        this.profile = profile;
     }
 
 }
