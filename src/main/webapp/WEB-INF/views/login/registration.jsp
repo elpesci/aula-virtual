@@ -47,7 +47,8 @@
                 <form:select path="profile" items="${profiles}" />
             </sec:authorize>
 
-            <input type="submit" value="Submit"/>
+            <input type="submit" name="save" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
+            <input type="submit" name="cancel" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
             <span class="error">
                 <spring:hasBindErrors name="registration">
                 <c:forEach items="${errors.globalErrors}" var="errorMessage">

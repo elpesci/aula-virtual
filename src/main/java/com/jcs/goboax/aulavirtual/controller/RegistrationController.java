@@ -48,7 +48,7 @@ public class RegistrationController
     {
         List<Perfil> myProfiles = usuarioService.readPerfiles();
         profiles = registrationService.convertProfilesToMap(myProfiles);
-        
+
     }
 
     @InitBinder
@@ -68,7 +68,15 @@ public class RegistrationController
     }
 
     // Process the form.
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(params = "cancel", method = RequestMethod.POST)
+    public String cancelRegistration(@Validated Registration registration,
+            BindingResult result)
+    {
+        return "redirect:/login";
+    }
+
+    // Process the form.
+    @RequestMapping(params = "save", method = RequestMethod.POST)
     public String processRegistration(@Validated Registration registration,
             BindingResult result)
     {
