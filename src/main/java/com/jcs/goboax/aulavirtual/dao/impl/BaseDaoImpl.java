@@ -48,6 +48,7 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E>
     public void persist(E entity)
     {
         entityManager.persist(entity);
+        entityManager.flush();
     }
 
     /**

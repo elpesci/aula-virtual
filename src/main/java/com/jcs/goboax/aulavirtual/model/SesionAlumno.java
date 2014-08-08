@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name = "SesionAlumno.findAll", query = "SELECT s FROM SesionAlumno s")
+@Table(name="SesionAlumno")
 public class SesionAlumno
         implements Serializable
 {
