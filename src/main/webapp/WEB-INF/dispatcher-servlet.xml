@@ -61,12 +61,9 @@
         </property>
         <property name="jpaPropertyMap">
             <props>
-                <prop key="eclipselink.weaving">true</prop>
+                <prop key="eclipselink.weaving">false</prop>
             </props>
         </property>
-        <property name="loadTimeWeaver">
-  <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
-</property>
     </bean>
     
     
@@ -83,6 +80,7 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPerfilConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.CourseModelToCursoConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.ContentModelToContenidoConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.CursoToCourseModelConverter"/>
             </list>
         </property>
     </bean>

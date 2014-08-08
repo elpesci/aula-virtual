@@ -1,11 +1,10 @@
 package com.jcs.goboax.aulavirtual.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -14,13 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-
-@NamedQueries({ 
-    @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, query = "SELECT c FROM Curso c") 
-})
+@NamedQueries({ @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, query = "SELECT c FROM Curso c") })
 @Entity
 @Table(name = "Curso")
 public class Curso
@@ -31,117 +24,51 @@ public class Curso
 
     public final static String CURSO_ALL_QUERYNAME = "curso.all";
 
-    @Column(name = "nombre", table = "Curso", nullable = false, length = 100)
-    @Basic
-    private String nombre;
+    @Id
+    private int cursoId;
 
-    @Column(name = "creadoPor", table = "Curso", nullable = false)
-    @Basic
-    private int creadoPor;
-
-    @Column(name = "habilitado", table = "Curso", nullable = false)
-    @Basic
-    private boolean habilitado;
-
-    @Column(name = "objetivo", table = "Curso", nullable = false, length = 500)
-    @Basic
-    private String objetivo;
-
-    @OneToMany(targetEntity = Examen.class, mappedBy = "cursoId", fetch=FetchType.LAZY)
-    private Collection<Examen> examenCollection;
-
-    @Column(name = "modificadoPor", table = "Curso")
-    @Basic
-    private Integer modificadoPor;
-
-    @Column(name = "audiencia", table = "Curso", nullable = false, length = 500)
-    @Basic
     private String audiencia;
 
-    @Column(name = "fechaCreacion", table = "Curso", nullable = false)
+    private int creadoPor;
+
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaCreacion;
 
-    @Column(name = "cursoId", table = "Curso", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cursoId;
-
-    @Column(name = "fechaModificacion", table = "Curso")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaModificacion;
 
-    @OneToMany(targetEntity = Sesion.class, mappedBy = "cursoId", fetch=FetchType.LAZY)
-    private Collection<Sesion> sesionCollection;
+    private boolean habilitado;
 
-    @OneToMany(targetEntity = Contenido.class, mappedBy = "curso", fetch=FetchType.LAZY)
-    private Collection<Contenido> contenidoCollection;
+    private int modificadoPor;
+
+    private String nombre;
+
+    private String objetivo;
+
+    // bi-directional many-to-one association to Contenido
+    @OneToMany(mappedBy = "curso")
+    private List<Contenido> contenidos;
+
+    // bi-directional many-to-one association to Examen
+    @OneToMany(mappedBy = "curso")
+    private List<Examen> examens;
+
+    // bi-directional many-to-one association to Sesion
+    @OneToMany(mappedBy = "curso")
+    private List<Sesion> sesions;
 
     public Curso()
     {
-
     }
 
-    public String getNombre()
+    public int getCursoId()
     {
-        return this.nombre;
+        return this.cursoId;
     }
 
-    public void setNombre(String nombre)
+    public void setCursoId(int cursoId)
     {
-        this.nombre = nombre;
-    }
-
-    public int getCreadoPor()
-    {
-        return this.creadoPor;
-    }
-
-    public void setCreadoPor(int creadoPor)
-    {
-        this.creadoPor = creadoPor;
-    }
-
-    public boolean isHabilitado()
-    {
-        return this.habilitado;
-    }
-
-    public void setHabilitado(boolean habilitado)
-    {
-        this.habilitado = habilitado;
-    }
-
-    public String getObjetivo()
-    {
-        return this.objetivo;
-    }
-
-    public void setObjetivo(String objetivo)
-    {
-        this.objetivo = objetivo;
-    }
-
-    public Collection<Examen> getExamenCollection()
-    {
-        return this.examenCollection;
-    }
-
-    public void setExamenCollection(Collection<Examen> examenCollection)
-    {
-        this.examenCollection = examenCollection;
-    }
-
-    public Integer getModificadoPor()
-    {
-        return this.modificadoPor;
-    }
-
-    public void setModificadoPor(Integer modificadoPor)
-    {
-        this.modificadoPor = modificadoPor;
+        this.cursoId = cursoId;
     }
 
     public String getAudiencia()
@@ -154,6 +81,16 @@ public class Curso
         this.audiencia = audiencia;
     }
 
+    public int getCreadoPor()
+    {
+        return this.creadoPor;
+    }
+
+    public void setCreadoPor(int creadoPor)
+    {
+        this.creadoPor = creadoPor;
+    }
+
     public Date getFechaCreacion()
     {
         return this.fechaCreacion;
@@ -162,16 +99,6 @@ public class Curso
     public void setFechaCreacion(Date fechaCreacion)
     {
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public Integer getCursoId()
-    {
-        return this.cursoId;
-    }
-
-    public void setCursoId(Integer cursoId)
-    {
-        this.cursoId = cursoId;
     }
 
     public Date getFechaModificacion()
@@ -184,24 +111,122 @@ public class Curso
         this.fechaModificacion = fechaModificacion;
     }
 
-    public Collection<Sesion> getSesionCollection()
+    public boolean getHabilitado()
     {
-        return this.sesionCollection;
+        return this.habilitado;
     }
 
-    public void setSesionCollection(Collection<Sesion> sesionCollection)
+    public void setHabilitado(boolean habilitado)
     {
-        this.sesionCollection = sesionCollection;
+        this.habilitado = habilitado;
     }
 
-    public Collection<Contenido> getContenidoCollection()
+    public int getModificadoPor()
     {
-        return this.contenidoCollection;
+        return this.modificadoPor;
     }
 
-    public void setContenidoCollection(Collection<Contenido> contenidoCollection)
+    public void setModificadoPor(int modificadoPor)
     {
-        this.contenidoCollection = contenidoCollection;
+        this.modificadoPor = modificadoPor;
+    }
+
+    public String getNombre()
+    {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre)
+    {
+        this.nombre = nombre;
+    }
+
+    public String getObjetivo()
+    {
+        return this.objetivo;
+    }
+
+    public void setObjetivo(String objetivo)
+    {
+        this.objetivo = objetivo;
+    }
+
+    public List<Contenido> getContenidos()
+    {
+        return this.contenidos;
+    }
+
+    public void setContenidos(List<Contenido> contenidos)
+    {
+        this.contenidos = contenidos;
+    }
+
+    public Contenido addContenido(Contenido contenido)
+    {
+        getContenidos().add(contenido);
+        contenido.setCurso(this);
+
+        return contenido;
+    }
+
+    public Contenido removeContenido(Contenido contenido)
+    {
+        getContenidos().remove(contenido);
+        contenido.setCurso(null);
+
+        return contenido;
+    }
+
+    public List<Examen> getExamens()
+    {
+        return this.examens;
+    }
+
+    public void setExamens(List<Examen> examens)
+    {
+        this.examens = examens;
+    }
+
+    public Examen addExamen(Examen examen)
+    {
+        getExamens().add(examen);
+        examen.setCurso(this);
+
+        return examen;
+    }
+
+    public Examen removeExamen(Examen examen)
+    {
+        getExamens().remove(examen);
+        examen.setCurso(null);
+
+        return examen;
+    }
+
+    public List<Sesion> getSesions()
+    {
+        return this.sesions;
+    }
+
+    public void setSesions(List<Sesion> sesions)
+    {
+        this.sesions = sesions;
+    }
+
+    public Sesion addSesion(Sesion sesion)
+    {
+        getSesions().add(sesion);
+        sesion.setCurso(this);
+
+        return sesion;
+    }
+
+    public Sesion removeSesion(Sesion sesion)
+    {
+        getSesions().remove(sesion);
+        sesion.setCurso(null);
+
+        return sesion;
     }
 
 }

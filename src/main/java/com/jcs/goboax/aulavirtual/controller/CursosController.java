@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -37,28 +39,31 @@ import com.jcs.goboax.aulavirtual.viewmodel.CursoToJsonObject;
 @RequestMapping("/cursos")
 public class CursosController
 {
-    private static final Logger LOG = LoggerFactory.getLogger(CursosController.class); 
-    
+    private static final Logger LOG = LoggerFactory
+            .getLogger(CursosController.class);
+
     @Autowired
     private CursoService cursoService;
 
     @Autowired
     private CourseModelValidator courseModelValidator;
-    
+
     @Autowired
     private ContentModelValidator contentModelValidator;
-    
-    
-    //TODO Remove me
+
+    // TODO Remove me
     @Autowired
     private ContenidoDao contenidoDao;
+
+    @Autowired
+    private ConversionService conversionService;
 
     @InitBinder("courseModel")
     private void initBinder(WebDataBinder binder)
     {
         binder.setValidator(courseModelValidator);
     }
-    
+
     @InitBinder("contentModel")
     private void initContentModelBinder(WebDataBinder binder)
     {
@@ -76,12 +81,20 @@ public class CursosController
     public @ResponseBody String cursosList() throws IOException
     {
         List<Curso> myCursos = cursoService.readCourses();
+        
+        @SuppressWarnings("unchecked")
+        List<CourseModel> myCourseModels = (List<CourseModel>) conversionService.convert(
+                myCursos,
+                TypeDescriptor.collection(List.class,
+                        TypeDescriptor.valueOf(Curso.class)),
+                TypeDescriptor.collection(List.class,
+                        TypeDescriptor.valueOf(CourseModel.class)));
 
         CursoToJsonObject myCursoToJsonObject = new CursoToJsonObject();
 
         myCursoToJsonObject.setiTotalDisplayRecords(myCursos.size());
         myCursoToJsonObject.setiTotalRecords(myCursos.size());
-        myCursoToJsonObject.setAaData(myCursos);
+        myCursoToJsonObject.setAaData(myCourseModels);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json2 = gson.toJson(myCursoToJsonObject);
@@ -101,6 +114,7 @@ public class CursosController
     public String cursosAddDo(@Validated CourseModel courseModel,
             BindingResult result)
     {
+        LOG.debug("Adding Curso ...");
         if (result.hasErrors())
         {
             return "cursos/add";
@@ -116,44 +130,45 @@ public class CursosController
             Map<String, Object> aModel)
     {
         ContentModel myContentModel = new ContentModel();
-        
+
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
         aModel.put("contentModel", myContentModel);
-        
+
         return "contenido/add";
     }
-    
+
     @RequestMapping(value = "/{courseId}/content/add", method = RequestMethod.POST)
-    public String contentAdd( @PathVariable("courseId") Integer aCourseId, 
-            ContentModel courseModel,
-            BindingResult result)
+    public String contentAdd(@PathVariable("courseId") Integer aCourseId,
+            ContentModel courseModel, BindingResult result)
     {
         LOG.debug(courseModel.getName());
         LOG.debug(courseModel.getContent().getContentType());
-        
+
         cursoService.createContent(courseModel, aCourseId);
         return "contenido/add";
-    
+
     }
-    
+
     @RequestMapping(value = "/content/test/{id}", method = RequestMethod.GET)
     public void doDownload(HttpServletRequest request,
-            HttpServletResponse response,
-            @PathVariable("id") Integer anId) throws IOException {
- 
+            HttpServletResponse response, @PathVariable("id") Integer anId)
+            throws IOException
+    {
+
         try
         {
             Contenido myContenido = contenidoDao.findByKey(anId);
             byte[] myFileContent = myContenido.getArchivoMaterial();
-//            response.setContentType("text/csv");
-            response.setHeader("Content-disposition", "attachment; filename=\"" 
+            // response.setContentType("text/csv");
+            response.setHeader("Content-disposition", "attachment; filename=\""
                     + myContenido.getNombre() + "\"");
             FileCopyUtils.copy(myFileContent, response.getOutputStream());
         }
         catch (IOException e)
         {
-            LOG.error("unable to create CSV file,  please see the stackTrace", e);
+            LOG.error("unable to create CSV file,  please see the stackTrace",
+                    e);
         }
- 
+
     }
 }

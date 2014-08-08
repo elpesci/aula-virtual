@@ -1,65 +1,64 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-
-import java.lang.Integer;
-import java.lang.String;
-import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the TipoContenido database table.
+ * 
+ */
 @Entity
-@Table(name = "TipoContenido")
+@NamedQuery(name = "TipoContenido.findAll", query = "SELECT t FROM TipoContenido t")
+@Table(name="TipoContenido")
 public class TipoContenido
         implements Serializable
 {
-    private static final long serialVersionUID = 2226727162089413850L;
+    private static final long serialVersionUID = 1L;
 
-    @Column(name = "creadoPor", table = "TipoContenido", nullable = false)
-    @Basic
+    @Id
+    private int tipoContenidoId;
+
     private int creadoPor;
 
-    @Column(name = "modificadoPor", table = "TipoContenido")
-    @Basic
-    private Integer modificadoPor;
-
-    @Column(name = "descripcion", table = "TipoContenido", nullable = false, length = 45)
-    @Basic
     private String descripcion;
 
-    @Column(name = "fechaCreacion", table = "TipoContenido", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaCreacion;
 
-    @Column(name = "fechaModificacion", table = "TipoContenido")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaModificacion;
 
-    @Column(name = "tipoContenidoId", table = "TipoContenido", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tipoContenidoId;
+    private int modificadoPor;
 
-    @OneToMany(targetEntity = ExtensionContenido.class, mappedBy = "tipoContenidoId")
-    private Collection<ExtensionContenido> extensionContenidoCollection;
+    // bi-directional many-to-one association to Contenido
+    @OneToMany(mappedBy = "tipoContenido")
+    private List<Contenido> contenidos;
 
-    @OneToMany(targetEntity = Contenido.class, mappedBy = "tipoContenido")
-    private Collection<Contenido> contenidoCollection;
+    // bi-directional many-to-one association to ExtensionContenido
+    @OneToMany(mappedBy = "tipoContenido")
+    private List<ExtensionContenido> extensionContenidos;
 
     public TipoContenido()
     {
+    }
 
+    public int getTipoContenidoId()
+    {
+        return this.tipoContenidoId;
+    }
+
+    public void setTipoContenidoId(int tipoContenidoId)
+    {
+        this.tipoContenidoId = tipoContenidoId;
     }
 
     public int getCreadoPor()
@@ -70,16 +69,6 @@ public class TipoContenido
     public void setCreadoPor(int creadoPor)
     {
         this.creadoPor = creadoPor;
-    }
-
-    public Integer getModificadoPor()
-    {
-        return this.modificadoPor;
-    }
-
-    public void setModificadoPor(Integer modificadoPor)
-    {
-        this.modificadoPor = modificadoPor;
     }
 
     public String getDescripcion()
@@ -112,35 +101,69 @@ public class TipoContenido
         this.fechaModificacion = fechaModificacion;
     }
 
-    public Integer getTipoContenidoId()
+    public int getModificadoPor()
     {
-        return this.tipoContenidoId;
+        return this.modificadoPor;
     }
 
-    public void setTipoContenidoId(Integer tipoContenidoId)
+    public void setModificadoPor(int modificadoPor)
     {
-        this.tipoContenidoId = tipoContenidoId;
+        this.modificadoPor = modificadoPor;
     }
 
-    public Collection<ExtensionContenido> getExtensionContenidoCollection()
+    public List<Contenido> getContenidos()
     {
-        return this.extensionContenidoCollection;
+        return this.contenidos;
     }
 
-    public void setExtensionContenidoCollection(
-            Collection<ExtensionContenido> extensionContenidoCollection)
+    public void setContenidos(List<Contenido> contenidos)
     {
-        this.extensionContenidoCollection = extensionContenidoCollection;
+        this.contenidos = contenidos;
     }
 
-    public Collection<Contenido> getContenidoCollection()
+    public Contenido addContenido(Contenido contenido)
     {
-        return this.contenidoCollection;
+        getContenidos().add(contenido);
+        contenido.setTipoContenido(this);
+
+        return contenido;
     }
 
-    public void setContenidoCollection(Collection<Contenido> contenidoCollection)
+    public Contenido removeContenido(Contenido contenido)
     {
-        this.contenidoCollection = contenidoCollection;
+        getContenidos().remove(contenido);
+        contenido.setTipoContenido(null);
+
+        return contenido;
+    }
+
+    public List<ExtensionContenido> getExtensionContenidos()
+    {
+        return this.extensionContenidos;
+    }
+
+    public void setExtensionContenidos(
+            List<ExtensionContenido> extensionContenidos)
+    {
+        this.extensionContenidos = extensionContenidos;
+    }
+
+    public ExtensionContenido addExtensionContenido(
+            ExtensionContenido extensionContenido)
+    {
+        getExtensionContenidos().add(extensionContenido);
+        extensionContenido.setTipoContenido(this);
+
+        return extensionContenido;
+    }
+
+    public ExtensionContenido removeExtensionContenido(
+            ExtensionContenido extensionContenido)
+    {
+        getExtensionContenidos().remove(extensionContenido);
+        extensionContenido.setTipoContenido(null);
+
+        return extensionContenido;
     }
 
 }

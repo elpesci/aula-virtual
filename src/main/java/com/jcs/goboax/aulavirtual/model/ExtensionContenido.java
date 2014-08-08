@@ -1,140 +1,120 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-
-import java.lang.Integer;
-import java.lang.String;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the ExtensionContenido database table.
+ * 
+ */
 @Entity
-@Table(name="ExtensionContenido")
-public  class ExtensionContenido implements Serializable {
+@NamedQuery(name = "ExtensionContenido.findAll", query = "SELECT e FROM ExtensionContenido e")
+public class ExtensionContenido
+        implements Serializable
+{
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    private int extensionContenidoId;
 
-    @Column(name="extension",table="ExtensionContenido",nullable=false,length=45)
-    @Basic
-    private String extension;
-
-
-    @Column(name="creadoPor",table="ExtensionContenido",nullable=false)
-    @Basic
     private int creadoPor;
 
+    private String extension;
 
-    @Column(name="modificadoPor",table="ExtensionContenido")
-    @Basic
-    private Integer modificadoPor;
-
-
-    @Column(name="fechaCreacion",table="ExtensionContenido",nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaCreacion;
 
-
-    @ManyToOne(optional=false,targetEntity=TipoContenido.class)
-    @JoinColumn(name="tipoContenidoId",referencedColumnName="tipoContenidoId",insertable=true,nullable=true,unique=false,updatable=true)
-    private TipoContenido tipoContenidoId;
-
-
-    @Column(name="fechaModificacion",table="ExtensionContenido")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaModificacion;
 
+    private int modificadoPor;
 
-    @Column(name="extensionContenidoId",table="ExtensionContenido",nullable=false)
-    @Id
-    private Integer extensionContenidoId;
+    // bi-directional many-to-one association to TipoContenido
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipoContenidoId")
+    private TipoContenido tipoContenido;
 
-    public ExtensionContenido(){
-
+    public ExtensionContenido()
+    {
     }
 
-
-   public String getExtension() {
-        return this.extension;
-    }
-
-
-  public void setExtension (String extension) {
-        this.extension = extension;
-    }
-
-
-
-   public int getCreadoPor() {
-        return this.creadoPor;
-    }
-
-
-  public void setCreadoPor (int creadoPor) {
-        this.creadoPor = creadoPor;
-    }
-
-
-
-   public Integer getModificadoPor() {
-        return this.modificadoPor;
-    }
-
-
-  public void setModificadoPor (Integer modificadoPor) {
-        this.modificadoPor = modificadoPor;
-    }
-
-
-
-   public Date getFechaCreacion() {
-        return this.fechaCreacion;
-    }
-
-
-  public void setFechaCreacion (Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-
-
-   public TipoContenido getTipoContenidoId() {
-        return this.tipoContenidoId;
-    }
-
-
-  public void setTipoContenidoId (TipoContenido tipoContenidoId) {
-        this.tipoContenidoId = tipoContenidoId;
-    }
-
-
-
-   public Date getFechaModificacion() {
-        return this.fechaModificacion;
-    }
-
-
-  public void setFechaModificacion (Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
-
-
-
-   public Integer getExtensionContenidoId() {
+    public int getExtensionContenidoId()
+    {
         return this.extensionContenidoId;
     }
 
-
-  public void setExtensionContenidoId (Integer extensionContenidoId) {
+    public void setExtensionContenidoId(int extensionContenidoId)
+    {
         this.extensionContenidoId = extensionContenidoId;
     }
 
-}
+    public int getCreadoPor()
+    {
+        return this.creadoPor;
+    }
 
+    public void setCreadoPor(int creadoPor)
+    {
+        this.creadoPor = creadoPor;
+    }
+
+    public String getExtension()
+    {
+        return this.extension;
+    }
+
+    public void setExtension(String extension)
+    {
+        this.extension = extension;
+    }
+
+    public Date getFechaCreacion()
+    {
+        return this.fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion)
+    {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaModificacion()
+    {
+        return this.fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion)
+    {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public int getModificadoPor()
+    {
+        return this.modificadoPor;
+    }
+
+    public void setModificadoPor(int modificadoPor)
+    {
+        this.modificadoPor = modificadoPor;
+    }
+
+    public TipoContenido getTipoContenido()
+    {
+        return this.tipoContenido;
+    }
+
+    public void setTipoContenido(TipoContenido tipoContenido)
+    {
+        this.tipoContenido = tipoContenido;
+    }
+
+}

@@ -1,16 +1,10 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,9 +15,8 @@ import javax.persistence.TemporalType;
 
 @NamedQueries({
         @NamedQuery(name = Perfil.PROFILE_ALL_QUERYNAME, query = "SELECT p FROM Perfil p"),
-        @NamedQuery(name = Perfil.PROFILE_BY_CODE_QUERYNAME,
-                query = "SELECT p FROM Perfil p WHERE p.codigo = :" + Perfil.PROFILE_BY_CODE_PARAMETER)
-})
+        @NamedQuery(name = Perfil.PROFILE_BY_CODE_QUERYNAME, query = "SELECT p FROM Perfil p WHERE p.codigo = :"
+                + Perfil.PROFILE_BY_CODE_PARAMETER) })
 @Entity
 @Table(name = "Perfil")
 public class Perfil
@@ -36,63 +29,49 @@ public class Perfil
 
     public static final String PROFILE_BY_CODE_PARAMETER = "code";
 
-    @Column(name = "nombre", table = "Perfil", nullable = false, length = 45)
-    @Basic
-    private String nombre;
+    @Id
+    private int perfilId;
 
-    @OneToMany(targetEntity = UsuarioPerfil.class, mappedBy = "perfil")
-    private Collection<UsuarioPerfil> usuarioPerfilCollection;
+    private String codigo;
 
-    @Column(name = "creadoPor", table = "Perfil", nullable = false)
-    @Basic
     private int creadoPor;
 
-    @Column(name = "perfilId", table = "Perfil", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer perfilId;
-
-    @Column(name = "modificadoPor", table = "Perfil")
-    @Basic
-    private Integer modificadoPor;
-
-    @Column(name = "fechaCreacion", table = "Perfil", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaCreacion;
 
-    @Column(name = "fechaModificacion", table = "Perfil")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaModificacion;
 
-    @Column(name = "codigo", nullable = false)
-    private String codigo;
+    private int modificadoPor;
+
+    private String nombre;
+
+    // bi-directional many-to-one association to UsuarioPerfil
+    @OneToMany(mappedBy = "perfil")
+    private List<UsuarioPerfil> usuarioPerfils;
 
     public Perfil()
     {
-
     }
 
-    public String getNombre()
+    public int getPerfilId()
     {
-        return this.nombre;
+        return this.perfilId;
     }
 
-    public void setNombre(String nombre)
+    public void setPerfilId(int perfilId)
     {
-        this.nombre = nombre;
+        this.perfilId = perfilId;
     }
 
-    public Collection<UsuarioPerfil> getUsuarioPerfilCollection()
+    public String getCodigo()
     {
-        return this.usuarioPerfilCollection;
+        return this.codigo;
     }
 
-    public void setUsuarioPerfilCollection(
-            Collection<UsuarioPerfil> usuarioPerfilCollection)
+    public void setCodigo(String codigo)
     {
-        this.usuarioPerfilCollection = usuarioPerfilCollection;
+        this.codigo = codigo;
     }
 
     public int getCreadoPor()
@@ -103,26 +82,6 @@ public class Perfil
     public void setCreadoPor(int creadoPor)
     {
         this.creadoPor = creadoPor;
-    }
-
-    public Integer getPerfilId()
-    {
-        return this.perfilId;
-    }
-
-    public void setPerfilId(Integer perfilId)
-    {
-        this.perfilId = perfilId;
-    }
-
-    public Integer getModificadoPor()
-    {
-        return this.modificadoPor;
-    }
-
-    public void setModificadoPor(Integer modificadoPor)
-    {
-        this.modificadoPor = modificadoPor;
     }
 
     public Date getFechaCreacion()
@@ -145,14 +104,49 @@ public class Perfil
         this.fechaModificacion = fechaModificacion;
     }
 
-    public String getCodigo()
+    public int getModificadoPor()
     {
-        return codigo;
+        return this.modificadoPor;
     }
 
-    public void setCodigo(String codigo)
+    public void setModificadoPor(int modificadoPor)
     {
-        this.codigo = codigo;
+        this.modificadoPor = modificadoPor;
     }
 
+    public String getNombre()
+    {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre)
+    {
+        this.nombre = nombre;
+    }
+
+    public List<UsuarioPerfil> getUsuarioPerfils()
+    {
+        return this.usuarioPerfils;
+    }
+
+    public void setUsuarioPerfils(List<UsuarioPerfil> usuarioPerfils)
+    {
+        this.usuarioPerfils = usuarioPerfils;
+    }
+
+    public UsuarioPerfil addUsuarioPerfil(UsuarioPerfil usuarioPerfil)
+    {
+        getUsuarioPerfils().add(usuarioPerfil);
+        usuarioPerfil.setPerfil(this);
+
+        return usuarioPerfil;
+    }
+
+    public UsuarioPerfil removeUsuarioPerfil(UsuarioPerfil usuarioPerfil)
+    {
+        getUsuarioPerfils().remove(usuarioPerfil);
+        usuarioPerfil.setPerfil(null);
+
+        return usuarioPerfil;
+    }
 }

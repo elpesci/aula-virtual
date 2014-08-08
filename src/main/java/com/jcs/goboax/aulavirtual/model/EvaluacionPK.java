@@ -2,66 +2,87 @@ package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
+/**
+ * The primary key class for the Evaluacion database table.
+ * 
+ */
 @Embeddable
 public class EvaluacionPK
-        implements Serializable {
+        implements Serializable
+{
+    // default serial version id, required for serializable classes.
+    private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 2870534513776390109L;
-
+    @Column(insertable = false, updatable = false)
     private int sesionId;
-    private int respuestaId;
+
+    @Column(insertable = false, updatable = false)
     private int alumnoId;
 
-    public int getSesionId() {
-        return sesionId;
+    @Column(insertable = false, updatable = false)
+    private int respuestaId;
+
+    public EvaluacionPK()
+    {
     }
 
-    public void setSesionId(int sesionId) {
+    public int getSesionId()
+    {
+        return this.sesionId;
+    }
+
+    public void setSesionId(int sesionId)
+    {
         this.sesionId = sesionId;
     }
 
-    public int getRespuestaId() {
-        return respuestaId;
+    public int getAlumnoId()
+    {
+        return this.alumnoId;
     }
 
-    public void setRespuestaId(int respuestaId) {
-        this.respuestaId = respuestaId;
-    }
-
-    public int getAlumnoId() {
-        return alumnoId;
-    }
-
-    public void setAlumnoId(int alumnoId) {
+    public void setAlumnoId(int alumnoId)
+    {
         this.alumnoId = alumnoId;
     }
 
-    @Override
-    public boolean equals(Object anObject) {
-        if (anObject == null) {
-            return false;
-        }
-
-        if (!(anObject instanceof EvaluacionPK)) {
-            return false;
-        }
-
-        EvaluacionPK myEvaluacionId = (EvaluacionPK) anObject;
-
-        return new EqualsBuilder()
-                .append(getSesionId(), myEvaluacionId.getSesionId())
-                .append(getRespuestaId(), myEvaluacionId.getRespuestaId())
-                .append(getAlumnoId(), myEvaluacionId.getAlumnoId()).isEquals();
+    public int getRespuestaId()
+    {
+        return this.respuestaId;
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(getSesionId())
-                .append(getRespuestaId()).append(getAlumnoId()).toHashCode();
+    public void setRespuestaId(int respuestaId)
+    {
+        this.respuestaId = respuestaId;
+    }
+
+    public boolean equals(Object other)
+    {
+        if (this == other)
+        {
+            return true;
+        }
+        if (!(other instanceof EvaluacionPK))
+        {
+            return false;
+        }
+        EvaluacionPK castOther = (EvaluacionPK) other;
+        return (this.sesionId == castOther.sesionId)
+                && (this.alumnoId == castOther.alumnoId)
+                && (this.respuestaId == castOther.respuestaId);
+    }
+
+    public int hashCode()
+    {
+        final int prime = 31;
+        int hash = 17;
+        hash = hash * prime + this.sesionId;
+        hash = hash * prime + this.alumnoId;
+        hash = hash * prime + this.respuestaId;
+
+        return hash;
     }
 }
