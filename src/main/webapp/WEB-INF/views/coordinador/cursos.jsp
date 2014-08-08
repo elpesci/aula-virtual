@@ -31,12 +31,24 @@
             "bServerSide": false,
             "sort": "position",
             "sAjaxSource": "cursos/list",
+            "createdRow": function (row, data, index) {
+            	console.log(row);
+            	console.log(data);
+            	console.log(index);
+            	var contentLink = $('<a/>');
+            	myLink = "<c:url value='/cursos/" + data.id + "/content/add'/>";
+            	console.log(myLink)
+            	contentLink.attr('href', myLink);
+            	contentLink.html('Contenido');
+            	$(row).find('.acciones-control').append(contentLink);
+            },
             "aoColumns": [
-                { "mData": "nombre" },
-                { "mData": "objetivo" },
-                { "mData": "cursoId",
-                    "mRender": function (cursoId) {
-                        return  '<a href="' + cursoId + '">' + cursoId + '</a>';
+                { "mData": "name" },
+                { "mData": "goal" },
+                { "mData": "id",
+                    "mRender": function (id) {
+                        return  '<a href="' + id + '">' + id + '</a><div id="contentLink_' 
+                        	+ id + '"/>';
                     },
                     "class": "acciones-control",
                     "orderable": false
@@ -54,9 +66,9 @@
                 <table id="example" class="display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="paths.path.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="paths.goal.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="paths.actions.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.course.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.goal.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.actions.label"/></th>
                     </tr>
                     </thead>
                 </table>

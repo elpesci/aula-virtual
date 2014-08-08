@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.jcs.goboax.aulavirtual.controller;
 
 import org.slf4j.Logger;

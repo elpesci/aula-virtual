@@ -9,10 +9,13 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <http use-expressions="true">
+        <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/login/*" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll"/>
-        <intercept-url pattern="/**" access="hasRole('SuperAdmin')"/>
+        <intercept-url pattern="/cursos" access="isAuthenticated()"/>
+        <intercept-url pattern="/cursos/*" access="isAuthenticated()"/>
+        <intercept-url pattern="/**" access="hasRole('SUPER_ADMIN')"/>
         <form-login login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error=1" username-parameter="username"
                     password-parameter="password"/>
@@ -29,7 +32,7 @@
                               select username,password, habilitado
                               from Usuario where username=?"
                                authorities-by-username-query="
-                              select u.username, p.nombre from Usuario u, UsuarioPerfil ur, Perfil p
+                              select u.username, p.codigo from Usuario u, UsuarioPerfil ur, Perfil p
                               where u.usuarioId = ur.usuarioId
                               and p.perfilId = ur.perfilId
                               and u.username=?"/>

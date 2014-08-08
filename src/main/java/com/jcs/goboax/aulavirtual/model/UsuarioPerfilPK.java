@@ -2,59 +2,72 @@ package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
+/**
+ * The primary key class for the UsuarioPerfil database table.
+ * 
+ */
 @Embeddable
 public class UsuarioPerfilPK
-        implements Serializable {
+        implements Serializable
+{
+    // default serial version id, required for serializable classes.
+    private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = -5355696638680390946L;
-
-    private int perfilId;
+    @Column(insertable = false, updatable = false)
     private int usuarioId;
 
-    public int getPerfilId() {
-        return perfilId;
+    @Column(insertable = false, updatable = false)
+    private int perfilId;
+
+    public UsuarioPerfilPK()
+    {
     }
 
-    public void setPerfilId(int perfilId) {
-        this.perfilId = perfilId;
+    public int getUsuarioId()
+    {
+        return this.usuarioId;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
+    public void setUsuarioId(int usuarioId)
+    {
         this.usuarioId = usuarioId;
     }
 
-    @Override
-    public boolean equals(Object anObject) {
-        if (anObject == null) {
-            return false;
-        }
-
-        if (!(anObject instanceof UsuarioPerfilPK)) {
-            return false;
-        }
-
-        UsuarioPerfilPK myUsuarioPerfilId = (UsuarioPerfilPK) anObject;
-
-        return new EqualsBuilder()
-                .append(getUsuarioId(), myUsuarioPerfilId.getUsuarioId())
-                .append(getPerfilId(), myUsuarioPerfilId.getPerfilId())
-                .isEquals();
-
+    public int getPerfilId()
+    {
+        return this.perfilId;
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(getUsuarioId())
-                .append(getPerfilId()).toHashCode();
+    public void setPerfilId(int perfilId)
+    {
+        this.perfilId = perfilId;
     }
 
+    public boolean equals(Object other)
+    {
+        if (this == other)
+        {
+            return true;
+        }
+        if (!(other instanceof UsuarioPerfilPK))
+        {
+            return false;
+        }
+        UsuarioPerfilPK castOther = (UsuarioPerfilPK) other;
+        return (this.usuarioId == castOther.usuarioId)
+                && (this.perfilId == castOther.perfilId);
+    }
+
+    public int hashCode()
+    {
+        final int prime = 31;
+        int hash = 17;
+        hash = hash * prime + this.usuarioId;
+        hash = hash * prime + this.perfilId;
+
+        return hash;
+    }
 }

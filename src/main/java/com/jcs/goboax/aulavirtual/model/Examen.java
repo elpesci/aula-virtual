@@ -1,175 +1,169 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
-
-import java.lang.Integer;
-import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the Examen database table.
+ * 
+ */
 @Entity
+@NamedQuery(name = "Examen.findAll", query = "SELECT e FROM Examen e")
 @Table(name="Examen")
-public  class Examen implements Serializable {
+public class Examen
+        implements Serializable
+{
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int examenId;
 
-    @OneToMany(targetEntity=Pregunta.class,mappedBy="examenId")
-    private Collection<Pregunta> preguntaCollection;
-
-
-    @Column(name="numPreguntas",table="Examen",nullable=false)
-    @Basic
-    private short numPreguntas;
-
-
-    @Column(name="creadoPor",table="Examen",nullable=false)
-    @Basic
     private int creadoPor;
 
-
-    @Column(name="modificadoPor",table="Examen")
-    @Basic
-    private Integer modificadoPor;
-
-
-    @Column(name="examenId",table="Examen",nullable=false)
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer examenId;
-
-
-    @ManyToOne(optional=false,targetEntity=Curso.class)
-    @JoinColumn(name="cursoId",referencedColumnName="cursoId",insertable=true,nullable=true,unique=false,updatable=true)
-    private Curso cursoId;
-
-
-    @Column(name="fechaCreacion",table="Examen",nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaCreacion;
 
-
-    @Column(name="fechaModificacion",table="Examen")
     @Temporal(TemporalType.TIMESTAMP)
-    @Basic
     private Date fechaModificacion;
 
+    private int modificadoPor;
 
-    @Column(name="numRespuestasPregunta",table="Examen",nullable=false)
-    @Basic
+    private short numPreguntas;
+
     private short numRespuestasPregunta;
 
-    public Examen(){
+    // bi-directional many-to-one association to Curso
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cursoId")
+    private Curso curso;
 
+    // bi-directional many-to-one association to Pregunta
+    @OneToMany(mappedBy = "examen")
+    private List<Pregunta> preguntas;
+
+    public Examen()
+    {
     }
 
-
-   public Collection<Pregunta> getPreguntaCollection() {
-        return this.preguntaCollection;
-    }
-
-
-  public void setPreguntaCollection (Collection<Pregunta> preguntaCollection) {
-        this.preguntaCollection = preguntaCollection;
-    }
-
-
-
-   public short getNumPreguntas() {
-        return this.numPreguntas;
-    }
-
-
-  public void setNumPreguntas (short numPreguntas) {
-        this.numPreguntas = numPreguntas;
-    }
-
-
-
-   public int getCreadoPor() {
-        return this.creadoPor;
-    }
-
-
-  public void setCreadoPor (int creadoPor) {
-        this.creadoPor = creadoPor;
-    }
-
-
-
-   public Integer getModificadoPor() {
-        return this.modificadoPor;
-    }
-
-
-  public void setModificadoPor (Integer modificadoPor) {
-        this.modificadoPor = modificadoPor;
-    }
-
-
-
-   public Integer getExamenId() {
+    public int getExamenId()
+    {
         return this.examenId;
     }
 
-
-  public void setExamenId (Integer examenId) {
+    public void setExamenId(int examenId)
+    {
         this.examenId = examenId;
     }
 
-
-
-   public Curso getCursoId() {
-        return this.cursoId;
+    public int getCreadoPor()
+    {
+        return this.creadoPor;
     }
 
-
-  public void setCursoId (Curso cursoId) {
-        this.cursoId = cursoId;
+    public void setCreadoPor(int creadoPor)
+    {
+        this.creadoPor = creadoPor;
     }
 
-
-
-   public Date getFechaCreacion() {
+    public Date getFechaCreacion()
+    {
         return this.fechaCreacion;
     }
 
-
-  public void setFechaCreacion (Date fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion)
+    {
         this.fechaCreacion = fechaCreacion;
     }
 
-
-
-   public Date getFechaModificacion() {
+    public Date getFechaModificacion()
+    {
         return this.fechaModificacion;
     }
 
-
-  public void setFechaModificacion (Date fechaModificacion) {
+    public void setFechaModificacion(Date fechaModificacion)
+    {
         this.fechaModificacion = fechaModificacion;
     }
 
+    public int getModificadoPor()
+    {
+        return this.modificadoPor;
+    }
 
+    public void setModificadoPor(int modificadoPor)
+    {
+        this.modificadoPor = modificadoPor;
+    }
 
-   public short getNumRespuestasPregunta() {
+    public short getNumPreguntas()
+    {
+        return this.numPreguntas;
+    }
+
+    public void setNumPreguntas(short numPreguntas)
+    {
+        this.numPreguntas = numPreguntas;
+    }
+
+    public short getNumRespuestasPregunta()
+    {
         return this.numRespuestasPregunta;
     }
 
-
-  public void setNumRespuestasPregunta (short numRespuestasPregunta) {
+    public void setNumRespuestasPregunta(short numRespuestasPregunta)
+    {
         this.numRespuestasPregunta = numRespuestasPregunta;
     }
 
-}
+    public Curso getCurso()
+    {
+        return this.curso;
+    }
 
+    public void setCurso(Curso curso)
+    {
+        this.curso = curso;
+    }
+
+    public List<Pregunta> getPreguntas()
+    {
+        return this.preguntas;
+    }
+
+    public void setPreguntas(List<Pregunta> preguntas)
+    {
+        this.preguntas = preguntas;
+    }
+
+    public Pregunta addPregunta(Pregunta pregunta)
+    {
+        getPreguntas().add(pregunta);
+        pregunta.setExamen(this);
+
+        return pregunta;
+    }
+
+    public Pregunta removePregunta(Pregunta pregunta)
+    {
+        getPreguntas().remove(pregunta);
+        pregunta.setExamen(null);
+
+        return pregunta;
+    }
+
+}
