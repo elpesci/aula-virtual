@@ -8,5 +8,6 @@ import com.jcs.goboax.aulavirtual.model.Usuario;
 public interface UsuarioDao
     extends IDao<Integer, Usuario>
 {
+    Usuario findByEmail(String anEmail);
     
 }

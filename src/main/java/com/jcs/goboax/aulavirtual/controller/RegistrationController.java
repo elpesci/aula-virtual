@@ -25,7 +25,6 @@ import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 
 @Controller
-@Scope(value = "request")
 @RequestMapping("/login/registration")
 public class RegistrationController
 {
@@ -69,8 +68,7 @@ public class RegistrationController
 
     // Process the form.
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
-    public String cancelRegistration(@Validated Registration registration,
-            BindingResult result)
+    public String cancelRegistration()
     {
         return "redirect:/login";
     }

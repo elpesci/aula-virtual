@@ -3,11 +3,14 @@ package com.jcs.goboax.aulavirtual.service.impl;
 import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
 import com.jcs.goboax.aulavirtual.model.Perfil;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
+import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,6 +30,9 @@ public class UsuarioServiceImpl
 
     @Autowired
     private UsuarioPerfilDao usuarioPerfilDao;
+
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public List<Perfil> readPerfiles()
@@ -56,5 +62,27 @@ public class UsuarioServiceImpl
         myUsuarioPerfilPK.setPerfilId(aUsuarioPerfil.getPerfil().getPerfilId());
         aUsuarioPerfil.setId(myUsuarioPerfilPK);
         usuarioPerfilDao.persist(aUsuarioPerfil);
+    }
+
+    @Transactional
+    @Override
+    public void resetPassword(String anEmail)
+    {
+        Usuario myUsuario = usuarioDao.findByEmail(anEmail);
+        String myPassword = resetPassword(myUsuario);
+        if (myUsuario == null)
+        {
+            throw new AulaVirtualException("User Does not exists");
+        }
+        usuarioDao.update(myUsuario);
+        emailService.sendTemporaryPasswordEmail(myUsuario, myPassword);
+    }
+
+    private String resetPassword(Usuario aUsuario)
+    {
+        String password = Utils.generateRandomPassword();
+        aUsuario.setPassword(Utils.encodePassword(password));
+//        aUsuario.setStatus(CHANGE_PASSWORD);
+        return password;
     }
 }

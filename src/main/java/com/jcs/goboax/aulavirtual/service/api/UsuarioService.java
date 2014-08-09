@@ -32,4 +32,6 @@ public interface UsuarioService
      * @param aUsuarioPerfil
      */
     void createUserProfile(UsuarioPerfil aUsuarioPerfil);
+
+    void resetPassword(String anEmail);
 }
