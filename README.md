@@ -1,2 +1,4 @@
-aula-virtual   [Build Status]: https://travis-ci.org/acardenasnet/aula-virtual.svg?branch=master
+aula-virtual
 ============
+
+[![build status](https://travis-ci.org/acardenasnet/aula-virtual.svg?branch=master)](https://travis-ci.org/acardenasnet/aula-virtual.svg?branch=master)
