@@ -1,9 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,22 +7,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The persistent class for the Usuario database table.
- * 
  */
 @Entity
-@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
-@Table(name="Usuario")
+@NamedQueries({
+        @NamedQuery(name = Usuario.USUARIO_ALL_QUERYNAME, query = "SELECT u FROM Usuario u"),
+        @NamedQuery(name = Usuario.USUARIO_BY_EMAIL, query = "SELECT u FROM Usuario u " +
+                "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER)
+})
+@Table(name = "Usuario")
 public class Usuario
         implements Serializable
 {
+    public static final String USUARIO_ALL_QUERYNAME = "usuario.findAll";
+    public static final String USUARIO_BY_EMAIL = "usuario.findByEmail";
+
+    public static final String USUARIO_EMAIL_PARAMETER = "email";
+
     private static final long serialVersionUID = 1L;
 
     @Id

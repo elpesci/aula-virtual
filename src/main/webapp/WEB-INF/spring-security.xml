@@ -14,12 +14,12 @@
         <intercept-url pattern="/login/*" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll"/>
         <intercept-url pattern="/cursos" access="isAuthenticated()"/>
-        <intercept-url pattern="/cursos/*" access="isAuthenticated()"/>
+        <intercept-url pattern="/cursos/**" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="hasRole('SUPER_ADMIN')"/>
         <form-login login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error=1" username-parameter="username"
                     password-parameter="password"/>
-        <logout logout-success-url="/login?logout"/>
+        <logout logout-success-url="/login?logout" invalidate-session="true"/>
 
 
     </http>
