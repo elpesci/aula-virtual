@@ -166,8 +166,7 @@ public class CursosController
         }
         catch (IOException e)
         {
-            LOG.error("unable to create CSV file,  please see the stackTrace",
-                    e);
+            LOG.error("unable to create file,  please see the stackTrace", e);
         }
 
     }
