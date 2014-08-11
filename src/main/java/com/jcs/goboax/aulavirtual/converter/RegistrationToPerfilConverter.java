@@ -14,6 +14,7 @@ public class RegistrationToPerfilConverter
         implements Converter<Registration, Perfil>
 {
     private static final Logger LOG = LoggerFactory.getLogger(RegistrationToPerfilConverter.class);
+
     @Autowired
     private UsuarioService usuarioService;
 

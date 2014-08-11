@@ -5,17 +5,21 @@ import java.sql.Connection;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration
+@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/dispatcher-servlet.xml",
+                                   "InMemoryDbTestBase-contex.xml"})
+@ActiveProfiles(profiles = "test")
 public class InMemoryDbTestBase
 {
     // &: get the actual factory, not the object it produced
-    @Resource(name = "&sessionFactory")
-    private LocalSessionFactoryBean sf;
+//    @Resource(name = "&sessionFactory")
+//    private LocalSessionFactoryBean sf;
 
     @Resource
     private DataSource dataSource;
@@ -25,7 +29,6 @@ public class InMemoryDbTestBase
     @Before
     public void setup() throws Exception
     {
-
         conn = dataSource.getConnection();
     }
 
