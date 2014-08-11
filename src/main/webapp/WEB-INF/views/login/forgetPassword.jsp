@@ -5,6 +5,15 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div id="registration_form">
+            <span class="error">
+                <spring:hasBindErrors name="forgetPasswordForm">
+                <c:forEach items="${errors.globalErrors}" var="errorMessage">
+                    <div id="errors" class="errors">
+                        <spring:message htmlEscape="true" code="${errorMessage.code}" />
+                    </div>
+                </c:forEach>
+                </spring:hasBindErrors>
+            </span>
     <fieldset>
         <form:form method="POST" action="${target}" commandName="forgetPasswordForm">
             <form:label path="email">

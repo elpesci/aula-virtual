@@ -23,6 +23,7 @@
     <script src="<c:url value="/resources/js/SpryMenuBar.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/SpryCollapsiblePanel.js"/>" type="text/javascript"></script>
 
+
 </head>
 
 <body>
@@ -33,7 +34,7 @@
     <tiles:insertAttribute name="navigation"/>
 
     <div id="page">
-
+		<tiles:insertAttribute name="flashMessage"/>
         <div id="content">
             <tiles:insertAttribute name="body"/>
             <!-- end #content -->
@@ -42,5 +43,6 @@
     </div>
     <!-- end #wraper -->
     <tiles:insertAttribute name="footer"/>
+</div>
 </body>
 </html>

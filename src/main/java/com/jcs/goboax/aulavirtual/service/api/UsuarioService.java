@@ -2,11 +2,14 @@ package com.jcs.goboax.aulavirtual.service.api;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.jcs.goboax.aulavirtual.model.Perfil;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
 
 public interface UsuarioService
+    extends UserDetailsService
 {
     /**
      * Read all the profiles stored into the data source.

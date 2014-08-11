@@ -10,6 +10,11 @@ public class AulaVirtualException
     {
         super();
     }
+    
+    public AulaVirtualException(Throwable aThrowable)
+    {
+        super(aThrowable);
+    }
 
     public AulaVirtualException(String aString)
     {

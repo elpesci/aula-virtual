@@ -12,3 +12,12 @@
     margin-right: auto;
 }
 
+a.dismissFlash {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#flashMessagesBox .error, #flashMessagesBox .notice, #flashMessagesBox .success {padding:.5em; /*margin-bottom:1.6em;*/border:1px solid #ddd;}
+#flashMessagesBox .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+#flashMessagesBox .notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+#flashMessagesBox .success {background:#E6EFC2;color:#264409;border-color:#C6D880;}

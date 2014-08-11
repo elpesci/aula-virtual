@@ -1,6 +1,16 @@
 package com.jcs.goboax.aulavirtual.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +23,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * The persistent class for the Usuario database table.
@@ -23,13 +34,17 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = Usuario.USUARIO_ALL_QUERYNAME, query = "SELECT u FROM Usuario u"),
-        @NamedQuery(name = Usuario.USUARIO_BY_EMAIL, query = "SELECT u FROM Usuario u " +
-                "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER)
-})
+        @NamedQuery(name = Usuario.USUARIO_BY_EMAIL, query = "SELECT u FROM Usuario u "
+                + "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER) })
 @Table(name = "Usuario")
 public class Usuario
-        implements Serializable
+        implements UserDetails, Serializable
 {
+    public enum UsuarioStatus
+    {
+        ACTIVE, VERIFICATION_PENDING, CHANGE_PASSWORD, DISABLED, REMOVED
+    };
+
     public static final String USUARIO_ALL_QUERYNAME = "usuario.findAll";
     public static final String USUARIO_BY_EMAIL = "usuario.findByEmail";
 
@@ -57,6 +72,10 @@ public class Usuario
 
     private String username;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private UsuarioStatus status;
+
     // bi-directional many-to-one association to RegistroAcceso
     @OneToMany(mappedBy = "usuario")
     private List<RegistroAcceso> registroAccesos;
@@ -68,7 +87,7 @@ public class Usuario
 
     // bi-directional many-to-one association to UsuarioPerfil
     @OneToMany(mappedBy = "usuario")
-    private List<UsuarioPerfil> usuarioPerfils;
+    private Set<UsuarioPerfil> usuarioPerfils;
 
     public Usuario()
     {
@@ -190,12 +209,12 @@ public class Usuario
         this.persona = persona;
     }
 
-    public List<UsuarioPerfil> getUsuarioPerfils()
+    public Set<UsuarioPerfil> getUsuarioPerfils()
     {
         return this.usuarioPerfils;
     }
 
-    public void setUsuarioPerfils(List<UsuarioPerfil> usuarioPerfils)
+    public void setUsuarioPerfils(Set<UsuarioPerfil> usuarioPerfils)
     {
         this.usuarioPerfils = usuarioPerfils;
     }
@@ -214,6 +233,41 @@ public class Usuario
         usuarioPerfil.setUsuario(null);
 
         return usuarioPerfil;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities()
+    {
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        for (UsuarioPerfil myUsuarioPerfil : usuarioPerfils) 
+        {
+            authorities.add(new SimpleGrantedAuthority(myUsuarioPerfil.getPerfil().getCodigo()));
+        }
+        return authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired()
+    {
+        return UsuarioStatus.ACTIVE.equals(status);
+    }
+
+    @Override
+    public boolean isAccountNonLocked()
+    {
+        return !UsuarioStatus.VERIFICATION_PENDING.equals(status);
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired()
+    {
+        return !UsuarioStatus.CHANGE_PASSWORD.equals(status);
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+        return !UsuarioStatus.DISABLED.equals(status);
     }
 
 }
