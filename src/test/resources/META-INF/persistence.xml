@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+    <persistence-unit name="testingSetup">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> 
+        <class>com.jcs.goboax.aulavirtual.model.Alumno</class>
+        <class>com.jcs.goboax.aulavirtual.model.Contenido</class>
+        <class>com.jcs.goboax.aulavirtual.model.Curso</class>
+        <class>com.jcs.goboax.aulavirtual.model.Evaluacion</class>
+        <class>com.jcs.goboax.aulavirtual.model.Examen</class>
+        <class>com.jcs.goboax.aulavirtual.model.ExtensionContenido</class>
+        <class>com.jcs.goboax.aulavirtual.model.Instructor</class>
+        <class>com.jcs.goboax.aulavirtual.model.Perfil</class>
+        <class>com.jcs.goboax.aulavirtual.model.Persona</class>
+        <class>com.jcs.goboax.aulavirtual.model.Pregunta</class>
+        <class>com.jcs.goboax.aulavirtual.model.RegistroAcceso</class>
+        <class>com.jcs.goboax.aulavirtual.model.Respuesta</class>
+        <class>com.jcs.goboax.aulavirtual.model.Sesion</class>
+        <class>com.jcs.goboax.aulavirtual.model.SesionAlumno</class>
+        <class>com.jcs.goboax.aulavirtual.model.TipoContenido</class>
+        <class>com.jcs.goboax.aulavirtual.model.Usuario</class>
+        <class>com.jcs.goboax.aulavirtual.model.UsuarioPerfil</class>
+        <properties>
+            <property name="eclipselink.logging.level" value="FINEST" />
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
+            <property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+        </properties>        
+    </persistence-unit>
+</persistence>

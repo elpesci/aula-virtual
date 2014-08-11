@@ -15,9 +15,10 @@
 
  <!-- for an in-memory test we need to load the db properties, then the test properties, then the persistence bits -->
 <beans profile="test">
+
  <context:property-placeholder location="classpath:jdbc.properties, classpath:db.inmemory-overrides.properties"/>
-    <jdbc:embedded-database id="dataSource" type="H2">
-        <jdbc:script location="classpath:/db.sql"/>
+    <jdbc:embedded-database id="dataSource" type="HSQL">
+
     </jdbc:embedded-database>
 
     <bean id="entityManagerFactory"
@@ -36,6 +37,6 @@
             </props>
         </property>
     </bean>
- <!-- import resource="classpath:/META-INF/persistence.xml" /-->
+
 </beans>
 </beans>
