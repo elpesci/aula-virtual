@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ForgetPasswordForm
 {
 
-    @NotEmpty(message = "{NotNull.message}")
-//    @Length(max = 30)
+    @NotEmpty(message = "{email.empty}")
+    @Length(max = 30)
 //    @Email
     private String email;
 

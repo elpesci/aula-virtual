@@ -17,8 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration("file:src/main/webapp/WEB-INF/dispatcher-servlet.xml")
-public class HomeControllerTest
+//@ContextConfiguration("file:src/main/webapp/WEB-INF/dispatcher-servlet.xml")
+public class HomeControllerTest extends InMemoryDbTestBase
 {
     private MockMvc mockMvc;
 

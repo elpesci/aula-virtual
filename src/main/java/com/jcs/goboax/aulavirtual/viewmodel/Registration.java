@@ -1,6 +1,8 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * Created by acardenas on 8/3/14.
  */
@@ -9,6 +11,7 @@ public class Registration
     private String name;
     private String lastName;
     private String secondLastName;
+    @NotEmpty(message = "{email.empty}")
     private String email;
     private String password;
     private String confirmPassword;
