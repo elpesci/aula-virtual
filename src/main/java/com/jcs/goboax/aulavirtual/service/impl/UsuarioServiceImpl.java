@@ -2,6 +2,8 @@ package com.jcs.goboax.aulavirtual.service.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +28,8 @@ import com.jcs.goboax.aulavirtual.util.Utils;
 public class UsuarioServiceImpl
         implements UsuarioService
 {
+    private static final Logger LOG = LoggerFactory.getLogger(UsuarioServiceImpl.class);
+
     @Autowired
     private UsuarioDao usuarioDao;
 
@@ -54,6 +58,7 @@ public class UsuarioServiceImpl
     @Override
     public void createUser(Usuario aUsuario)
     {
+        aUsuario.setStatus(Usuario.UsuarioStatus.VERIFICATION_PENDING);
         usuarioDao.persist(aUsuario);
     }
 
@@ -83,11 +88,30 @@ public class UsuarioServiceImpl
         emailService.sendTemporaryPasswordEmail(myUsuario, myPassword);
     }
 
+    @Override
+    public Usuario getByCredentials(Integer aUserId, String aPassword)
+    {
+        return usuarioDao.getByCredentials(aUserId, aPassword);
+    }
+
+    @Transactional
+    @Override
+    public Usuario updatePassword(Usuario aUsuario, String aNewPassword)
+    {
+        if (aUsuario.isChangePassword())
+        {
+            aUsuario.setStatus(Usuario.UsuarioStatus.ACTIVE);
+        }
+        aUsuario.setPassword(Utils.encodePassword(aNewPassword));
+
+        return usuarioDao.update(aUsuario);
+    }
+
     private String resetPassword(Usuario aUsuario)
     {
         String password = Utils.generateRandomPassword();
         aUsuario.setPassword(Utils.encodePassword(password));
-        // aUsuario.setStatus(CHANGE_PASSWORD);
+        aUsuario.setStatus(Usuario.UsuarioStatus.CHANGE_PASSWORD);
         return password;
     }
 

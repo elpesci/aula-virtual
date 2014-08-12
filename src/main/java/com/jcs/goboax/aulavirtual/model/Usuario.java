@@ -214,6 +214,16 @@ public class Usuario
         return this.usuarioPerfils;
     }
 
+    public UsuarioStatus getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(UsuarioStatus status)
+    {
+        this.status = status;
+    }
+
     public void setUsuarioPerfils(Set<UsuarioPerfil> usuarioPerfils)
     {
         this.usuarioPerfils = usuarioPerfils;
@@ -270,4 +280,8 @@ public class Usuario
         return !UsuarioStatus.DISABLED.equals(status);
     }
 
+    public boolean isChangePassword()
+    {
+        return status != null && UsuarioStatus.CHANGE_PASSWORD.equals(status);
+    }
 }

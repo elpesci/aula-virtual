@@ -4,24 +4,21 @@
 
 <div class="centre">
 
-<c:if test="${error}">
-	<script>
-	$(document).ready(function() {
-		$('#flashMessagesBox').html($('<p/>', { 'class': 'error center', html: "<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>" }));
-	});
-	</script>
-</c:if>
- <c:out value="${SPRING_SECURITY_LAST_USERNAME}" escapeXml="false" />
+    <c:if test="${error}">
+        <script>
+            $(document).ready(function () {
+                $('#flashMessagesBox').html($('<p/>', { 'class': 'error center', html: "<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>" }));
+            });
+        </script>
+    </c:if>
+    <c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false"/>
     <form name='loginForm' action="<c:url value='/j_spring_security_check'/>" method='POST'>
         <fieldset>
             <label for="username">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="login.username.label"/>
             </label>
-            <input name="username" placeholder="Capture usuario" 
-            	value="<c:if test="${error}">
-            		<c:out value="${SPRING_SECURITY_LAST_USERNAME}" escapeXml="false" />m
-            		</c:if>
-            		"/>
+            <input name="username" placeholder="Capture usuario"
+                   value="<c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false" />"/>
 
             <label for="password">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="login.password.label"/>

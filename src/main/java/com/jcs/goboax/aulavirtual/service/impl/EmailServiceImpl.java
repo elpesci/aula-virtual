@@ -49,7 +49,7 @@ public class EmailServiceImpl
         Map<String, Object> model = new HashMap<String, Object>();
         String myUrl = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/login/forgetPassword/" + aUsuario.getUsuarioId() + "/"
+                .path("/login/forgetPassword/reset/" + aUsuario.getUsuarioId() + "/"
                         + aPassword).build().toUriString();
         model.put("serverUrl", myUrl);
         model.put("user", aUsuario);

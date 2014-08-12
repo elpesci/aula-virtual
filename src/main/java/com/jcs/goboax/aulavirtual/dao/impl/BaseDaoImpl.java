@@ -131,6 +131,8 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E>
     @Override
     public E update(E anEntity)
     {
-        return entityManager.merge(anEntity);
+        E myResult = entityManager.merge(anEntity);
+        entityManager.flush();
+        return myResult;
     }
 }

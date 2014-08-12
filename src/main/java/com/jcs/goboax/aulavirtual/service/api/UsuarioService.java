@@ -36,5 +36,13 @@ public interface UsuarioService
      */
     void createUserProfile(UsuarioPerfil aUsuarioPerfil);
 
+    /**
+     * Reset Password, generate one temporal and change the status.
+     * @param anEmail
+     */
     void resetPassword(String anEmail);
+
+    Usuario getByCredentials(Integer aUserId, String aPassword);
+
+    Usuario updatePassword(Usuario aUsuario, String aNewPassword);
 }
