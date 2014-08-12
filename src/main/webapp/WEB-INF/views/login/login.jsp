@@ -28,7 +28,7 @@
 
         <div>
             <spring:message htmlEscape="true" javaScriptEscape="true" code="login.forgetpassword.label"/>
-            <a href="login/forgetPassword">
+            <a href="/login/forgetPassword">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
             </a>
         </div>
@@ -38,7 +38,7 @@
                    id="submitBtn"/>
         </div>
         <spring:message htmlEscape="true" javaScriptEscape="true" code="login.newuser.label"/>
-        <a href="login/registration">
+        <a href="<c:url value="/login/registration"/>">
             <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
         </a>
 
