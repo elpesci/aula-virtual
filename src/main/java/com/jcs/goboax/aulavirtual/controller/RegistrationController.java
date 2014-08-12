@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -66,14 +65,12 @@ public class RegistrationController
         return "login/registration";
     }
 
-    // Process the form.
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
     public String cancelRegistration()
     {
         return "redirect:/login";
     }
 
-    // Process the form.
     @RequestMapping(params = "save", method = RequestMethod.POST)
     public String processRegistration(@Validated Registration registration,
             BindingResult result)

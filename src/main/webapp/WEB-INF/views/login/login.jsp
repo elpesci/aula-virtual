@@ -21,7 +21,7 @@
                    value="<c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false" />"/>
 
             <label for="password">
-                <spring:message htmlEscape="true" javaScriptEscape="true" code="login.password.label"/>
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="label.password"/>
             </label>
             <input type="password" name="password"/>
         </fieldset>

@@ -26,19 +26,19 @@
             <form:input path="secondLastName"/>
 
             <form:label path="email">
-                <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.email.label"/>
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="label.email"/>
                 <span class="error"><form:errors path="email"/></span>
             </form:label>
             <form:input path="email"/>
 
             <form:label path="password">
-                <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.password.label"/>
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="label.password"/>
                 <span class="error"><form:errors path="password"/></span>
             </form:label>
             <form:password path="password"/>
 
             <form:label path="confirmPassword">
-                <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.confirmPassword.label"/>
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="label.confirmPassword"/>
                 <span class="error"><form:errors path="confirmPassword"/></span>
             </form:label>
             <form:password path="confirmPassword"/>
