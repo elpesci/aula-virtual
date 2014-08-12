@@ -11,40 +11,40 @@
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.name.label"/>
                 <span class="error"><form:errors path="name"/></span>
             </form:label>
-            <form:input path="name"/>
+            <form:input path="name" cssErrorClass="fieldError"/>
 
             <form:label path="lastName">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.lastName.label"/>
                 <span class="error"><form:errors path="lastName"/></span>
             </form:label>
-            <form:input path="lastName"/>
+            <form:input path="lastName" cssErrorClass="fieldError"/>
 
             <form:label path="secondLastName">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.secondLastName.label"/>
                 <span class="error"><form:errors path="secondLastName"/></span>
             </form:label>
-            <form:input path="secondLastName"/>
+            <form:input path="secondLastName" cssErrorClass="fieldError"/>
 
             <form:label path="email">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="label.email"/>
                 <span class="error"><form:errors path="email"/></span>
             </form:label>
-            <form:input path="email"/>
+            <form:input path="email" cssErrorClass="fieldError"/>
 
             <form:label path="password">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="label.password"/>
                 <span class="error"><form:errors path="password"/></span>
             </form:label>
-            <form:password path="password"/>
+            <form:password path="password" autocomplete="off" cssErrorClass="fieldError"/>
 
             <form:label path="confirmPassword">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="label.confirmPassword"/>
                 <span class="error"><form:errors path="confirmPassword"/></span>
             </form:label>
-            <form:password path="confirmPassword"/>
+            <form:password path="confirmPassword" autocomplete="off" cssErrorClass="fieldError"/>
             
             <sec:authorize access="hasRole('SUPER_ADMIN')">
-                <form:select path="profile" items="${profiles}" />
+                <form:select path="profile" items="${profiles}"/>
             </sec:authorize>
 
             <input type="submit" name="save" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>

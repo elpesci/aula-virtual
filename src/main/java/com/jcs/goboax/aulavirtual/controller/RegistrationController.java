@@ -52,7 +52,7 @@ public class RegistrationController
     @InitBinder
     private void initBinder(WebDataBinder binder)
     {
-        binder.setValidator(registrationValidator);
+        binder.addValidators(registrationValidator);
     }
 
     // Display the form on the get request

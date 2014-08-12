@@ -6,6 +6,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc" 
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            		http://www.springframework.org/schema/aop 
@@ -15,7 +16,9 @@
                            http://www.springframework.org/schema/mvc 
                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
                            http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+                           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+                           http://www.springframework.org/schema/jdbc 
+                           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <import resource="spring-security.xml"/>
     <context:component-scan base-package="com.jcs.goboax.aulavirtual"/>
@@ -87,9 +90,14 @@
         <property name="jpaPropertyMap">
             <props>
                 <prop key="eclipselink.weaving">false</prop>
+                <prop key="eclipselink.ddl-generation.output-mode">${jdbc.ddl-generation.output-mode}</prop>
             </props>
         </property>
     </bean>
+    
+<!-- jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="/WEB-INF/import.sql" encoding="UTF-8" />
+</jdbc:initialize-database -->    
 
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"

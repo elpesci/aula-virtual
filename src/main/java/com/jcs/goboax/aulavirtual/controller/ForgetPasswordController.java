@@ -124,11 +124,6 @@ public class ForgetPasswordController
 
         if (result.hasErrors())
         {
-            for (ObjectError myError : result.getAllErrors())
-            {
-                LOG.debug("{} = {}", myError.getCode(), myError.getDefaultMessage());
-            }
-            
             resetPasswordForm.setUsuario(myUsuario);
             return "login/resetpassword";
         }

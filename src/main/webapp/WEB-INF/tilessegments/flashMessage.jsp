@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".dismissFlash").click(function() 
-		{
+		$(".dismissFlash").click(function() {
 			$(this).parent().remove();
 		});
 	});
@@ -14,12 +13,12 @@
 	style="display: block;">
 	<c:set value="${sessionScope['scopedTarget.flash']}" var="flash" />
 	<c:if test="${flash.notEmpty}">
-		<p class="center ${flash.type}">
+		<p class="flash center ${flash.type}">
 			<spring:message code="${flash.message}"
 				arguments="${flash.arguments}" />
 			<a class="dismissFlash" href="javascript:void(0);"><spring:message
 					code="label.dismiss" /> </a>
 		</p>
-	</c:if>
+	</c:if>	
 </div>
 

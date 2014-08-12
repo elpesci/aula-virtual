@@ -18,6 +18,7 @@ import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
 import com.jcs.goboax.aulavirtual.model.Perfil;
 import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
 import com.jcs.goboax.aulavirtual.service.api.EmailService;
@@ -58,7 +59,8 @@ public class UsuarioServiceImpl
     @Override
     public void createUser(Usuario aUsuario)
     {
-        aUsuario.setStatus(Usuario.UsuarioStatus.VERIFICATION_PENDING);
+        aUsuario.setStatus(UsuarioStatus.VERIFICATION_PENDING);
+        LOG.debug("Status set to: {}", UsuarioStatus.VERIFICATION_PENDING);
         usuarioDao.persist(aUsuario);
     }
 

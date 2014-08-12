@@ -8,7 +8,7 @@
     <script>
         $(document).ready(function () {
             <c:forEach items="${errors.globalErrors}" var="errorMessage">
-                $('#flashMessagesBox').html($('<p/>', { 'class': 'error center', html: "<c:out value="${errorMessage.defaultMessage}" />" }));
+            	aulaVirtualController.addFlashMessage("<c:out value="${errorMessage.defaultMessage}" />");
             </c:forEach>
         });
     </script>
