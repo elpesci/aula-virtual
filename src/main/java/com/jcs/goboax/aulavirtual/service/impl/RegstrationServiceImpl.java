@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
+import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,8 @@ public class RegstrationServiceImpl
     @Autowired
     private PersonaDao personaDao;
 
+    @Autowired EmailService emailService;
+
 
     @Transactional
     @Override
@@ -67,6 +70,7 @@ public class RegstrationServiceImpl
             myUsuarioPerfil.setPerfil(myPerfil);
 
             usuarioService.createUserProfile(myUsuarioPerfil);
+            emailService.sendWelcomeEmail(myUsuario);
         }
         catch (RuntimeException e)
         {

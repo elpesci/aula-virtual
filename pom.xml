@@ -253,6 +253,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.sun.xml.security</groupId>
+            <artifactId>xml-security-impl</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
     <repositories>
@@ -322,11 +328,11 @@
         <profile>
             <id>development</id>
             <properties>
-                <db.driverClass>oracle.jdbc.driver.OracleDriver</db.driverClass>
-                <db.connectionURL>jdbc:oracle:thin:@127.0.0.1:1521:XE</db.connectionURL>
-                <db.username>devuser</db.username>
-                <db.password>devpassword</db.password>
-                <logo.image>mylogo.png</logo.image>
+                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull</db.connectionURL>
+                <db.username>avDev</db.username>
+                <db.password>Password#1</db.password>
+                <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
             </properties>
         </profile>
         <!-- Production environment @ production server -->

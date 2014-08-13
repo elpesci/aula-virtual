@@ -1,7 +1,20 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
-import java.util.List;
-
+import com.google.common.base.Charsets;
+import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
+import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
+import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
+import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
+import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
+import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
+import com.jcs.goboax.aulavirtual.service.api.EmailService;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
-import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
-import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
-import com.jcs.goboax.aulavirtual.model.Perfil;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
-import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
-import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
-import com.jcs.goboax.aulavirtual.service.api.EmailService;
-import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
-import com.jcs.goboax.aulavirtual.util.Utils;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Service("usuarioService")
 public class UsuarioServiceImpl
@@ -59,9 +63,19 @@ public class UsuarioServiceImpl
     @Override
     public void createUser(Usuario aUsuario)
     {
-        aUsuario.setStatus(UsuarioStatus.VERIFICATION_PENDING);
-        LOG.debug("Status set to: {}", UsuarioStatus.VERIFICATION_PENDING);
-        usuarioDao.persist(aUsuario);
+        try
+        {
+            String myVerificationKey = Utils.generateVerificationKey(aUsuario.getUsername(), aUsuario.getPassword());
+            aUsuario.setVerificationKey(myVerificationKey);
+            aUsuario.setStatus(UsuarioStatus.VERIFICATION_PENDING);
+            LOG.debug("Status set to: {}", UsuarioStatus.VERIFICATION_PENDING);
+            usuarioDao.persist(aUsuario);
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            LOG.error("Unable to generate Validation Key", e);
+            throw new AulaVirtualPersistenceException("Unable to generate Validation Key", e);
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -109,6 +123,23 @@ public class UsuarioServiceImpl
         return usuarioDao.update(aUsuario);
     }
 
+    @Transactional
+    @Override
+    public Usuario activateAccount(Integer aUserId, String aVerificationKey)
+    {
+        Usuario myUsuario = usuarioDao.findByKey(aUserId);
+        LOG.debug("User to Activate {}, Current Status {}", myUsuario.getUsername(), myUsuario.getStatus());
+
+        if (myUsuario.isVerificationPending() && aVerificationKey.equals(myUsuario.getVerificationKey()))
+        {
+            myUsuario.setVerificationKey(null);
+            myUsuario.setStatus(UsuarioStatus.ACTIVE);
+            usuarioDao.update(myUsuario);
+            sendActivationComplete(myUsuario);
+        }
+        return myUsuario;
+    }
+
     private String resetPassword(Usuario aUsuario)
     {
         String password = Utils.generateRandomPassword();
@@ -130,5 +161,11 @@ public class UsuarioServiceImpl
         {
             throw new UsernameNotFoundException("user not found");
         }
+    }
+
+    @Override
+    public void sendActivationComplete(Usuario anUsuario)
+    {
+        emailService.sendActivationComplete(anUsuario);
     }
 }

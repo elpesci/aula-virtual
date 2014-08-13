@@ -45,4 +45,8 @@ public interface UsuarioService
     Usuario getByCredentials(Integer aUserId, String aPassword);
 
     Usuario updatePassword(Usuario aUsuario, String aNewPassword);
+
+    Usuario activateAccount(Integer aUserId, String aVerificationKey);
+
+    void sendActivationComplete(Usuario anUsuario);
 }

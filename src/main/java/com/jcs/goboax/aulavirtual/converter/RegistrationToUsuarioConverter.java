@@ -15,7 +15,6 @@ public class RegistrationToUsuarioConverter
     public Usuario convert(Registration aRegistration) {
         Usuario myUsuario = new Usuario();
         myUsuario.setFechaCreacion(new Date());
-        myUsuario.setHabilitado(true);
         myUsuario.setUsername(aRegistration.getEmail());
         myUsuario.setPassword(Utils.encodePassword(aRegistration.getPassword()));
         return myUsuario;

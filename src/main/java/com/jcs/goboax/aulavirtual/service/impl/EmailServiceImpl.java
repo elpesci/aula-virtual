@@ -1,11 +1,10 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
+import com.google.common.base.Charsets;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.service.api.EmailService;
+import com.jcs.goboax.aulavirtual.util.PropertiesUtil;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.google.common.base.Charsets;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.service.api.EmailService;
-import com.jcs.goboax.aulavirtual.util.PropertiesUtil;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -59,8 +59,45 @@ public class EmailServiceImpl
 
     }
 
+    @Override
+    public void sendActivationComplete(Usuario aUsuario)
+    {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String myUrl = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/login/forgetPassword/reset/" + aUsuario.getUsuarioId() + "/"
+                ).build().toUriString();
+        model.put("serverUrl", myUrl);
+        model.put("user", aUsuario);
+        LOG.debug("Sending Reset Password Link: {}", myUrl);
+        sendEmail(aUsuario.getUsername(), "forgetpassword", model, false);
+    }
+
+    @Override
+    public void sendWelcomeEmail(Usuario aUsuario)
+    {
+        Map<String, Object> model = new HashMap<String, Object>();
+        try
+        {
+            String myVerificationKeyEncode = URLEncoder.encode(aUsuario.getVerificationKey(), "UTF-8");
+            String myUrl = ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/login/registration/activate/" + aUsuario.getUsuarioId() + "?k="
+                            + myVerificationKeyEncode).build().toUriString();
+
+            model.put("serverUrl", myUrl);
+            model.put("user", aUsuario);
+            LOG.debug("Sending Activation Link: {}", myUrl);
+            sendEmail(aUsuario.getUsername(), "welcome", model, false);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     private void sendEmail(String aTo, String aTemplate,
-            Map<String, Object> model, boolean aBlindCopy)
+                           Map<String, Object> model, boolean aBlindCopy)
     {
         try
         {

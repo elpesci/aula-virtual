@@ -64,13 +64,13 @@ public class Usuario
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
 
-    private boolean habilitado;
-
     private int modificadoPor;
 
     private String password;
 
     private String username;
+
+    private String verificationKey;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -131,16 +131,6 @@ public class Usuario
     public void setFechaModificacion(Date fechaModificacion)
     {
         this.fechaModificacion = fechaModificacion;
-    }
-
-    public boolean getHabilitado()
-    {
-        return this.habilitado;
-    }
-
-    public void setHabilitado(boolean habilitado)
-    {
-        this.habilitado = habilitado;
     }
 
     public int getModificadoPor()
@@ -283,5 +273,20 @@ public class Usuario
     public boolean isChangePassword()
     {
         return status != null && UsuarioStatus.CHANGE_PASSWORD.equals(status);
+    }
+
+    public boolean isVerificationPending()
+    {
+        return status != null && UsuarioStatus.VERIFICATION_PENDING.equals(status);
+    }
+
+    public String getVerificationKey()
+    {
+        return verificationKey;
+    }
+
+    public void setVerificationKey(String verificationKey)
+    {
+        this.verificationKey = verificationKey;
     }
 }

@@ -4,5 +4,9 @@ import com.jcs.goboax.aulavirtual.model.Usuario;
 
 public interface EmailService
 {
-   void sendTemporaryPasswordEmail(Usuario aUsuario, String Password);
+    void sendTemporaryPasswordEmail(Usuario aUsuario, String Password);
+
+    void sendActivationComplete(Usuario aUsuario);
+
+    void sendWelcomeEmail(Usuario aUsuario);
 }
