@@ -294,6 +294,54 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
+            <!-- Enabling and configuring regular resources filtering.
+     See also section "resources" below -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <!-- specify UTF-8, ISO-8859-1 or any other file encoding -->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
         </plugins>
+
+        <!-- Instructing the resources plugin to filter certain directories -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
+    <!-- Profiles start here -->
+    <profiles>
+        <!-- Development environment @ my laptop -->
+        <profile>
+            <id>development</id>
+            <properties>
+                <db.driverClass>oracle.jdbc.driver.OracleDriver</db.driverClass>
+                <db.connectionURL>jdbc:oracle:thin:@127.0.0.1:1521:XE</db.connectionURL>
+                <db.username>devuser</db.username>
+                <db.password>devpassword</db.password>
+                <logo.image>mylogo.png</logo.image>
+            </properties>
+        </profile>
+        <!-- Production environment @ production server -->
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull</db.connectionURL>
+                <db.username>avDev</db.username>
+                <db.password>Password#1</db.password>
+                <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
+            </properties>
+        </profile>
+    </profiles>
 </project>
