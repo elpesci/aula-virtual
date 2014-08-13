@@ -106,7 +106,7 @@ public class RegistrationController
             LOG.debug("Processing Registration....");
             registrationService.createRegistration(registration);
 
-            return "login";
+            return "redirect:/";
         }
         catch (AulaVirtualRegistrationException e)
         {
