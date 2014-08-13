@@ -8,6 +8,7 @@ package com.jcs.goboax.aulavirtual.dao.impl;
 
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
 import com.jcs.goboax.aulavirtual.model.Perfil;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
@@ -44,5 +45,19 @@ public class UsuarioDaoImpl
         {
             throw new AulaVirtualPersistenceException("More than one result", e);
         }
+    }
+
+    @Override
+    public Usuario getByCredentials(Integer aUserId, String aPassword)
+    {
+        Usuario myUsuario = findByKey(aUserId);
+        BCryptPasswordEncoder myBCryptPasswordEncoder = new BCryptPasswordEncoder();
+        boolean isValid = myBCryptPasswordEncoder.matches(aPassword, myUsuario.getPassword());
+        if (isValid)
+        {
+            return myUsuario;
+        }
+
+        return null;
     }
 }

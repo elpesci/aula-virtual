@@ -8,8 +8,8 @@ public class ForgetPasswordForm
 {
 
     @NotEmpty(message = "{email.empty}")
-    @Length(max = 30)
-//    @Email
+    @Length(max = 45, message = "{length.invalid}")
+    @Email(message = "{email.invalid}")
     private String email;
 
     public String getEmail()

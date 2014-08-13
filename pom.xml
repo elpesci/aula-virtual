@@ -247,20 +247,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.175</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.8.2.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.github.springtestdbunit</groupId>
             <artifactId>spring-test-dbunit</artifactId>
             <version>1.0.0</version>
@@ -268,17 +254,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.4.9</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>junit</artifactId>
-                    <groupId>junit</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.sun.xml.security</groupId>
+            <artifactId>xml-security-impl</artifactId>
+            <version>1.0</version>
         </dependency>
+
     </dependencies>
 
     <repositories>
@@ -320,6 +300,54 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
+            <!-- Enabling and configuring regular resources filtering.
+     See also section "resources" below -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <!-- specify UTF-8, ISO-8859-1 or any other file encoding -->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
         </plugins>
+
+        <!-- Instructing the resources plugin to filter certain directories -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
+    <!-- Profiles start here -->
+    <profiles>
+        <!-- Development environment @ my laptop -->
+        <profile>
+            <id>development</id>
+            <properties>
+                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull</db.connectionURL>
+                <db.username>avDev</db.username>
+                <db.password>Password#1</db.password>
+                <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
+            </properties>
+        </profile>
+        <!-- Production environment @ production server -->
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull</db.connectionURL>
+                <db.username>avDev</db.username>
+                <db.password>Password#1</db.password>
+                <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
+            </properties>
+        </profile>
+    </profiles>
 </project>
