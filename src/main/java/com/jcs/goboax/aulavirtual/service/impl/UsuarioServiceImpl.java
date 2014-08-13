@@ -128,9 +128,11 @@ public class UsuarioServiceImpl
     public Usuario activateAccount(Integer aUserId, String aVerificationKey)
     {
         Usuario myUsuario = usuarioDao.findByKey(aUserId);
-        LOG.debug("User to Activate {}, Current Status {}", myUsuario.getUsername(), myUsuario.getStatus());
+        LOG.debug("User to Activate {}", myUsuario);
 
-        if (myUsuario.isVerificationPending() && aVerificationKey.equals(myUsuario.getVerificationKey()))
+        if (myUsuario != null 
+                && myUsuario.isVerificationPending() 
+                && aVerificationKey.equals(myUsuario.getVerificationKey()))
         {
             myUsuario.setVerificationKey(null);
             myUsuario.setStatus(UsuarioStatus.ACTIVE);

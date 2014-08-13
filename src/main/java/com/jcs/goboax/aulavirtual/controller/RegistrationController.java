@@ -1,21 +1,21 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
-import com.jcs.goboax.aulavirtual.model.Perfil;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
-import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
-import com.jcs.goboax.aulavirtual.util.FlashMessage;
-import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
-import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
-import java.util.Map;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
+import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
+import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 
 @Controller
 @RequestMapping("/login/registration")
@@ -119,7 +121,7 @@ public class RegistrationController
                                            "k") String aVerificationKey, Map<String, Object> aModel) throws UnsupportedEncodingException
     {
         Usuario myUsuario = usuarioService.activateAccount(aUserId, aVerificationKey);
-        if (Usuario.UsuarioStatus.ACTIVE.equals(myUsuario.getStatus()))
+        if (myUsuario != null && Usuario.UsuarioStatus.ACTIVE.equals(myUsuario.getStatus()))
         {
             flashMessage.success("subject.welcome");
             autoLogin(aRequest, myUsuario.getUsername(), myUsuario.getPassword());
@@ -141,10 +143,12 @@ public class RegistrationController
      */
     private void autoLogin(HttpServletRequest request, String username, String password)
     {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         request.getSession();
-        token.setDetails(new WebAuthenticationDetails(request));
-//        Authentication authenticatedUser = authenticationManager.authenticate(token);
-        SecurityContextHolder.getContext().setAuthentication(token);
+        
+        UserDetails myUserDetails = usuarioService.loadUserByUsername(username);
+        Authentication authenticatedUser = 
+            new UsernamePasswordAuthenticationToken(myUserDetails, null, myUserDetails
+                .getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
     }
 }
