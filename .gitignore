@@ -7,3 +7,5 @@ target/
 *.checkclipse
 /src/main/webapp/WEB-INF/rescue_servlet-context.xml
 *.travis.yml
+createDDL_ddlGeneration.jdbc
+dropDDL_ddlGeneration.jdbc
