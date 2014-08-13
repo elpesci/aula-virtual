@@ -1,20 +1,8 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
-import com.google.common.base.Charsets;
-import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
-import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
-import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
-import com.jcs.goboax.aulavirtual.model.Perfil;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
-import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
-import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
-import com.jcs.goboax.aulavirtual.service.api.EmailService;
-import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
-import com.jcs.goboax.aulavirtual.util.Utils;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
+import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
+import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
+import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
+import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
+import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
+import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
+import com.jcs.goboax.aulavirtual.service.api.EmailService;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.Utils;
 
 @Service("usuarioService")
 public class UsuarioServiceImpl
