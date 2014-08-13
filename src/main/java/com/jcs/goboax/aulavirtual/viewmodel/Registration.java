@@ -11,7 +11,7 @@ public class Registration
     private String lastName;
     @NotEmpty
     private String secondLastName;
-    @NotEmpty(message = "{email.empty}")
+    @NotEmpty
     @Email
     private String email;
     @NotEmpty
