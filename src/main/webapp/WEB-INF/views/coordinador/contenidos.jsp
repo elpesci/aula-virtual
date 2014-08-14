@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
-<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.css">
+<script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
+
 <script type="text/javascript">
     var espanol = {"sProcessing": "Procesando...",
         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -25,6 +26,7 @@
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({
+        	"sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"lfr>t<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip>',
             "oLanguage": espanol,
             "bProcessing": false,
             "bServerSide": false,
@@ -48,6 +50,9 @@
                 }
             ]
         });
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add>Agregar</a>");
+        myLink = "<c:url value='/cursos/" + ${courseId} + "/content/add' />";
+        $('#add').attr('href',myLink);
     });
 
 

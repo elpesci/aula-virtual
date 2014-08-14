@@ -15,7 +15,7 @@
         <intercept-url pattern="/resources/**" access="permitAll"/>
         <intercept-url pattern="/cursos" access="isAuthenticated()"/>
         <intercept-url pattern="/cursos/**" access="isAuthenticated()"/>
-                <intercept-url pattern="/" access="hasRole('SUPER_ADMIN')"/>
+        <intercept-url pattern="/" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="hasRole('SUPER_ADMIN')"/>
         <form-login login-page="/login" default-target-url="/"
                     username-parameter="username"

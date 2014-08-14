@@ -3,8 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
-<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+
 <script type="text/javascript">
     var espanol = {"sProcessing": "Procesando...",
         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -26,6 +26,7 @@
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({
+        	"sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"lfr>t<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip>',
             "oLanguage": espanol,
             "bProcessing": false,
             "bServerSide": false,
@@ -51,6 +52,8 @@
                 }
             ]
         });
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add>Agregar</a>");
+        $('#add').attr('href','<c:url value='/cursos/add'/>');
     });
 
 

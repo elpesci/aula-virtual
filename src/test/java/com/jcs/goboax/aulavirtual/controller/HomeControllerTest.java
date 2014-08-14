@@ -36,6 +36,6 @@ public class HomeControllerTest extends InMemoryDbTestBase
     {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("home"));
+                .andExpect(view().name("cursos"));
     }
 }

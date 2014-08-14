@@ -54,6 +54,8 @@ public class Contenido implements Serializable
     private String fechaModificacion;
 
     private int modificadoPor;
+    
+    private String contentType;
 
     private String nombre;
 
@@ -171,4 +173,13 @@ public class Contenido implements Serializable
         this.tipoContenido = tipoContenido;
     }
 
+    public String getContentType()
+    {
+        return contentType;
+    }
+
+    public void setContentType(String contenttype)
+    {
+        this.contentType = contenttype;
+    }
 }

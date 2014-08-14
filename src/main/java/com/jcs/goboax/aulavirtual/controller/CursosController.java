@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,16 +110,20 @@ public class CursosController
     {
         CourseModel myCourseModel = new CourseModel();
         aModel.put("courseModel", myCourseModel);
+        aModel.put("target", NavigationTargets.COURSE_ADD);
+        aModel.put("action", "add");
         return "cursos/add";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(params = "save", value = "/add", method = RequestMethod.POST)
     public String cursosAddDo(@Validated CourseModel courseModel,
-            BindingResult result)
+            BindingResult result, Map<String, Object> aModel)
     {
         LOG.debug("Adding Curso ...");
         if (result.hasErrors())
         {
+            aModel.put("target", NavigationTargets.COURSE_ADD);
+            aModel.put("action", "add");
             return "cursos/add";
         }
 
@@ -160,7 +166,7 @@ public class CursosController
         {
             Contenido myContenido = contenidoDao.findByKey(anId);
             byte[] myFileContent = myContenido.getArchivoMaterial();
-            // response.setContentType("text/csv");
+            response.setContentType(myContenido.getContentType());
             response.setHeader("Content-disposition", "attachment; filename=\""
                     + myContenido.getNombre() + "\"");
             FileCopyUtils.copy(myFileContent, response.getOutputStream());
