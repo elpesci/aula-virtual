@@ -116,8 +116,9 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPersonaConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPerfilConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.CourseModelToCursoConverter"/>
-                <bean class="com.jcs.goboax.aulavirtual.converter.ContentModelToContenidoConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ContentModelFormToContenidoConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.CursoToCourseModelConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ContenidoToContentModelConverter"/>
             </list>
         </property>
     </bean>

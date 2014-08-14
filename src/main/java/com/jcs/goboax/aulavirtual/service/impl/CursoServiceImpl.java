@@ -3,11 +3,12 @@ package com.jcs.goboax.aulavirtual.service.impl;
 import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.dao.api.CursoDao;
 import com.jcs.goboax.aulavirtual.dao.api.TipoContenidoDao;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.TipoContenido;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
-import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
+import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +60,10 @@ public class CursoServiceImpl
 
     @Transactional
     @Override
-    public void createContent(ContentModel aContentModel, Integer aCourseId)
+    public void createContent(ContentModelForm aContentModelForm, Integer aCourseId)
     {
         
-        Contenido myContenido = conversionService.convert(aContentModel, Contenido.class);
+        Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
         Curso myCurso = cursoDao.findByKey(aCourseId);
         myContenido.setCurso(myCurso);
         
@@ -70,5 +71,25 @@ public class CursoServiceImpl
         myContenido.setTipoContenido(tipoContenido);
         
         contenidoDao.persist(myContenido);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Contenido> readContents(Integer aCourseId)
+    {
+        Curso myCurso = cursoDao.findByKey(aCourseId);
+        if (myCurso == null)
+        {
+            throw new AulaVirtualPersistenceException("Course does not exists");
+        }
+        return readContents(myCurso);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Contenido> readContents(Curso aCourse)
+    {
+
+        return contenidoDao.readContentsByCourse(aCourse);
     }
 }
