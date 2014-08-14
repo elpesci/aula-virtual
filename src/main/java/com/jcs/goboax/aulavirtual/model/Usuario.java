@@ -35,7 +35,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NamedQueries({
         @NamedQuery(name = Usuario.USUARIO_ALL_QUERYNAME, query = "SELECT u FROM Usuario u"),
         @NamedQuery(name = Usuario.USUARIO_BY_EMAIL, query = "SELECT u FROM Usuario u "
-                + "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER) })
+                + "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER)})
 @Table(name = "Usuario")
 public class Usuario
         implements UserDetails, Serializable

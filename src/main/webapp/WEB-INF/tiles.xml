@@ -61,4 +61,9 @@
         <put-attribute name="title" value="Aula Virtual - Agegar Contenido" />
         <put-attribute name="body" value="/WEB-INF/views/coordinador/addContenido.jsp" />
     </definition>
+
+    <definition extends="base.definition" name="contenido/list">
+        <put-attribute name="title" value="Aula Virtual - Lista de Contenido" />
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/contenidos.jsp" />
+    </definition>
 </tiles-definitions>

@@ -3,7 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
-<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
     var espanol = {"sProcessing": "Procesando...",
@@ -30,21 +29,19 @@
             "bProcessing": false,
             "bServerSide": false,
             "sort": "position",
-            "sAjaxSource": "cursos/list",
+            "sAjaxSource": "content/list",
             "createdRow": function (row, data, index) {
                 var contentLink = $('<a/>');
-                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
+                myLink = "<c:url value='/cursos/content/download/" + data.id + "'/>";
                 contentLink.attr('href', myLink);
-                contentLink.html('Contenido');
+                contentLink.html('Descargar');
                 $(row).find('.acciones-control').append(contentLink);
             },
             "aoColumns": [
                 { "mData": "name" },
-                { "mData": "goal" },
                 { "mData": "id",
                     "mRender": function (id) {
-                        return  '<a href="' + id + '">' + id + '</a><div id="contentLink_'
-                                + id + '"/>';
+                        return  '<div id="contentLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
                     "orderable": false
@@ -62,10 +59,8 @@
                 <table id="example" class="display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.course.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.goal.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true"
-                                            code="courses.actions.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="content.name.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="contentent.download.label"/></th>
                     </tr>
                     </thead>
                 </table>
