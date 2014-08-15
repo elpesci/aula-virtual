@@ -3,6 +3,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<spring:hasBindErrors name="registration">
+    <script>
+        $(document).ready(function () {
+            <c:forEach items="${errors.globalErrors}" var="errorMessage">
+            	aulaVirtualController.addFlashMessage("<c:out value="${errorMessage.defaultMessage}" />");
+            </c:forEach>
+        });
+    </script>
+</spring:hasBindErrors>
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
@@ -10,8 +19,7 @@
     </div>
     <div class="panel panel-body">
         <p class="info">
-            Para poder obtener los beneficios de Aula Virtual, es necesario que te registres como usuario.
-            Por favor, captura los datos solicitados en el siguiente formulario.
+            <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.info"/>
         </p>
         <form:form method="Post" action="/login/registration" commandName="registration" cssClass="form-horizontal">
             <div class="form-group">
@@ -20,7 +28,7 @@
                     <span class="error"><form:errors path="name"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="name" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:input path="name" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
 
@@ -30,7 +38,7 @@
                     <span class="error"><form:errors path="lastName"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="lastName" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:input path="lastName" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
             
@@ -40,7 +48,7 @@
                     <span class="error"><form:errors path="secondLastName"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="secondLastName" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:input path="secondLastName" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
 
@@ -50,7 +58,7 @@
                     <span class="error"><form:errors path="email"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="email" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:input path="email" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
 
@@ -60,7 +68,7 @@
                     <span class="error"><form:errors path="password"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:password path="password" autocomplete="off" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:password path="password" autocomplete="off" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
 
@@ -70,12 +78,16 @@
                     <span class="error"><form:errors path="confirmPassword"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:password path="confirmPassword" autocomplete="off" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:password path="confirmPassword" autocomplete="off" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
             
             <div class="form-group">
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
+                <form:label path="confirmPassword" cssClass="col-sm-4 control-label">
+                    <spring:message htmlEscape="true" javaScriptEscape="true" code="label.profile"/>:
+                    <span class="error"><form:errors path="profile"/></span>
+                </form:label>
                     <form:select path="profile" cssClass="col-sm-offset-4 col-sm-8" items="${profiles}"/>
                 </sec:authorize>
             </div>
@@ -86,16 +98,6 @@
                     <input type="submit" name="cancel" class="btn btn-danger" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
                 </div>
             </div>
-
-            <span class="error">
-                <spring:hasBindErrors name="registration">
-                <c:forEach items="${errors.globalErrors}" var="errorMessage">
-                    <div id="errors" class="errors">
-                        <spring:message htmlEscape="true" code="${errorMessage.code}" />
-                    </div>
-                </c:forEach>
-                </spring:hasBindErrors>
-            </span>
         </form:form>
     </div>
 </div>

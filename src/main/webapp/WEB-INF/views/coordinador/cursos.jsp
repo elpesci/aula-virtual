@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
@@ -52,12 +53,14 @@
                 }
             ]
         });
+
+        <sec:authorize access="hasRole('SUPER_ADMIN')">
         var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add>Agregar</a>");
         $('#add').attr('href','<c:url value='/cursos/add'/>');
+        </sec:authorize>
     });
-
-
 </script>
+
 <form:form action="" method="GET">
     <table width="100%" style="border: 3px;background: rgb(243, 244, 248);">
         <tr>
