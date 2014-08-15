@@ -13,6 +13,7 @@
     <tiles:insertAttribute name="meta"/>
 
     <!--estilos-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<c:url value="/resources/css/estilo_general.css"/>" rel="stylesheet" type="text/css" media="screen"/>
     <link href="<c:url value="/resources/css/SprayMenuBar.css"/>" rel="stylesheet" type="text/css" media="screen"/>
     <link href="<c:url value="/resources/css/SpryCollapsiblePanel.css"/>" rel="stylesheet" type="text/css"
@@ -20,6 +21,7 @@
     <link href="<c:url value="/resources/css/aulavirtual.css"/>" rel="stylesheet" type="text/css" media="screen"/>
     <!--Scripts-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/SpryMenuBar.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/SpryCollapsiblePanel.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/js/aulavirtual.js"/>" type="text/javascript"></script>
@@ -45,5 +47,6 @@
     <!-- end #wraper -->
     <tiles:insertAttribute name="footer"/>
 </div>
+
 </body>
 </html>

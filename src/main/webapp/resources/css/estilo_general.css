@@ -298,7 +298,7 @@ fieldset {
 }
 
 fieldset {display: inline-block; vertical-align: middle; background: #eee;}
-fieldset {display: inline !ie7;}
+/*fieldset {display: inline !ie7;}*/
 
 
 label {
