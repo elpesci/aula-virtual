@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -60,6 +62,9 @@ public class CursosController
 
     @Autowired
     private ConversionService conversionService;
+    
+    @Autowired
+    private FlashMessage flashMessage;
 
     @InitBinder("courseModel")
     private void initBinder(WebDataBinder binder)
@@ -80,7 +85,7 @@ public class CursosController
     }
 
     // TODO Create external API and move this call.
-    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String cursosList() throws IOException
     {
         List<Curso> myCursos = cursoService.readCourses();
@@ -128,9 +133,16 @@ public class CursosController
         }
 
         cursoService.createCourse(courseModel);
-
+        flashMessage.success("course.success");
         return "redirect:/cursos";
     }
+    
+    @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
+    public String cancelAddCourse()
+    {
+        return "redirect:/cursos";
+    }
+
 
     @RequestMapping(value = "/{courseId}/content/add", method = RequestMethod.GET)
     public String contentAdd(@PathVariable("courseId") Integer aCourseId,
@@ -205,8 +217,8 @@ public class CursosController
         myObjectToJsonObject.setAaData(myContentModels);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json2 = gson.toJson(myObjectToJsonObject);
+        String myJsonResponse = gson.toJson(myObjectToJsonObject);
 
-        return json2;
+        return myJsonResponse;
     }
 }

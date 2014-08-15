@@ -134,8 +134,11 @@ public class UsuarioServiceImpl
             myUsuario.setStatus(UsuarioStatus.ACTIVE);
             usuarioDao.update(myUsuario);
             sendActivationComplete(myUsuario);
+            
+            return myUsuario;
         }
-        return myUsuario;
+        
+        return null;
     }
 
     private String resetPassword(Usuario aUsuario)

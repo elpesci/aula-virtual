@@ -65,10 +65,9 @@
                 <table id="example" class="display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.course.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.goal.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true"
-                                            code="courses.actions.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="course.course.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="course.goal.label"/></th>
+                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="course.actions.label"/></th>
                     </tr>
                     </thead>
                 </table>
