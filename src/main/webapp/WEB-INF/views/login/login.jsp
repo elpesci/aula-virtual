@@ -31,7 +31,7 @@
                 
             <div class="panel panel-warning">
                 <div class="panel-heading">
-                    <spring:message htmlEscape="true" javaScriptEscape="true" code="login.login.label"/>
+                    <spring:message javaScriptEscape="true" code="login.login.label"/>
                 </div>
                 <div class="panel-body">
                     <c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false"/>
@@ -39,7 +39,7 @@
                         
                             <div class="form-group">
                                 <label for="username" class="col-sm-4 control-label">
-                                    <spring:message htmlEscape="true" javaScriptEscape="true" code="login.username.label"/>
+                                    <spring:message javaScriptEscape="true" code="login.username.label"/>
                                 </label>
                                 <div class="col-sm-8">
                                 <input name="username" placeholder="Capture usuario" class="form-control"
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <label for="password" class="col-sm-4 control-label">
-                                    <spring:message htmlEscape="true" javaScriptEscape="true" code="label.password"/>
+                                    <spring:message javaScriptEscape="true" code="label.password"/>
                                 </label>
                                 <div class="col-sm-8">
                                 <input type="password" name="password" class="form-control"/>
@@ -59,21 +59,21 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
                                 <input type="submit" class="btn btn-primary"
-                                       value="<spring:message htmlEscape="true" javaScriptEscape="true" code="send"/>"
+                                       value="<spring:message javaScriptEscape="true" code="send"/>"
                                        id="submitBtn"/>
                                 </div>
                             </div>
 
                         <div>
-                            <spring:message htmlEscape="true" javaScriptEscape="true" code="login.forgetpassword.label"/>
+                            <spring:message javaScriptEscape="true" code="login.forgetpassword.label"/>
                             <a href="<c:url value="/login/forgetPassword"/>">
-                                <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
+                                <spring:message javaScriptEscape="true" code="here"/>
                             </a>
                         </div>
-                        <spring:message htmlEscape="true" javaScriptEscape="true" code="login.newuser.label"/>
+                        <spring:message javaScriptEscape="true" code="login.newuser.label"/>
                         <a href="<c:url value="/login/registration"/>">
-                            <spring:message htmlEscape="true" javaScriptEscape="true" code="login.register.label"/>
-                            <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
+                            <spring:message javaScriptEscape="true" code="login.register.label"/>
+                            <spring:message javaScriptEscape="true" code="here"/>
                         </a>
 
                     </form>
