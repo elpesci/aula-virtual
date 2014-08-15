@@ -4,42 +4,44 @@
 
 <div class="centre">
 
-	<c:if test="${not empty param.error}">
-        <span class="error"> Invalid user name or password, try again.</span>
+    <c:if test="${error}">
+        <script>
+            $(document).ready(function () {
+                $('#flashMessagesBox').html($('<p/>', { 'class': 'error center', html: "<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>" }));
+            });
+        </script>
     </c:if>
-		<span class="error">${msg}</span>
-	<c:if test="${not empty msg}">
-		<span class="error">${msg}</span>
-	</c:if>
+    <c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false"/>
     <form name='loginForm' action="<c:url value='/j_spring_security_check'/>" method='POST'>
-    	<fieldset>
+        <fieldset>
             <label for="username">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="login.username.label"/>
             </label>
-            <input name="username" placeholder="Capture usuario"/>
+            <input name="username" placeholder="Capture usuario"
+                   value="<c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false" />"/>
 
             <label for="password">
-                <spring:message htmlEscape="true" javaScriptEscape="true" code="login.password.label"/> 
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="label.password"/>
             </label>
             <input type="password" name="password"/>
-         </fieldset>
+        </fieldset>
 
-         <div>
-			<spring:message htmlEscape="true" javaScriptEscape="true" code="login.forgetpassword.label"/>         
-                         <a href="login/forgetPassword">
-                	<spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
-                </a>
-                </div>
         <div>
-            <input type="submit" 
-            		value="<spring:message htmlEscape="true" javaScriptEscape="true" code="login.login.label"/>" 
-            		id="submitBtn"/>
+            <spring:message htmlEscape="true" javaScriptEscape="true" code="login.forgetpassword.label"/>
+            <a href="<c:url value="/login/forgetPassword"/>">
+                <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
+            </a>
         </div>
-                <spring:message htmlEscape="true" javaScriptEscape="true" code="login.newuser.label"/>
-                <a href="login/registration">
-                	<spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
-                </a>
-        
+        <div>
+            <input type="submit"
+                   value="<spring:message htmlEscape="true" javaScriptEscape="true" code="login.login.label"/>"
+                   id="submitBtn"/>
+        </div>
+        <spring:message htmlEscape="true" javaScriptEscape="true" code="login.newuser.label"/>
+        <a href="<c:url value="/login/registration"/>">
+            <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
+        </a>
+
     </form>
 
 </div>

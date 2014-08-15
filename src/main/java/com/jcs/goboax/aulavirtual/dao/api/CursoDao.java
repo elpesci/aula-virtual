@@ -5,4 +5,5 @@ import com.jcs.goboax.aulavirtual.model.Curso;
 public interface CursoDao
     extends IDao<Integer, Curso>
 {
+
 }

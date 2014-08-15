@@ -1,16 +1,22 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
 
-/**
- * Created by acardenas on 8/3/14.
- */
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Registration
 {
     private String name;
+    @NotEmpty
     private String lastName;
+    @NotEmpty
     private String secondLastName;
+    @NotEmpty
+    @Email
     private String email;
+    @NotEmpty
     private String password;
+    @NotEmpty
     private String confirmPassword;
     private String profile;
 

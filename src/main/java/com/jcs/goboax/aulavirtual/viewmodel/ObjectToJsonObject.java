@@ -2,16 +2,13 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 
 import java.util.List;
 
-/**
- * Created by acardenas on 8/5/14.
- */
-public class CursoToJsonObject
+public class ObjectToJsonObject<T>
 {
     int iTotalRecords;
     int iTotalDisplayRecords;
     String sEcho;
     String sColumns;
-    List<CourseModel> aaData;
+    List<T> aaData;
 
     public int getiTotalRecords()
     {
@@ -53,12 +50,12 @@ public class CursoToJsonObject
         this.sColumns = sColumns;
     }
 
-    public List<CourseModel> getAaData()
+    public List<T> getAaData()
     {
         return aaData;
     }
 
-    public void setAaData(List<CourseModel> aaData)
+    public void setAaData(List<T> aaData)
     {
         this.aaData = aaData;
     }

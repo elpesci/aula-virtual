@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
+import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
+import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +32,9 @@ import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
-import com.jcs.goboax.aulavirtual.validator.ContentModelValidator;
+import com.jcs.goboax.aulavirtual.validator.ContentModelFormValidator;
 import com.jcs.goboax.aulavirtual.validator.CourseModelValidator;
-import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
-import com.jcs.goboax.aulavirtual.viewmodel.CursoToJsonObject;
 
 @Controller
 @RequestMapping("/cursos")
@@ -49,7 +50,7 @@ public class CursosController
     private CourseModelValidator courseModelValidator;
 
     @Autowired
-    private ContentModelValidator contentModelValidator;
+    private ContentModelFormValidator contentModelFormValidator;
 
     // TODO Remove me
     @Autowired
@@ -64,10 +65,10 @@ public class CursosController
         binder.setValidator(courseModelValidator);
     }
 
-    @InitBinder("contentModel")
+    @InitBinder("contentModelForm")
     private void initContentModelBinder(WebDataBinder binder)
     {
-        binder.setValidator(contentModelValidator);
+        binder.setValidator(contentModelFormValidator);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -90,7 +91,7 @@ public class CursosController
                 TypeDescriptor.collection(List.class,
                         TypeDescriptor.valueOf(CourseModel.class)));
 
-        CursoToJsonObject myCursoToJsonObject = new CursoToJsonObject();
+        ObjectToJsonObject<CourseModel> myCursoToJsonObject = new ObjectToJsonObject<CourseModel>();
 
         myCursoToJsonObject.setiTotalDisplayRecords(myCursos.size());
         myCursoToJsonObject.setiTotalRecords(myCursos.size());
@@ -129,17 +130,17 @@ public class CursosController
     public String contentAdd(@PathVariable("courseId") Integer aCourseId,
             Map<String, Object> aModel)
     {
-        ContentModel myContentModel = new ContentModel();
+        ContentModelForm myContentModelForm = new ContentModelForm();
 
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
-        aModel.put("contentModel", myContentModel);
+        aModel.put("contentModelForm", myContentModelForm);
 
         return "contenido/add";
     }
 
     @RequestMapping(value = "/{courseId}/content/add", method = RequestMethod.POST)
     public String contentAdd(@PathVariable("courseId") Integer aCourseId,
-            ContentModel courseModel, BindingResult result)
+            @Validated ContentModelForm courseModel, BindingResult result)
     {
         LOG.debug(courseModel.getName());
         LOG.debug(courseModel.getContent().getContentType());
@@ -149,7 +150,7 @@ public class CursosController
 
     }
 
-    @RequestMapping(value = "/content/test/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/content/download/{id}", method = RequestMethod.GET)
     public void doDownload(HttpServletRequest request,
             HttpServletResponse response, @PathVariable("id") Integer anId)
             throws IOException
@@ -166,9 +167,40 @@ public class CursosController
         }
         catch (IOException e)
         {
-            LOG.error("unable to create CSV file,  please see the stackTrace",
-                    e);
+            LOG.error("unable to create file,  please see the stackTrace", e);
         }
 
+    }
+
+    @RequestMapping(value = "/{cursoId}/contents", method = RequestMethod.GET)
+    public String contents(@PathVariable("cursoId") Integer aCourse, Map<String, Object> aModel)
+    {
+        aModel.put("courseId", aCourse);
+        return "contenido/list";
+    }
+
+    @RequestMapping(value = "/{cursoId}/content/list", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String contentList(@PathVariable("cursoId") Integer aCourseId) throws IOException
+    {
+        List<Contenido> myContenidos = cursoService.readContents(aCourseId);
+
+        @SuppressWarnings("unchecked")
+        List<ContentModel> myContentModels = (List<ContentModel>) conversionService.convert(
+                myContenidos,
+                TypeDescriptor.collection(List.class,
+                        TypeDescriptor.valueOf(Contenido.class)),
+                TypeDescriptor.collection(List.class,
+                        TypeDescriptor.valueOf(ContentModel.class)));
+
+        ObjectToJsonObject<ContentModel> myObjectToJsonObject = new ObjectToJsonObject<ContentModel>();
+
+        myObjectToJsonObject.setiTotalDisplayRecords(myContenidos.size());
+        myObjectToJsonObject.setiTotalRecords(myContenidos.size());
+        myObjectToJsonObject.setAaData(myContentModels);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json2 = gson.toJson(myObjectToJsonObject);
+
+        return json2;
     }
 }

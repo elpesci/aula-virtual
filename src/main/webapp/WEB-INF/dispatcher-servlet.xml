@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                           		http://www.springframework.org/schema/aop 
+                           		http://www.springframework.org/schema/aop/spring-aop.xsd
                            http://www.springframework.org/schema/context 
                            http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc 
                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
                            http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+                           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+                           http://www.springframework.org/schema/jdbc 
+                           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <import resource="spring-security.xml"/>
     <context:component-scan base-package="com.jcs.goboax.aulavirtual"/>
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:message"/>
+        <property name="basenames">
+            <list>
+                <value>classpath:message</value>
+                <value>classpath:email</value>
+            </list>
+        </property>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!-- JSR-303 -->
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <context:property-placeholder location="classpath:jdbc.properties, classpath:mail.properties"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -38,16 +57,30 @@
         </property>
     </bean>
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven validator="validator"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:default-servlet-handler/>
 
+    <mvc:interceptors>
+        <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+            <property name="cacheSeconds" value="0"/>
+            <property name="useExpiresHeader" value="false"/>
+            <property name="useCacheControlHeader" value="true"/>
+            <property name="useCacheControlNoStore" value="true"/>
+        </bean>
+    </mvc:interceptors>
+
     <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${mysql.database.driver}"/>
-        <property name="url" value="${mysql.database.url}"/>
-        <property name="username" value="${mysql.database.user}"/>
-        <property name="password" value="${mysql.database.password}"/>
+          class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="acquireIncrement" value="${c3p0.acquire_increment}"/>
+        <property name="minPoolSize" value="${c3p0.min_size}"/>
+        <property name="maxPoolSize" value="${c3p0.max_size}"/>
+        <property name="maxIdleTime" value="${c3p0.max_idle_time}"/>
+        <property name="unreturnedConnectionTimeout" value="${c3p0.unreturned_connection_timeout}"/>
     </bean>
 
     <bean id="entityManagerFactory"
@@ -62,11 +95,15 @@
         <property name="jpaPropertyMap">
             <props>
                 <prop key="eclipselink.weaving">false</prop>
+                <prop key="eclipselink.ddl-generation.output-mode">${jdbc.ddl-generation.output-mode}</prop>
             </props>
         </property>
     </bean>
     
-    
+<!-- jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="/WEB-INF/import.sql" encoding="UTF-8" />
+</jdbc:initialize-database -->    
+
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
@@ -79,17 +116,46 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPersonaConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.RegistrationToPerfilConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.CourseModelToCursoConverter"/>
-                <bean class="com.jcs.goboax.aulavirtual.converter.ContentModelToContenidoConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ContentModelFormToContenidoConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.CursoToCourseModelConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ContenidoToContentModelConverter"/>
             </list>
         </property>
     </bean>
 
-   <!-- Configure the multipart resolver -->
+    <!-- Configure the multipart resolver -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- one of the properties available; the maximum file size in bytes -->
         <property name="maxUploadSize" value="10000000"/>
-    </bean>    
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+                <prop key="mail.debug">${mail.debug}</prop>
+                <prop key="mail.smtp.socketFactory.port">${mail.smtp.socketFactory.port}</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="velocityEngine" 
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="resourceLoaderPath" value="/WEB-INF/email/" />
+   </bean>
+   
+   	<bean id="flash" class="com.jcs.goboax.aulavirtual.util.FlashMessage" scope="session">
+		<aop:scoped-proxy/>		
+	</bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

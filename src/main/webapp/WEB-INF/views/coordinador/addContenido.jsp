@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div id="registration_form">
-    <form:form method="POST" commandName="contentModel" action="${target}" enctype="multipart/form-data">
+    <form:form method="POST" commandName="contentModelForm" action="${target}" enctype="multipart/form-data">
         <fieldset>
             <form:label path="name">
                 <spring:message htmlEscape="true" javaScriptEscape="true" code="content.name.label"/>
