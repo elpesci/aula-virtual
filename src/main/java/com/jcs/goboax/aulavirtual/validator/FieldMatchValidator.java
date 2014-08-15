@@ -1,24 +1,23 @@
-package com.jcs.goboax.aulavirtual.viewmodel;
+package com.jcs.goboax.aulavirtual.validator;
+
+import com.jcs.goboax.aulavirtual.validator.annotation.FieldMatch;
+import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import com.jcs.goboax.aulavirtual.validator.annotation.FieldMatch;
-
 public class FieldMatchValidator
-    implements ConstraintValidator<FieldMatch, Object>
+        implements ConstraintValidator<FieldMatch, Object>
 {
     private String firstFieldName;
     private String secondFieldName;
-    
+
     @Override
     public void initialize(FieldMatch aFieldMatch)
     {
         firstFieldName = aFieldMatch.first();
         secondFieldName = aFieldMatch.second();
-        
+
     }
 
     @Override
@@ -37,7 +36,7 @@ public class FieldMatchValidator
         catch (final Exception ignore)
         {
             //ignore
-        } 
+        }
         return true;
     }
 

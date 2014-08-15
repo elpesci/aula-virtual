@@ -1,6 +1,6 @@
 package com.jcs.goboax.aulavirtual.validator.annotation;
 
-import com.jcs.goboax.aulavirtual.validator.FieldMatchValidator;
+import com.jcs.goboax.aulavirtual.validator.UniqueEmailValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,24 +11,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = FieldMatchValidator.class)
-@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Constraint(validatedBy = UniqueEmailValidator.class)
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FieldMatch
+public @interface UniqueEmail
 {
-    String message() default "{fieldmatch.message}";
+    String message() default "{UniqueEmail.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    /**
-     * @return The first field
-     */
-    String first();
-
-    /**
-     * @return The second field
-     */
-    String second();
 }

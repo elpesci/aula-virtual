@@ -1,9 +1,11 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.viewmodel.ForgetPasswordForm;
+import com.jcs.goboax.aulavirtual.viewmodel.ResetPasswordForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
-import com.jcs.goboax.aulavirtual.util.FlashMessage;
-import com.jcs.goboax.aulavirtual.viewmodel.ForgetPasswordForm;
-import com.jcs.goboax.aulavirtual.viewmodel.ResetPasswordForm;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/login/forgetPassword")
@@ -75,7 +73,7 @@ public class ForgetPasswordController
         }
         catch (AulaVirtualException e)
         {
-            LOG.info("Email doesn't exist");
+            LOG.error("Email doesn't exist", e);
             flashMessage.error("forgetPassword.exception");
             result.reject("forgetPassword.exception");
             return "login/forgetPassword";
@@ -113,6 +111,7 @@ public class ForgetPasswordController
     {
         return "redirect:/";
     }
+
     @RequestMapping(params = "send", value = "/resetpassword", method = RequestMethod.POST)
     public String resetPasswordSubmit(@Validated ResetPasswordForm resetPasswordForm,
                                       BindingResult result, HttpServletRequest request)

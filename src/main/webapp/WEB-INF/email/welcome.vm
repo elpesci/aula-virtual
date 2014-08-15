@@ -1,8 +1,13 @@
-Estimado ${user.persona.nombre} ${user.persona.apellidoPaterno}:	
+<html>
+<strong>
+    Estimado ${user.persona.nombre} ${user.persona.apellidoPaterno}:
+</strong>
+<br/>
 
 Bienvenido y Gracias por registrarse en el Aula Virtual.
-
+<br/>
 Para finalizar su proceso de registro y obtener acceso al sistema por favor visite la siguiente liga:
  ${serverUrl}.
-
+<br/>
 Gracias.
+</html>

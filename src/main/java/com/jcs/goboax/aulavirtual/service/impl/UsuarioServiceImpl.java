@@ -1,17 +1,5 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
@@ -25,6 +13,17 @@ import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
 import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
 import com.jcs.goboax.aulavirtual.util.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Service("usuarioService")
 public class UsuarioServiceImpl
@@ -127,8 +126,8 @@ public class UsuarioServiceImpl
         Usuario myUsuario = usuarioDao.findByKey(aUserId);
         LOG.debug("User to Activate {}", myUsuario);
 
-        if (myUsuario != null 
-                && myUsuario.isVerificationPending() 
+        if (myUsuario != null
+                && myUsuario.isVerificationPending()
                 && aVerificationKey.equals(myUsuario.getVerificationKey()))
         {
             myUsuario.setVerificationKey(null);
@@ -166,5 +165,11 @@ public class UsuarioServiceImpl
     public void sendActivationComplete(Usuario anUsuario)
     {
         emailService.sendActivationComplete(anUsuario);
+    }
+
+    @Override
+    public Usuario readByEmail(String anEmail)
+    {
+        return usuarioDao.findByEmail(anEmail);
     }
 }

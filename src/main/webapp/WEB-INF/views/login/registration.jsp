@@ -5,6 +5,15 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div id="registration_form">
+    <spring:hasBindErrors name="registration">
+        <script>
+            $(document).ready(function () {
+                <c:forEach items="${errors.globalErrors}" var="errorMessage">
+                aulaVirtualController.addFlashMessage("<c:out value="${errorMessage.defaultMessage}" />");
+                </c:forEach>
+            });
+        </script>
+    </spring:hasBindErrors>
     <fieldset>
         <form:form method="Post" action="/login/registration" commandName="registration">
             <form:label path="name">
@@ -42,22 +51,15 @@
                 <span class="error"><form:errors path="confirmPassword"/></span>
             </form:label>
             <form:password path="confirmPassword" autocomplete="off" cssErrorClass="fieldError"/>
-            
+
             <sec:authorize access="hasRole('SUPER_ADMIN')">
                 <form:select path="profile" items="${profiles}"/>
             </sec:authorize>
 
-            <input type="submit" name="save" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
-            <input type="submit" name="cancel" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
-            <span class="error">
-                <spring:hasBindErrors name="registration">
-                <c:forEach items="${errors.globalErrors}" var="errorMessage">
-                    <div id="errors" class="errors">
-                        <spring:message htmlEscape="true" code="${errorMessage.code}" />
-                    </div>
-                </c:forEach>
-                </spring:hasBindErrors>
-            </span>
+            <input type="submit" name="save"
+                   value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
+            <input type="submit" name="cancel"
+                   value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
         </form:form>
     </fieldset>
 </div>
