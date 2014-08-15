@@ -15,7 +15,7 @@
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h1>¡Regístrate en Aula Virtual!</h1>
+        <h1><spring:message htmlEscape="true" javaScriptEscape="true" code="registration.header"/></h1>
     </div>
     <div class="panel panel-body">
         <p class="info">
