@@ -73,6 +73,10 @@
 
     <mvc:view-controller path="/accessdenied" view-name="accessdenied"/>
 
+    <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+        <property name="privateKey" value="6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl"/>
+    </bean>
+
     <cache:annotation-driven/>
 
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
@@ -112,10 +116,10 @@
             </props>
         </property>
     </bean>
-    
-<!-- jdbc:initialize-database data-source="dataSource">
-    <jdbc:script location="/WEB-INF/import.sql" encoding="UTF-8" />
-</jdbc:initialize-database -->    
+
+    <!-- jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="/WEB-INF/import.sql" encoding="UTF-8" />
+    </jdbc:initialize-database -->
 
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
@@ -143,10 +147,10 @@
     </bean>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${mail.host}" />
-        <property name="port" value="${mail.port}" />
-        <property name="username" value="${mail.username}" />
-        <property name="password" value="${mail.password}" />
+        <property name="host" value="${mail.host}"/>
+        <property name="port" value="${mail.port}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
 
         <property name="javaMailProperties">
             <props>
@@ -155,20 +159,20 @@
                 <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
                 <prop key="mail.debug">${mail.debug}</prop>
                 <prop key="mail.smtp.socketFactory.port">${mail.smtp.socketFactory.port}</prop>
-				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
-				<prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>
             </props>
         </property>
     </bean>
-    
-    <bean id="velocityEngine" 
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-      <property name="resourceLoaderPath" value="/WEB-INF/email/" />
-   </bean>
-   
-   	<bean id="flash" class="com.jcs.goboax.aulavirtual.util.FlashMessage" scope="session">
-		<aop:scoped-proxy/>		
-	</bean>
+
+    <bean id="velocityEngine"
+          class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="resourceLoaderPath" value="/WEB-INF/email/"/>
+    </bean>
+
+    <bean id="flash" class="com.jcs.goboax.aulavirtual.util.FlashMessage" scope="session">
+        <aop:scoped-proxy/>
+    </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>
