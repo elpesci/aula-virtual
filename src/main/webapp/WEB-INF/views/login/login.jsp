@@ -55,8 +55,8 @@
                                 <input type="password" name="password" class="form-control"/>
                                 </div>
                             </div>
-                                
-                            <div class="form-group">
+
+                        <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
                                 <input type="submit" class="btn btn-primary"
                                        value="<spring:message javaScriptEscape="true" code="send"/>"

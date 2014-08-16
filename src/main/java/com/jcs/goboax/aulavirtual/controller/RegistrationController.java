@@ -8,6 +8,8 @@ import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -51,6 +55,9 @@ public class RegistrationController
 
     @Autowired
     private FlashMessage flashMessage;
+
+    @Autowired
+    ReCaptcha reCaptcha;
 
     /**
      * Used to auto-login after activating an account
@@ -93,12 +100,24 @@ public class RegistrationController
 
     @RequestMapping(params = "save", method = RequestMethod.POST)
     public String processRegistration(@Validated Registration registration,
-                                      BindingResult result)
+                                      BindingResult result,
+                                      @RequestParam("recaptcha_challenge_field") String aChallangeField,
+                                      @RequestParam("recaptcha_response_field") String aResponseField,
+                                      ServletRequest aServletRequest,
+                                      Model aModel)
     {
         try
         {
-            if (result.hasErrors())
+            String remoteAddress = aServletRequest.getRemoteAddr();
+            ReCaptchaResponse reCaptchaResponse =
+                    this.reCaptcha.checkAnswer(remoteAddress, aChallangeField, aResponseField);
+
+            if (result.hasErrors() || !reCaptchaResponse.isValid())
             {
+                if (!reCaptchaResponse.isValid())
+                {
+                    aModel.addAttribute("invalidRecaptcha", true);
+                }
                 return "login/registration";
             }
             LOG.debug("Processing Registration....");
@@ -110,7 +129,7 @@ public class RegistrationController
         }
         catch (AulaVirtualRegistrationException e)
         {
-            result.reject("registration.exception");
+            flashMessage.error("registration.exception");
             return "login/registration";
         }
     }
