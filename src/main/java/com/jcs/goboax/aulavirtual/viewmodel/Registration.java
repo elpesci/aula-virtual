@@ -1,9 +1,13 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
 
+import com.jcs.goboax.aulavirtual.validator.annotation.FieldMatch;
+import com.jcs.goboax.aulavirtual.validator.annotation.UniqueEmail;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@FieldMatch(first = "password", second = "confirmPassword")
 public class Registration
 {
     private String name;
@@ -13,8 +17,10 @@ public class Registration
     private String secondLastName;
     @NotEmpty
     @Email
+    @UniqueEmail
     private String email;
     @NotEmpty
+    @Length(min = 8, max = 30)
     private String password;
     @NotEmpty
     private String confirmPassword;

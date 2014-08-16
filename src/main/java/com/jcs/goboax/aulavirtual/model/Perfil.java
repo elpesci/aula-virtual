@@ -24,6 +24,14 @@ import javax.persistence.TemporalType;
 public class Perfil
         implements Serializable
 {
+    public enum PerfilCodes
+    {
+        SUPER_ADMIN,
+        COORDINADOR,
+        INSTRUCTOR,
+        ALUMNO
+    };
+    
     private static final long serialVersionUID = 7915160426517813587L;
 
     public static final String PROFILE_ALL_QUERYNAME = "perfil.findAll";

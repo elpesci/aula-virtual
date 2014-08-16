@@ -19,7 +19,7 @@ public class ContentModelFormToContenidoConverter
         myContenido.setCreadoPor(Constants.SUPER_USER_ID);
         myContenido.setArchivoMaterial(aContentModelForm.getContent().getBytes());
         myContenido.setNombre(aContentModelForm.getContent().getOriginalFilename());
-//        myContenido.setDescripcion(aContentModel.getContent().getContentType());
+        myContenido.setContentType(aContentModelForm.getContent().getContentType());
         myContenido.setFechaCreacion(new Date());
         return myContenido;
     }

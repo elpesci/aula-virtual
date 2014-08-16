@@ -4,6 +4,7 @@ import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Component
 public class ContentModelFormValidator
@@ -19,8 +20,12 @@ public class ContentModelFormValidator
     @Override
     public void validate(Object anObjet, Errors anErrors)
     {
-        // TODO Auto-generated method stub
-        
+        ContentModelForm myContentModelForm = (ContentModelForm) anObjet;
+        CommonsMultipartFile myMultipartFile = myContentModelForm.getContent();
+        if (myMultipartFile.getSize() <= 0)
+        {
+            anErrors.rejectValue("content", "content.empty");
+        }
     }
 
 }
