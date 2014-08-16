@@ -39,10 +39,10 @@
                         
                             <div class="form-group">
                                 <label for="username" class="col-sm-4 control-label">
-                                    <spring:message htmlEscape="true" javaScriptEscape="true" code="login.username.label"/>
+                                    <spring:message htmlEscape="true" javaScriptEscape="true" code="label.email"/>
                                 </label>
                                 <div class="col-sm-8">
-                                <input name="username" placeholder="Capture usuario" class="form-control"
+                                    <input name="username" placeholder="Capture correo electr&oacute;nico" class="form-control"
                                        value="<c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false" />"/>
                                 </div>
                             </div>
@@ -67,6 +67,7 @@
                         <div>
                             <spring:message htmlEscape="true" javaScriptEscape="true" code="login.forgetpassword.label"/>
                             <a href="<c:url value="/login/forgetPassword"/>">
+                                <spring:message htmlEscape="true" javaScriptEscape="true" code="login.resetPassword.label"/>
                                 <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
                             </a>
                         </div>
