@@ -10,7 +10,6 @@ import com.jcs.goboax.aulavirtual.model.TipoContenido;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,14 @@ import java.util.List;
 
 @Service
 public class CursoServiceImpl
-    implements CursoService
+        implements CursoService
 {
     @Autowired
     private CursoDao cursoDao;
 
     @Autowired
     private ContenidoDao contenidoDao;
-    
+
     @Autowired
     private TipoContenidoDao tipoContenidoDao;
 
@@ -39,6 +38,13 @@ public class CursoServiceImpl
     public List<Curso> readCourses()
     {
         return cursoDao.findWithNamedQuery(Curso.CURSO_ALL_QUERYNAME);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Curso readCourseById(Integer anId)
+    {
+        return cursoDao.findByKey(anId);
     }
 
     @Transactional
@@ -54,7 +60,7 @@ public class CursoServiceImpl
     public CourseModel updateCourse(CourseModel aCourseModel)
     {
         Curso myCurso = conversionService.convert(aCourseModel, Curso.class);
-        cursoDao.persist(myCurso);
+        cursoDao.update(myCurso);
         return aCourseModel;
     }
 
@@ -62,14 +68,14 @@ public class CursoServiceImpl
     @Override
     public void createContent(ContentModelForm aContentModelForm, Integer aCourseId)
     {
-        
+
         Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
         Curso myCurso = cursoDao.findByKey(aCourseId);
         myContenido.setCurso(myCurso);
-        
+
         TipoContenido tipoContenido = tipoContenidoDao.findByKey(1);
         myContenido.setTipoContenido(tipoContenido);
-        
+
         contenidoDao.persist(myContenido);
     }
 

@@ -1,8 +1,5 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
-/**
- * Created by acardenas on 8/6/14.
- */
 public class CourseModel
 {
     private Integer id;
@@ -10,7 +7,7 @@ public class CourseModel
     private String goal;
     private String addressedTo;
 
-    
+
     public Integer getId()
     {
         return id;

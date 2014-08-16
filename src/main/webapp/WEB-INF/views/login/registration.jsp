@@ -8,7 +8,7 @@
     <script>
         $(document).ready(function () {
             <c:forEach items="${errors.globalErrors}" var="errorMessage">
-            	aulaVirtualController.addFlashMessage("<c:out value="${errorMessage.defaultMessage}" />");
+            aulaVirtualController.addFlashMessage("<c:out value="${errorMessage.defaultMessage}" />");
             </c:forEach>
         });
     </script>
@@ -42,7 +42,7 @@
                     <form:input path="lastName" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="secondLastName" cssClass="col-sm-4 control-label">
                     <spring:message javaScriptEscape="true" code="registration.secondLastName.label"/>
@@ -69,7 +69,8 @@
                     <span class="error"><form:errors path="password"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:password path="password" autocomplete="off" cssClass="form-control" cssErrorClass="form-control fieldError"/>
+                    <form:password path="password" autocomplete="off" cssClass="form-control"
+                                   cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
 
@@ -79,24 +80,27 @@
                     <span class="error"><form:errors path="confirmPassword"/></span>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:password path="confirmPassword" autocomplete="off" cssClass="form-control" cssErrorClass="form-control fieldError"/>
+                    <form:password path="confirmPassword" autocomplete="off" cssClass="form-control"
+                                   cssErrorClass="form-control fieldError"/>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
-                <form:label path="confirmPassword" cssClass="col-sm-4 control-label">
-                    <spring:message javaScriptEscape="true" code="label.profile"/>:
-                    <span class="error"><form:errors path="profile"/></span>
-                </form:label>
+                    <form:label path="profile" cssClass="col-sm-4 control-label">
+                        <spring:message javaScriptEscape="true" code="label.profile"/>:
+                        <span class="error"><form:errors path="profile"/></span>
+                    </form:label>
                     <form:select path="profile" cssClass="col-sm-offset-4 col-sm-8" items="${profiles}"/>
                 </sec:authorize>
             </div>
-                
+
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
-                    <input type="submit" name="save" class="btn btn-primary" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
-                    <input type="submit" name="cancel" class="btn btn-danger" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
+                    <input type="submit" name="save" class="btn btn-primary"
+                           value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
+                    <input type="submit" name="cancel" class="btn btn-danger"
+                           value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
                 </div>
             </div>
         </form:form>

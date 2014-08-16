@@ -1,30 +1,33 @@
 package com.jcs.goboax.aulavirtual.model;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The persistent class for the TipoContenido database table.
- * 
  */
 @Entity
-@NamedQuery(name = "TipoContenido.findAll", query = "SELECT t FROM TipoContenido t")
-@Table(name="TipoContenido")
+@NamedQueries({
+        @NamedQuery(name = TipoContenido.TIPO_CONTENIDO_ALL_QUERYNAME, query = "SELECT t FROM TipoContenido t")
+})
+@Table(name = "TipoContenido")
 public class TipoContenido
         implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public static final String TIPO_CONTENIDO_ALL_QUERYNAME = "tipoContenido.all";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

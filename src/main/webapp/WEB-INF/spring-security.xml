@@ -7,6 +7,7 @@
         http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <global-method-security secured-annotations="enabled"/>
 
     <http use-expressions="true">
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
@@ -14,6 +15,7 @@
         <intercept-url pattern="/login/**" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll"/>
         <intercept-url pattern="/cursos" access="isAuthenticated()"/>
+        <intercept-url pattern="/cursos/*/edit" access="hasAnyRole('SUPER_ADMIN','COORDINADOR')"/>
         <intercept-url pattern="/cursos/**" access="isAuthenticated()"/>
         <intercept-url pattern="/" access="isAuthenticated()"/>
         <intercept-url pattern="/**" access="hasRole('SUPER_ADMIN')"/>
@@ -22,6 +24,7 @@
                     password-parameter="password"
                     authentication-failure-handler-ref="userNameCachingAuthenticationFailureHandler"/>
         <logout logout-success-url="/login?logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
+        <access-denied-handler error-page="/accessdenied"/>
     </http>
 
     <beans:bean
