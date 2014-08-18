@@ -16,6 +16,8 @@ public interface CursoService
      */
     List<Curso> readCourses();
 
+    Curso readCourseById(Integer anId);
+
     /**
      * Save a given course.
      *
@@ -40,14 +42,12 @@ public interface CursoService
     void createContent(ContentModelForm aContentModelForm, Integer aCourseId);
 
     /**
-     *
      * @param aCourse
      * @return
      */
     List<Contenido> readContents(Curso aCourse);
 
     /**
-     *
      * @param aCourseId
      * @return
      */

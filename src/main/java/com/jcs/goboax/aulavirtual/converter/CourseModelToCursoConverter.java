@@ -14,6 +14,7 @@ public class CourseModelToCursoConverter
     public Curso convert(CourseModel courseModel)
     {
         Curso myCurso = new Curso();
+        myCurso.setCursoId(courseModel.getId());
         myCurso.setCreadoPor(Constants.SUPER_USER_ID);
         myCurso.setFechaCreacion(new Date());
         myCurso.setAudiencia(courseModel.getAddressedTo());

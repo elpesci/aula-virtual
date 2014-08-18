@@ -6,24 +6,35 @@ public class ContentModelForm
 {
     private String name;
     private CommonsMultipartFile content;
-    
+    private Integer contentTypeId;
+
     public String getName()
     {
         return name;
     }
-    
+
     public void setName(String name)
     {
         this.name = name;
     }
-    
+
     public CommonsMultipartFile getContent()
     {
         return content;
     }
-    
+
     public void setContent(CommonsMultipartFile content)
     {
         this.content = content;
+    }
+
+    public Integer getContentTypeId()
+    {
+        return contentTypeId;
+    }
+
+    public void setContentTypeId(Integer contentTypeId)
+    {
+        this.contentTypeId = contentTypeId;
     }
 }

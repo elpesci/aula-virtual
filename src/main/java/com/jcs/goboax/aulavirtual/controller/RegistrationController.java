@@ -1,12 +1,15 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
+import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
+import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,14 +30,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
-import com.jcs.goboax.aulavirtual.model.Perfil;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
-import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
-import com.jcs.goboax.aulavirtual.util.FlashMessage;
-import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
-import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/login/registration")
@@ -53,6 +55,9 @@ public class RegistrationController
 
     @Autowired
     private FlashMessage flashMessage;
+
+    @Autowired
+    ReCaptcha reCaptcha;
 
     /**
      * Used to auto-login after activating an account
@@ -95,22 +100,36 @@ public class RegistrationController
 
     @RequestMapping(params = "save", method = RequestMethod.POST)
     public String processRegistration(@Validated Registration registration,
-                                      BindingResult result)
+                                      BindingResult result,
+                                      @RequestParam("recaptcha_challenge_field") String aChallangeField,
+                                      @RequestParam("recaptcha_response_field") String aResponseField,
+                                      ServletRequest aServletRequest,
+                                      Model aModel)
     {
         try
         {
-            if (result.hasErrors())
+            String remoteAddress = aServletRequest.getRemoteAddr();
+            ReCaptchaResponse reCaptchaResponse =
+                    this.reCaptcha.checkAnswer(remoteAddress, aChallangeField, aResponseField);
+
+            if (result.hasErrors() || !reCaptchaResponse.isValid())
             {
+                if (!reCaptchaResponse.isValid())
+                {
+                    aModel.addAttribute("invalidRecaptcha", true);
+                }
                 return "login/registration";
             }
             LOG.debug("Processing Registration....");
             registrationService.createRegistration(registration);
 
+            flashMessage.success("registration.success");
+
             return "redirect:/";
         }
         catch (AulaVirtualRegistrationException e)
         {
-            result.reject("registration.exception");
+            flashMessage.error("registration.exception");
             return "login/registration";
         }
     }
@@ -118,7 +137,7 @@ public class RegistrationController
     @RequestMapping("/activate/{userId}")
     public String activateAccount(HttpServletRequest aRequest, @PathVariable("userId") Integer aUserId,
                                   @RequestParam(
-                                           "k") String aVerificationKey, Map<String, Object> aModel) throws UnsupportedEncodingException
+                                          "k") String aVerificationKey, Map<String, Object> aModel) throws UnsupportedEncodingException
     {
         Usuario myUsuario = usuarioService.activateAccount(aUserId, aVerificationKey);
         if (myUsuario != null && Usuario.UsuarioStatus.ACTIVE.equals(myUsuario.getStatus()))
@@ -144,11 +163,11 @@ public class RegistrationController
     private void autoLogin(HttpServletRequest request, String username, String password)
     {
         request.getSession();
-        
+
         UserDetails myUserDetails = usuarioService.loadUserByUsername(username);
-        Authentication authenticatedUser = 
-            new UsernamePasswordAuthenticationToken(myUserDetails, null, myUserDetails
-                .getAuthorities());
+        Authentication authenticatedUser =
+                new UsernamePasswordAuthenticationToken(myUserDetails, null, myUserDetails
+                        .getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
     }
 }

@@ -1,20 +1,27 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
+import com.jcs.goboax.aulavirtual.model.Contenido;
+import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.service.api.CursoService;
+import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.util.NavigationTargets;
+import com.jcs.goboax.aulavirtual.validator.ContentModelFormValidator;
+import com.jcs.goboax.aulavirtual.validator.CourseModelValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
+import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -26,18 +33,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
-import com.jcs.goboax.aulavirtual.model.Contenido;
-import com.jcs.goboax.aulavirtual.model.Curso;
-import com.jcs.goboax.aulavirtual.service.api.CursoService;
-import com.jcs.goboax.aulavirtual.validator.ContentModelFormValidator;
-import com.jcs.goboax.aulavirtual.validator.CourseModelValidator;
-import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cursos")
+@Scope(value = "session")
 public class CursosController
 {
     private static final Logger LOG = LoggerFactory
@@ -58,6 +62,12 @@ public class CursosController
 
     @Autowired
     private ConversionService conversionService;
+    
+    @Autowired
+    private FlashMessage flashMessage;
+
+    @Autowired
+    private TipoContenidoService tipoContenidoService;
 
     @InitBinder("courseModel")
     private void initBinder(WebDataBinder binder)
@@ -78,7 +88,7 @@ public class CursosController
     }
 
     // TODO Create external API and move this call.
-    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String cursosList() throws IOException
     {
         List<Curso> myCursos = cursoService.readCourses();
@@ -108,21 +118,74 @@ public class CursosController
     {
         CourseModel myCourseModel = new CourseModel();
         aModel.put("courseModel", myCourseModel);
+        aModel.put("target", NavigationTargets.COURSE_ADD);
+        aModel.put("action", "add");
         return "cursos/add";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(params = "save", value = "/add", method = RequestMethod.POST)
     public String cursosAddDo(@Validated CourseModel courseModel,
-            BindingResult result)
+            BindingResult result, Map<String, Object> aModel)
     {
         LOG.debug("Adding Curso ...");
         if (result.hasErrors())
         {
+            aModel.put("target", NavigationTargets.COURSE_ADD);
+            aModel.put("action", "add");
             return "cursos/add";
         }
 
         cursoService.createCourse(courseModel);
+        flashMessage.success("course.success");
+        return "redirect:/cursos";
+    }
+    
+    @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
+    public String cancelAddCourse()
+    {
+        return "redirect:/cursos";
+    }
 
+    @RequestMapping(value = "/{cursoId}/edit", method = RequestMethod.GET)
+    public String cursoEdit(Map<String, Object> aModel,
+                            @PathVariable("cursoId") Integer aCourseId)
+    {
+        Curso myCurso = cursoService.readCourseById(aCourseId);
+
+        if (myCurso == null)
+        {
+            flashMessage.error("course.not.exists");
+            return "redirect:/cursos";
+        }
+
+        CourseModel myCourseModel = conversionService.convert(myCurso, CourseModel.class);
+        aModel.put("courseModel", myCourseModel);
+        aModel.put("target", NavigationTargets.COURSE_EDIT);
+        aModel.put("action", "edit");
+
+        return "cursos/add";
+    }
+
+    @RequestMapping(params = "save", value = "/edit", method = RequestMethod.POST)
+    public String cursosEdit(@Validated CourseModel courseModel,
+                             BindingResult result, Map<String, Object> aModel)
+    {
+        LOG.debug("Editing Curso ...");
+        if (result.hasErrors())
+        {
+            aModel.put("target", NavigationTargets.COURSE_EDIT);
+            aModel.put("action", "edit");
+            return "cursos/add";
+        }
+
+        cursoService.updateCourse(courseModel);
+        flashMessage.success("course.success");
+        return "redirect:/cursos";
+    }
+
+    @RequestMapping(params = "cancel", value = "/edit", method = RequestMethod.POST)
+    public String cancelEditCourse()
+    {
         return "redirect:/cursos";
     }
 
@@ -131,17 +194,31 @@ public class CursosController
             Map<String, Object> aModel)
     {
         ContentModelForm myContentModelForm = new ContentModelForm();
+        Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
 
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
+        aModel.put("action", "add");
+        aModel.put("contentTypeNames", myTipoContenido);
 
         return "contenido/add";
     }
 
     @RequestMapping(value = "/{courseId}/content/add", method = RequestMethod.POST)
     public String contentAdd(@PathVariable("courseId") Integer aCourseId,
-            @Validated ContentModelForm courseModel, BindingResult result)
+                             @Validated ContentModelForm courseModel, BindingResult result,
+                             Map<String, Object> aModel)
     {
+        if (result.hasErrors())
+        {
+            Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
+
+            aModel.put("target", "/cursos/" + aCourseId + "/content/add");
+            aModel.put("action", "add");
+            aModel.put("contentTypeNames", myTipoContenido);
+            return "contenido/add";
+
+        }
         LOG.debug(courseModel.getName());
         LOG.debug(courseModel.getContent().getContentType());
 
@@ -160,7 +237,7 @@ public class CursosController
         {
             Contenido myContenido = contenidoDao.findByKey(anId);
             byte[] myFileContent = myContenido.getArchivoMaterial();
-            // response.setContentType("text/csv");
+            response.setContentType(myContenido.getContentType());
             response.setHeader("Content-disposition", "attachment; filename=\""
                     + myContenido.getNombre() + "\"");
             FileCopyUtils.copy(myFileContent, response.getOutputStream());
@@ -199,8 +276,8 @@ public class CursosController
         myObjectToJsonObject.setAaData(myContentModels);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json2 = gson.toJson(myObjectToJsonObject);
+        String myJsonResponse = gson.toJson(myObjectToJsonObject);
 
-        return json2;
+        return myJsonResponse;
     }
 }

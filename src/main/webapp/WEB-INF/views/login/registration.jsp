@@ -3,15 +3,29 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+
+<%@ include file="/WEB-INF/views/login/recaptcha_options.jsp" %>
+
+
+<spring:hasBindErrors name="registration">
+    <script>
+        $(document).ready(function () {
+            <c:forEach items="${errors.globalErrors}" var="errorMessage">
+            aulaVirtualController.addFlashMessage("<c:out value="${errorMessage.defaultMessage}" />");
+            </c:forEach>
+        });
+    </script>
+</spring:hasBindErrors>
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h1>¡Regístrate en Aula Virtual!</h1>
+        <h1><spring:message javaScriptEscape="true" code="registration.header"/></h1>
     </div>
     <div class="panel panel-body">
         <p class="info">
-            Para poder obtener los beneficios de Aula Virtual, es necesario que te registres como usuario.
-            Por favor, captura los datos solicitados en el siguiente formulario.
+            <spring:message javaScriptEscape="true" code="registration.info"/>
         </p>
         <form:form method="Post" action="/login/registration" commandName="registration" cssClass="form-horizontal">
             <div class="form-group">
@@ -33,7 +47,7 @@
                     <span class="error"><form:errors path="lastName"/></span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="secondLastName" cssClass="col-sm-4 control-label">
                     <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.secondLastName.label"/>
@@ -73,29 +87,37 @@
                     <span class="error"><form:errors path="confirmPassword"/></span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
+                    <form:label path="profile" cssClass="col-sm-4 control-label">
+                        <spring:message javaScriptEscape="true" code="label.profile"/>:
+                        <span class="error"><form:errors path="profile"/></span>
+                    </form:label>
                     <form:select path="profile" cssClass="col-sm-offset-4 col-sm-8" items="${profiles}"/>
                 </sec:authorize>
             </div>
-                
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-8">
-                    <input type="submit" name="save" class="btn btn-primary" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
-                    <input type="submit" name="cancel" class="btn btn-danger" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
-                </div>
+
+            <div id="captcha_paragraph">
+                <c:if test="${invalidRecaptcha == true}">
+                    <span class="error_form_validation"><spring:message code="invalid.captcha"
+                                                                        text="Invalid captcha please try again"/></span>
+                </c:if>
+                <%
+                    ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lc1svgSAAAAAIwWCiFZNJagByxCGHSIvJPjSj9E",
+                            "6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl", false);
+                    out.print(c.createRecaptchaHtml(null, null));
+                %>
             </div>
 
-            <span class="error">
-                <spring:hasBindErrors name="registration">
-                <c:forEach items="${errors.globalErrors}" var="errorMessage">
-                    <div id="errors" class="errors">
-                        <spring:message htmlEscape="true" code="${errorMessage.code}" />
-                    </div>
-                </c:forEach>
-                </spring:hasBindErrors>
-            </span>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <input type="submit" name="save" class="btn btn-primary"
+                           value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
+                    <input type="submit" name="cancel" class="btn btn-danger"
+                           value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
+                </div>
+            </div>
         </form:form>
     </div>
 </div>

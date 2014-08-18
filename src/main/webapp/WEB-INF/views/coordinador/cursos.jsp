@@ -1,10 +1,12 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
-<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+
 <script type="text/javascript">
     var espanol = {"sProcessing": "Procesando...",
         "sLengthMenu": "Mostrar _MENU_ registros",
@@ -26,6 +28,7 @@
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({
+            "sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"lfr>t<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip>',
             "oLanguage": espanol,
             "bProcessing": false,
             "bServerSide": false,
@@ -37,24 +40,35 @@
                 contentLink.attr('href', myLink);
                 contentLink.html('Contenido');
                 $(row).find('.acciones-control').append(contentLink);
+
+                <sec:authorize access="hasRole('SUPER_ADMIN')">
+                var editLink = $('<a/>');
+                myLink = "<c:url value='/cursos/" + data.id + "/edit'/>";
+                editLink.attr('href', myLink);
+                editLink.html('Editar');
+                $(row).find('.acciones-control').append(editLink);
+                </sec:authorize>
             },
             "aoColumns": [
                 { "mData": "name" },
                 { "mData": "goal" },
                 { "mData": "id",
                     "mRender": function (id) {
-                        return  '<a href="' + id + '">' + id + '</a><div id="contentLink_'
-                                + id + '"/>';
+                        return  '<div id="contentLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
                     "orderable": false
                 }
             ]
         });
+
+        <sec:authorize access="hasRole('SUPER_ADMIN')">
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add>Agregar</a>");
+        $('#add').attr('href', '<c:url value='/cursos/add'/>');
+        </sec:authorize>
     });
-
-
 </script>
+
 <form:form action="" method="GET">
     <table width="100%" style="border: 3px;background: rgb(243, 244, 248);">
         <tr>
@@ -62,10 +76,9 @@
                 <table id="example" class="display" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.course.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true" code="courses.goal.label"/></th>
-                        <th><spring:message htmlEscape="true" javaScriptEscape="true"
-                                            code="courses.actions.label"/></th>
+                        <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
+                        <th><spring:message javaScriptEscape="true" code="course.goal.label"/></th>
+                        <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
                     </tr>
                     </thead>
                 </table>

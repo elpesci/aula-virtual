@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" 
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            		http://www.springframework.org/schema/aop 
@@ -17,8 +17,8 @@
                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-                           http://www.springframework.org/schema/jdbc 
-                           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+                            http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <import resource="spring-security.xml"/>
     <context:component-scan base-package="com.jcs.goboax.aulavirtual"/>
@@ -32,6 +32,7 @@
             </list>
         </property>
         <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
     </bean>
 
     <!-- JSR-303 -->
@@ -70,6 +71,22 @@
         </bean>
     </mvc:interceptors>
 
+    <mvc:view-controller path="/accessdenied" view-name="accessdenied"/>
+
+    <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+        <property name="privateKey" value="6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl"/>
+    </bean>
+
+    <cache:annotation-driven/>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcache"/>
+    </bean>
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="shared" value="true"/>
+    </bean>
+
     <bean id="dataSource"
           class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
@@ -99,10 +116,10 @@
             </props>
         </property>
     </bean>
-    
-<!-- jdbc:initialize-database data-source="dataSource">
-    <jdbc:script location="/WEB-INF/import.sql" encoding="UTF-8" />
-</jdbc:initialize-database -->    
+
+    <!-- jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="/WEB-INF/import.sql" encoding="UTF-8" />
+    </jdbc:initialize-database -->
 
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
@@ -130,10 +147,10 @@
     </bean>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${mail.host}" />
-        <property name="port" value="${mail.port}" />
-        <property name="username" value="${mail.username}" />
-        <property name="password" value="${mail.password}" />
+        <property name="host" value="${mail.host}"/>
+        <property name="port" value="${mail.port}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
 
         <property name="javaMailProperties">
             <props>
@@ -142,20 +159,20 @@
                 <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
                 <prop key="mail.debug">${mail.debug}</prop>
                 <prop key="mail.smtp.socketFactory.port">${mail.smtp.socketFactory.port}</prop>
-				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
-				<prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>
             </props>
         </property>
     </bean>
-    
-    <bean id="velocityEngine" 
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-      <property name="resourceLoaderPath" value="/WEB-INF/email/" />
-   </bean>
-   
-   	<bean id="flash" class="com.jcs.goboax.aulavirtual.util.FlashMessage" scope="session">
-		<aop:scoped-proxy/>		
-	</bean>
+
+    <bean id="velocityEngine"
+          class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="resourceLoaderPath" value="/WEB-INF/email/"/>
+    </bean>
+
+    <bean id="flash" class="com.jcs.goboax.aulavirtual.util.FlashMessage" scope="session">
+        <aop:scoped-proxy/>
+    </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

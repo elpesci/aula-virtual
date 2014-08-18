@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -33,8 +34,10 @@
 
 <div id="wrapper">
     <tiles:insertAttribute name="header"/>
-
-    <tiles:insertAttribute name="navigation"/>
+    
+    <sec:authorize access="isAuthenticated()">
+        <tiles:insertAttribute name="navigation"/>
+    </sec:authorize>
 
     <div id="page">
 		<tiles:insertAttribute name="flashMessage"/>

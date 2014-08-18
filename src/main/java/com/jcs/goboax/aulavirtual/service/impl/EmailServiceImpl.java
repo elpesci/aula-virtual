@@ -16,10 +16,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -43,14 +43,17 @@ public class EmailServiceImpl
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private ServletContext servletContext;
+
     @Override
     public void sendTemporaryPasswordEmail(Usuario aUsuario, String aPassword)
     {
         Map<String, Object> model = new HashMap<String, Object>();
-        String myUrl = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/login/forgetPassword/reset/" + aUsuario.getUsuarioId() + "/"
-                        + aPassword).build().toUriString();
+        String myUrl = propertiesUtil.getMessage("url.domain")
+                + servletContext.getContextPath()
+                + "/login/forgetPassword/reset/" + aUsuario.getUsuarioId() + "/"
+                + aPassword;
         model.put("serverUrl", myUrl);
         model.put("user", aUsuario);
         model.put("password", aPassword);
@@ -63,14 +66,11 @@ public class EmailServiceImpl
     public void sendActivationComplete(Usuario aUsuario)
     {
         Map<String, Object> model = new HashMap<String, Object>();
-        String myUrl = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/login/forgetPassword/reset/" + aUsuario.getUsuarioId() + "/"
-                ).build().toUriString();
+        String myUrl = propertiesUtil.getMessage("url.domain") + servletContext.getContextPath();
         model.put("serverUrl", myUrl);
         model.put("user", aUsuario);
-        LOG.debug("Sending Reset Password Link: {}", myUrl);
-        sendEmail(aUsuario.getUsername(), "forgetpassword", model, false);
+        LOG.debug("Sending Activation Mail: {}", myUrl);
+        sendEmail(aUsuario.getUsername(), "activation", model, false);
     }
 
     @Override
@@ -80,10 +80,9 @@ public class EmailServiceImpl
         try
         {
             String myVerificationKeyEncode = URLEncoder.encode(aUsuario.getVerificationKey(), "UTF-8");
-            String myUrl = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/login/registration/activate/" + aUsuario.getUsuarioId() + "?k="
-                            + myVerificationKeyEncode).build().toUriString();
+            String myUrl = propertiesUtil.getMessage("url.domain") + servletContext.getContextPath()
+                    + "/login/registration/activate/" + aUsuario.getUsuarioId()
+                    + "?k=" + myVerificationKeyEncode;
 
             model.put("serverUrl", myUrl);
             model.put("user", aUsuario);

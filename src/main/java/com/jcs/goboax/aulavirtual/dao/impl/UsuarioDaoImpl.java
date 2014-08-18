@@ -6,26 +6,23 @@
 
 package com.jcs.goboax.aulavirtual.dao.impl;
 
+import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
-import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Usuario;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
-
-import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
-import com.jcs.goboax.aulavirtual.model.Usuario;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 
 /**
- *
  * @author julio
  */
 @Repository
 public class UsuarioDaoImpl
-    extends BaseDaoImpl<Integer, Usuario>
-    implements UsuarioDao
+        extends BaseDaoImpl<Integer, Usuario>
+        implements UsuarioDao
 {
 
     @Override
@@ -51,13 +48,15 @@ public class UsuarioDaoImpl
     public Usuario getByCredentials(Integer aUserId, String aPassword)
     {
         Usuario myUsuario = findByKey(aUserId);
-        BCryptPasswordEncoder myBCryptPasswordEncoder = new BCryptPasswordEncoder();
-        boolean isValid = myBCryptPasswordEncoder.matches(aPassword, myUsuario.getPassword());
-        if (isValid)
+        if (myUsuario != null)
         {
-            return myUsuario;
+            BCryptPasswordEncoder myBCryptPasswordEncoder = new BCryptPasswordEncoder();
+            boolean isValid = myBCryptPasswordEncoder.matches(aPassword, myUsuario.getPassword());
+            if (isValid)
+            {
+                return myUsuario;
+            }
         }
-
         return null;
     }
 }

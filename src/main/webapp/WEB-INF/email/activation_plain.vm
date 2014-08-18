@@ -1,0 +1,6 @@
+Estimado ${user.persona.nombre} ${user.persona.apellidoPaterno}:
+
+Su cuenta se encuentra activada y puede comenzar a utilizar la plataforma,
+por favor visite nuestro sitio, ${serverUrl} .
+
+Gracias.
