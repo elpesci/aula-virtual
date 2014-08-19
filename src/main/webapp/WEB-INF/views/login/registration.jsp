@@ -98,12 +98,14 @@
                 </sec:authorize>
             </div>
 
-            <div id="captcha_paragraph">
+            <div class="form-group">
+            <div id="captcha_paragraph" class="col-sm-offset-4 col-sm-8">
                 <c:if test="${invalidRecaptcha == true}">
                     <span class="error_form_validation"><spring:message code="invalid.captcha"
                                                                         text="Invalid captcha please try again"/></span>
                 </c:if>
                 <c:out value="${recaptcha}" escapeXml="false"></c:out>
+            </div>
             </div>
 
             <div class="form-group">

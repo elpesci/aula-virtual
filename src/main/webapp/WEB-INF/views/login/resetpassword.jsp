@@ -20,17 +20,19 @@
         <form:hidden path="usuario.usuarioId" />
         <form:hidden path="usuario.password" />
         <form:hidden path="sendConfirmationEmail" />
-        <div>
-            <form:label path="newPassword"><spring:message code="label.password"/></form:label>
+        <div class="form-group">
+            <form:label path="newPassword">
+                <spring:message code="label.password"/>
+            </form:label>
             <form:password path="newPassword" autocomplete="off" cssErrorClass="fieldError" />
             <div class="error"><form:errors path="newPassword"/></div>
         </div>
-        <div>
+        <div class="form-group">
             <form:label path="confirmNewPassword"><spring:message code="label.confirmPassword"/></form:label>
             <form:password path="confirmNewPassword" autocomplete="off" cssErrorClass="fieldError" />
             <div class="error"><form:errors path="confirmNewPassword"/></div>
         </div>
-        <div>
+        <div class="form-group">
             <button type="submit" name="send"><spring:message code="send"/></button>
             <button type="submit" name="cancel"><spring:message code="cancel"/></button>
             <span class="clearfix"></span>
