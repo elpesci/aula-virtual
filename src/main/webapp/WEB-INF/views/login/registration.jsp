@@ -3,8 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
-<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 
 <%@ include file="/WEB-INF/views/login/recaptcha_options.jsp" %>
 
@@ -100,16 +98,14 @@
                 </sec:authorize>
             </div>
 
-            <div id="captcha_paragraph">
+            <div class="form-group">
+            <div id="captcha_paragraph" class="col-sm-offset-4 col-sm-8">
                 <c:if test="${invalidRecaptcha == true}">
                     <span class="error_form_validation"><spring:message code="invalid.captcha"
                                                                         text="Invalid captcha please try again"/></span>
                 </c:if>
-                <%
-                    ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lc1svgSAAAAAIwWCiFZNJagByxCGHSIvJPjSj9E",
-                            "6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl", false);
-                    out.print(c.createRecaptchaHtml(null, null));
-                %>
+                <c:out value="${recaptcha}" escapeXml="false"></c:out>
+            </div>
             </div>
 
             <div class="form-group">

@@ -1,9 +1,14 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ObjectToJsonObject<T>
+    implements Serializable
 {
+
+    private static final long serialVersionUID = -4354551450460679243L;
+    
     int iTotalRecords;
     int iTotalDisplayRecords;
     String sEcho;
