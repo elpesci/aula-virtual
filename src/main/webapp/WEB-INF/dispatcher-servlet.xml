@@ -41,7 +41,7 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
-    <context:property-placeholder location="classpath:jdbc.properties, classpath:mail.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties, classpath:mail.properties, classpath:recaptcha.properties"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -75,7 +75,7 @@
     <mvc:view-controller path="/accessdenied" view-name="accessdenied"/>
 
     <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
-        <property name="privateKey" value="6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl"/>
+        <property name="privateKey" value="${recaptcha.privatekey}"/>
     </bean>
 
     <cache:annotation-driven/>

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,7 +62,13 @@ public class RegistrationController
     private FlashMessage flashMessage;
 
     @Autowired
-    ReCaptcha reCaptcha;
+    private ReCaptcha reCaptcha;
+    
+    @Value(value = "${recaptcha.publickey}")
+    private String reCaptchaPublicKey;
+    
+    @Value(value = "recaptcha.privatekey")
+    private String reCaptchaPrivateKey;
 
     /**
      * Used to auto-login after activating an account
@@ -91,8 +98,8 @@ public class RegistrationController
     public String showRegistration(Map<String, Object> aModel)
     {
         Registration registration = new Registration();
-        ReCaptcha myReCaptcha = ReCaptchaFactory.newReCaptcha("6Lc1svgSAAAAAIwWCiFZNJagByxCGHSIvJPjSj9E",
-                "6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl", false);
+        ReCaptcha myReCaptcha = ReCaptchaFactory.newReCaptcha(reCaptchaPublicKey,
+                reCaptchaPrivateKey, false);
         String myReCaptchaString = myReCaptcha.createRecaptchaHtml(null, null);
         aModel.put("registration", registration);
         aModel.put("recaptcha", myReCaptchaString);
@@ -122,11 +129,12 @@ public class RegistrationController
 
             if (result.hasErrors() || !reCaptchaResponse.isValid())
             {
-                ReCaptcha myReCaptcha = ReCaptchaFactory.newReCaptcha("6Lc1svgSAAAAAIwWCiFZNJagByxCGHSIvJPjSj9E",
-                        "6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl", false);
+                ReCaptcha myReCaptcha = ReCaptchaFactory.newReCaptcha(reCaptchaPublicKey,
+                        reCaptchaPrivateKey, false);
                 String myReCaptchaString = myReCaptcha.createRecaptchaHtml(null, null);
                 if (!reCaptchaResponse.isValid())
                 {
+                    flashMessage.error("invalid.captcha");
                     aModel.addAttribute("invalidRecaptcha", true);
                 }
                 aModel.addAttribute("recaptcha", myReCaptchaString);
