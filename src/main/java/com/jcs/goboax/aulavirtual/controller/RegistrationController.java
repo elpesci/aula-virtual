@@ -1,15 +1,17 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
-import com.jcs.goboax.aulavirtual.model.Perfil;
-import com.jcs.goboax.aulavirtual.model.Usuario;
-import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
-import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
-import com.jcs.goboax.aulavirtual.util.FlashMessage;
-import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
-import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +32,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Map;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
+import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
+import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.validator.RegistrationValidator;
+import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 
 @Controller
 @RequestMapping("/login/registration")
@@ -87,7 +91,11 @@ public class RegistrationController
     public String showRegistration(Map<String, Object> aModel)
     {
         Registration registration = new Registration();
+        ReCaptcha myReCaptcha = ReCaptchaFactory.newReCaptcha("6Lc1svgSAAAAAIwWCiFZNJagByxCGHSIvJPjSj9E",
+                "6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl", false);
+        String myReCaptchaString = myReCaptcha.createRecaptchaHtml(null, null);
         aModel.put("registration", registration);
+        aModel.put("recaptcha", myReCaptchaString);
         aModel.put("profiles", profiles);
         return "login/registration";
     }
@@ -114,10 +122,14 @@ public class RegistrationController
 
             if (result.hasErrors() || !reCaptchaResponse.isValid())
             {
+                ReCaptcha myReCaptcha = ReCaptchaFactory.newReCaptcha("6Lc1svgSAAAAAIwWCiFZNJagByxCGHSIvJPjSj9E",
+                        "6Lc1svgSAAAAAGGSRcjyKiit7xoFIer1oanJzTBl", false);
+                String myReCaptchaString = myReCaptcha.createRecaptchaHtml(null, null);
                 if (!reCaptchaResponse.isValid())
                 {
                     aModel.addAttribute("invalidRecaptcha", true);
                 }
+                aModel.addAttribute("recaptcha", myReCaptchaString);
                 return "login/registration";
             }
             LOG.debug("Processing Registration....");
