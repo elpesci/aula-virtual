@@ -12,3 +12,4 @@ dropDDL_ddlGeneration.jdbc
 /src/main/webapp/WEB-INF/.gitignore
 /nb-configuration.xml
 *.gitignore~
+bin/

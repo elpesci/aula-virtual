@@ -9,8 +9,8 @@
        xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
-                           		http://www.springframework.org/schema/aop 
-                           		http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
                            http://www.springframework.org/schema/context 
                            http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc 
@@ -47,7 +47,7 @@
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-                  <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
     <bean id="tilesConfigurer"
@@ -142,10 +142,7 @@
     </bean>
 
     <!-- Configure the multipart resolver -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- one of the properties available; the maximum file size in bytes -->
-        <property name="maxUploadSize" value="10000000"/>
-    </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mail.host}"/>
