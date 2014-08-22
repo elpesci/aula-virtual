@@ -5,10 +5,8 @@ import java.sql.Connection;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Before;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
