@@ -5,7 +5,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 <script type="text/javascript">
     var espanol = {"sProcessing": "Procesando...",
@@ -63,26 +65,27 @@
         });
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
-        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add>Agregar</a>");
-        $('#add').attr('href', '<c:url value='/cursos/add'/>');
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar curso</a>");
+        $('#add').attr('href', '<c:url value='/cursos/add'/>').attr('class', 'btn btn-primary btn-sm').attr('title','Haga click para agregar un nuevo curso');
+        $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
     });
 </script>
 
-<form:form action="" method="GET">
-    <table width="100%" style="border: 3px;background: rgb(243, 244, 248);">
-        <tr>
-            <td>
-                <table id="example" class="display" cellspacing="0" width="100%">
-                    <thead>
-                    <tr>
-                        <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
-                        <th><spring:message javaScriptEscape="true" code="course.goal.label"/></th>
-                        <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
-                    </tr>
-                    </thead>
-                </table>
-            </td>
-        </tr>
-    </table>
-</form:form>
+<div class="container-fliud">
+    <div class="row">
+        <div class="col-xs-12">
+        <form:form action="" method="GET">
+            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
+                    <th><spring:message javaScriptEscape="true" code="course.goal.label"/></th>
+                    <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
+                </tr>
+                </thead>
+            </table>
+        </form:form>
+        </div>  
+    </div>
+</div>
