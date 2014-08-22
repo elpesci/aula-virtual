@@ -52,5 +52,5 @@ p.info {
     font-size: 16px;
 }
 
-#content a { color: whitesmoke; }
-#content a:hover{ color: whitesmoke;}
+#buttonPlaceholder a { color: whitesmoke; }
+#buttonPlaceholder a:hover{ color: whitesmoke; }
