@@ -1,15 +1,11 @@
 package com.jcs.goboax.aulavirtual.util;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-
-import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public abstract class Utils
 {
