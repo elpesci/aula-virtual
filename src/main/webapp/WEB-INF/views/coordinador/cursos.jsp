@@ -82,17 +82,26 @@
 <div class="container-fliud">
     <div class="row">
         <div class="col-xs-12">
-        <form:form action="" method="GET">
-            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
-                    <th><spring:message javaScriptEscape="true" code="course.goal.label"/></th>
-                    <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
-                </tr>
-                </thead>
-            </table>
-        </form:form>
-        </div>  
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <spring:message javaScriptEscape="true" code="course.heading.label"/>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form:form action="" method="GET">
+                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="course.goal.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </form:form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
