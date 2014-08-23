@@ -22,6 +22,7 @@
             help_btn: strings['recaptcha.help_btn'],
             incorrect_try_again: strings['recaptcha.incorrect_try_again']
         },
+        lang : 'es',
         theme: 'clean'
     };
 </script>
