@@ -36,9 +36,13 @@
             "sort": "position",
             "sAjaxSource": "content/list",
             "createdRow": function (row, data, index) {
+                var downloadIcon = $('<i/>');
+                downloadIcon.attr('class', 'fa fa-download');
+
                 var contentLink = $('<a/>');
                 myLink = "<c:url value='/cursos/content/download/" + data.id + "'/>";
                 contentLink.attr('href', myLink);
+                contentLink.html(downloadIcon);
                 contentLink.html('Descargar');
                 $(row).find('.acciones-control').append(contentLink);
             },
