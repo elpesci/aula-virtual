@@ -91,7 +91,7 @@ public class EmailServiceImpl
         }
         catch (UnsupportedEncodingException e)
         {
-            e.printStackTrace();
+            LOG.error("mail ecoding Error", e);
         }
     }
 
