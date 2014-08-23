@@ -14,6 +14,7 @@
     <tiles:insertAttribute name="meta"/>
 
     <!--estilos-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel= "stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<c:url value="/resources/css/estilo_general.css"/>" rel="stylesheet" type="text/css" media="screen"/>
     <link href="<c:url value="/resources/css/SprayMenuBar.css"/>" rel="stylesheet" type="text/css" media="screen"/>
@@ -33,8 +34,9 @@
 <body>
 
 <div id="wrapper">
+
     <tiles:insertAttribute name="header"/>
-    
+
     <sec:authorize access="isAuthenticated()">
         <tiles:insertAttribute name="navigation"/>
     </sec:authorize>

@@ -36,16 +36,24 @@
             "sort": "position",
             "sAjaxSource": "cursos/list",
             "createdRow": function (row, data, index) {
+                var contentIcon = $('<i/>');
+                contentIcon.attr('class', 'fa fa-file-text-o');
+
                 var contentLink = $('<a/>');
                 myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
                 contentLink.attr('href', myLink);
+                contentLink.html(contentIcon);
                 contentLink.html('Contenido');
                 $(row).find('.acciones-control').append(contentLink);
 
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
+                var editIcon = $('<i/>');
+                editIcon.attr('class', 'fa fa-pencil-square-o');
+
                 var editLink = $('<a/>');
                 myLink = "<c:url value='/cursos/" + data.id + "/edit'/>";
                 editLink.attr('href', myLink);
+                editLink.html(editIcon);
                 editLink.html('Editar');
                 $(row).find('.acciones-control').append(editLink);
                 </sec:authorize>
