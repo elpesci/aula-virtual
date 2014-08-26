@@ -29,21 +29,21 @@
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({
-            "sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"lfr>t<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip>',
+            "sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">lfrt<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">ip',
             "oLanguage": espanol,
             "bProcessing": false,
             "bServerSide": false,
             "sort": "position",
             "sAjaxSource": "content/list",
             "createdRow": function (row, data, index) {
-                var downloadIcon = $('<i/>');
-                downloadIcon.attr('class', 'fa fa-download');
+                var downloadIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-download fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
                 myLink = "<c:url value='/cursos/content/download/" + data.id + "'/>";
                 contentLink.attr('href', myLink);
+                contentLink.attr('title', 'Descargar archivo');
                 contentLink.html(downloadIcon);
-                contentLink.html('Descargar');
+                
                 $(row).find('.acciones-control').append(contentLink);
             },
             "aoColumns": [
@@ -79,19 +79,13 @@
                 </div>
                 <div class="panel-body">
                     <form:form action="" method="GET">
-                        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
                             <tr>
-                                <td>
-                                    <table id="example" class="display" cellspacing="0" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th><spring:message htmlEscape="true" javaScriptEscape="true" code="content.name.label"/></th>
-                                            <th><spring:message htmlEscape="true" javaScriptEscape="true" code="contentent.download.label"/></th>
-                                        </tr>
-                                        </thead>
-                                    </table>
-                                </td>
+                                <th><spring:message htmlEscape="true" javaScriptEscape="true" code="content.name.label"/></th>
+                                <th><spring:message htmlEscape="true" javaScriptEscape="true" code="contentent.download.label"/></th>
                             </tr>
+                            </thead>
                         </table>
                     </form:form>
                 </div>

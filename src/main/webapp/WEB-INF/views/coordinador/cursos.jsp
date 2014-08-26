@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
-<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 <script type="text/javascript">
@@ -29,35 +29,38 @@
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({
-            "sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"lfr>t<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"ip>',
+            "sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">lfrt<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">ip',
             "oLanguage": espanol,
             "bProcessing": false,
             "bServerSide": false,
             "sort": "position",
             "sAjaxSource": "cursos/list",
             "createdRow": function (row, data, index) {
-                var contentIcon = $('<i/>');
-                contentIcon.attr('class', 'fa fa-file-text-o');
-
-                var contentLink = $('<a/>');
-                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
-                contentLink.attr('href', myLink);
-                contentLink.html(contentIcon);
-                contentLink.html('Contenido');
-                $(row).find('.acciones-control').append(contentLink);
-
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
-                var editIcon = $('<i/>');
-                editIcon.attr('class', 'fa fa-pencil-square-o');
+                var editIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
 
                 var editLink = $('<a/>');
                 myLink = "<c:url value='/cursos/" + data.id + "/edit'/>";
                 editLink.attr('href', myLink);
+                editLink.attr('title', 'Editar información del curso');
                 editLink.html(editIcon);
-                editLink.html('Editar');
+                
                 $(row).find('.acciones-control').append(editLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
                 </sec:authorize>
+                    
+                var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';
+
+                var contentLink = $('<a/>');
+                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
+                contentLink.attr('href', myLink);
+                contentLink.attr('title', 'Ver contenidos del curso');
+                contentLink.html(contentIcon);
+                
+                $(row).find('.acciones-control').append(contentLink);
+
             },
+            "pagingType": "simple_numbers",
             "aoColumns": [
                 { "mData": "name" },
                 { "mData": "goal" },
@@ -90,7 +93,7 @@
                 </div>
                 <div class="panel-body">
                     <form:form action="" method="GET">
-                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <table id="example" class="table table-striped table-bordered display" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
