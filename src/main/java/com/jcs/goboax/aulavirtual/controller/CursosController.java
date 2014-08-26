@@ -252,7 +252,8 @@ public class CursosController
     @RequestMapping(value = "/{cursoId}/contents", method = RequestMethod.GET)
     public String contents(@PathVariable("cursoId") Integer aCourse, Map<String, Object> aModel)
     {
-        aModel.put("courseId", aCourse);
+        Curso myCurso = cursoService.readCourseById(aCourse);
+        aModel.put("course", myCurso);
         return "contenido/list";
     }
 

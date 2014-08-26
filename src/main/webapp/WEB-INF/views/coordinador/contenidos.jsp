@@ -60,7 +60,7 @@
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
         var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add><span class='glyphicon glyphicon-plus'></span> Agregar contenido</a>");
-        myLink = "<c:url value='/cursos/" + ${courseId} + "/content/add' />";
+        myLink = "<c:url value='/cursos/" + ${course.cursoId} + "/content/add' />";
         $('#add').attr('href', myLink).attr('class', 'btn btn-primary btn-sm').attr('title','Haga click para agregar un nuevo archivo de contenido');;
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
@@ -74,7 +74,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <spring:message javaScriptEscape="true" code="content.heading.label"/>
+                        <spring:message javaScriptEscape="true" code="content.heading.label" arguments="${course.nombre}"/>
                     </h3>
                 </div>
                 <div class="panel-body">
