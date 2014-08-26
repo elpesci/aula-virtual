@@ -4,28 +4,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%@ include file="/WEB-INF/views/common/datatable_options.jsp" %>
+
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 <script type="text/javascript">
-    var espanol = {"sProcessing": "Procesando...",
-        "sLengthMenu": "Mostrar _MENU_ registros",
-        "sZeroRecords": "No se encontraron resultados",
-        "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
-        "sInfoEmpty": "No existen registros",
-        "sInfoFiltered": "(filtrado de un total de _MAX_ líneas)",
-        "sInfoPostFix": "",
-        "sSearch": "Buscar:",
-        "sUrl": "",
-        "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Ultimo",
-            "sNext": "Siguiente",
-            "sPrevious": "Anterior"
-        }
-    };
-
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({

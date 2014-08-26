@@ -4,31 +4,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
+<%@ include file="/WEB-INF/views/common/datatable_options.jsp" %>
+
+
+<link rel="stylesheet" type="text/css"
+      href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+<script type="text/javascript"
+        src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 <script type="text/javascript">
-    var espanol = {"sProcessing": "Procesando...",
-        "sLengthMenu": "Mostrar _MENU_ registros",
-        "sZeroRecords": "No se encontraron resultados",
-        "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
-        "sInfoEmpty": "No existen registros",
-        "sInfoFiltered": "(filtrado de un total de _MAX_ líneas)",
-        "sInfoPostFix": "",
-        "sSearch": "Buscar:",
-        "sUrl": "",
-        "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Ultimo",
-            "sNext": "Siguiente",
-            "sPrevious": "Anterior"
-        }
-    };
-
     $(document).ready(function () {
 
-        var dt = $("#example").dataTable({
+        var dt = $("#course_table").dataTable({
             "sDom": 'R<C><"#buttonPlaceholder">H<"clear"><"ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">lfrt<"ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">ip',
             "oLanguage": espanol,
             "bProcessing": false,
@@ -44,11 +32,11 @@
                 editLink.attr('href', myLink);
                 editLink.attr('title', 'Editar información del curso');
                 editLink.html(editIcon);
-                
+
                 $(row).find('.acciones-control').append(editLink);
                 $(row).find('.acciones-control').append('&nbsp;&nbsp;');
                 </sec:authorize>
-                    
+
                 var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
@@ -56,7 +44,7 @@
                 contentLink.attr('href', myLink);
                 contentLink.attr('title', 'Ver contenidos del curso');
                 contentLink.html(contentIcon);
-                
+
                 $(row).find('.acciones-control').append(contentLink);
 
             },
@@ -76,7 +64,7 @@
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
         var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar curso</a>");
-        $('#add').attr('href', '<c:url value='/cursos/add'/>').attr('class', 'btn btn-primary btn-sm').attr('title','Haga click para agregar un nuevo curso');
+        $('#add').attr('href', '<c:url value='/cursos/add'/>').attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo curso');
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
     });
@@ -93,7 +81,8 @@
                 </div>
                 <div class="panel-body">
                     <form:form action="" method="GET">
-                        <table id="example" class="table table-striped table-bordered display" cellspacing="0" width="100%">
+                        <table id="course_table" class="table table-striped table-bordered display" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
