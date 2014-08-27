@@ -7,5 +7,5 @@ public interface AuthenticationService
 {
     Authentication getAuthentication();
 
-    Usuario getUsusario();
+    Usuario getUsuario();
 }

@@ -8,8 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-
 @Service
 public class AuthenticationServiceImpl
     implements AuthenticationService
@@ -23,12 +21,13 @@ public class AuthenticationServiceImpl
     }
 
     @Override
-    public Usuario getUsusario()
+    public Usuario getUsuario()
     {
         if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof Usuario)
         {
             return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         }
+
         return null;
     }
 }

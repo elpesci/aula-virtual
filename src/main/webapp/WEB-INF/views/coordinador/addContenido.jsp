@@ -22,7 +22,7 @@
                     <spring:message javaScriptEscape="true" code="label.profile"/>:
                 </form:label>
                 <div class="col-sm-8">
-                    <form:select path="contentTypeId" cssClass="col-sm-offset-4 col-sm-8" items="${contentTypeNames}" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:select path="contentTypeId" cssClass="col-sm-offset-4 col-sm-8 form-control" items="${contentTypeNames}" cssErrorClass="form-control fieldError"/>
                     <span class="error"><form:errors path="contentTypeId"/></span>
                 </div>
             </div>
