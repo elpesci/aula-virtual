@@ -1,7 +1,18 @@
 package com.jcs.goboax.aulavirtual.model;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -9,12 +20,20 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name = "RegistroAcceso.findAll", query = "SELECT r FROM RegistroAcceso r")
+@NamedQueries({
+        @NamedQuery(name = "RegistroAcceso.findAll", query = "SELECT r FROM RegistroAcceso r"),
+        @NamedQuery(name = RegistroAcceso.REGISTRO_ACCESO_BY_SESSION,
+                query = "SELECT r FROM RegistroAcceso r WHERE r.sessionId = :" + RegistroAcceso.REGISTRO_ACCESO_SESSION_PARAMETER )
+})
 @Table(name="RegistroAcceso")
 public class RegistroAcceso
         implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public static final String REGISTRO_ACCESO_BY_SESSION = "registroAcceso.bySessionId";
+
+    public static final String REGISTRO_ACCESO_SESSION_PARAMETER = "sessionId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
