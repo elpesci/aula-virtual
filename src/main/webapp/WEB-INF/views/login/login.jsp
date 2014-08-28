@@ -31,7 +31,8 @@
                 
             <div class="panel panel-warning">
                 <div class="panel-heading">
-                    <spring:message javaScriptEscape="true" code="login.login.label"/>
+                    <h3><span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                    <spring:message javaScriptEscape="true" code="login.login.label"/></h3>
                 </div>
                 <div class="panel-body">
                     <c:out value="${sessionScope.LAST_USERNAME}" escapeXml="false"/>
