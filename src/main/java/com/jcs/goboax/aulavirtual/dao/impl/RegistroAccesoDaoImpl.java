@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.TypedQuery;
+
 @Repository
 @Transactional
 public class RegistroAccesoDaoImpl
@@ -22,4 +24,13 @@ public class RegistroAccesoDaoImpl
 
     private final static Logger LOG = LoggerFactory.getLogger(RegistroAccesoDaoImpl.class);
 
+    @Override
+    public RegistroAcceso readBySessionId(String aSessionId)
+    {
+        TypedQuery<RegistroAcceso> myTypedQuery =
+                entityManager.createNamedQuery(RegistroAcceso.REGISTRO_ACCESO_BY_SESSION, RegistroAcceso.class);
+        myTypedQuery.setParameter(RegistroAcceso.REGISTRO_ACCESO_SESSION_PARAMETER, aSessionId);
+
+        return getSingleResult(myTypedQuery);
+    }
 }

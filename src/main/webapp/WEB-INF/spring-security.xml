@@ -10,6 +10,12 @@
     <global-method-security secured-annotations="enabled"/>
 
     <http use-expressions="true">
+        <session-management>
+            <concurrency-control
+            max-sessions="1"
+            expired-url="/login" />
+        </session-management>
+
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/login/**" access="permitAll"/>

@@ -7,6 +7,7 @@ import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.TipoContenido;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
@@ -15,6 +16,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,6 +34,9 @@ public class CursoServiceImpl
 
     @Autowired
     private ConversionService conversionService;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Transactional(readOnly = true)
     @Override
@@ -52,6 +57,8 @@ public class CursoServiceImpl
     public void createCourse(CourseModel aCourseModel)
     {
         Curso myCurso = conversionService.convert(aCourseModel, Curso.class);
+        myCurso.setFechaCreacion(new Date());
+        myCurso.setCreadoPor(authenticationService.getUsuario().getUsuarioId());
         cursoDao.persist(myCurso);
     }
 
@@ -60,6 +67,8 @@ public class CursoServiceImpl
     public CourseModel updateCourse(CourseModel aCourseModel)
     {
         Curso myCurso = conversionService.convert(aCourseModel, Curso.class);
+        myCurso.setFechaModificacion(new Date());
+        myCurso.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
         cursoDao.update(myCurso);
         return aCourseModel;
     }

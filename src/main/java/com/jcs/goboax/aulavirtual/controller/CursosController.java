@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
@@ -69,6 +70,9 @@ public class CursosController
     @Autowired
     private TipoContenidoService tipoContenidoService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @InitBinder("courseModel")
     private void initBinder(WebDataBinder binder)
     {
@@ -84,6 +88,7 @@ public class CursosController
     @RequestMapping(method = RequestMethod.GET)
     public String cursos() throws IOException
     {
+        LOG.debug("{}", authenticationService.getUsuario().getUsuarioId());
         return "cursos";
     }
 

@@ -20,4 +20,18 @@ public class RegistroAccesoServiceImpl
     {
         registroAccesoDao.persist(registroAcceso);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public RegistroAcceso readRegistroAccesoBySessionId(String aSessionId)
+    {
+        return registroAccesoDao.readBySessionId(aSessionId);
+    }
+
+    @Transactional
+    @Override
+    public RegistroAcceso updateRegistroAcceso(RegistroAcceso aRegistroAcceso)
+    {
+        return registroAccesoDao.update(aRegistroAcceso);
+    }
 }
