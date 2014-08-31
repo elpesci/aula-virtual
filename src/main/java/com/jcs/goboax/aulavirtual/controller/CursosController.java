@@ -231,6 +231,12 @@ public class CursosController
         return "contenido/add";
 
     }
+    
+    @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
+    public String cancelContentAdd(@PathVariable("courseId") Integer aCourseId)
+    {
+        return "redirect:/cursos/" + aCourseId + "/contents";
+    }
 
     @RequestMapping(value = "/content/download/{id}", method = RequestMethod.GET)
     public void doDownload(HttpServletRequest request,

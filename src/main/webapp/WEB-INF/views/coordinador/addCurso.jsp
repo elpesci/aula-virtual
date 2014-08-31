@@ -6,7 +6,14 @@
 
 <div class="panel panel-warning">
   <div class="panel-heading">
-      <h1><spring:message javaScriptEscape="true" code="course.add.heading.label"/></h1>
+      <h3>
+            <c:if test="${action eq 'add'}">
+                <spring:message javaScriptEscape="true" code="course.add.heading.label"/>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseModel.getName()}"/>
+            </c:if>
+      </h3>
   </div>
   <div class="panel-body">
     <p class="info">
