@@ -67,3 +67,7 @@ ul.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, 
     background-color: inherit;
     border-color: #428bca;
 }
+
+#content input[type=file] {
+    width: 100%;
+}
