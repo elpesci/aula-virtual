@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -20,12 +21,22 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@NamedQuery(name = "ExtensionContenido.findAll", query = "SELECT e FROM ExtensionContenido e")
+@NamedQueries({
+        @NamedQuery(name = ExtensionContenido.EXTENSION_CONTENIDO_ALL,
+                query = "SELECT e FROM ExtensionContenido e"),
+        @NamedQuery(name = ExtensionContenido.EXTENSION_CONTENIDO_EXTENSIONES,
+                query = "SELECT e.extension FROM ExtensionContenido e")
+
+})
 @Table(name="ExtensionContenido")
 public class ExtensionContenido
         implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public static final String EXTENSION_CONTENIDO_EXTENSIONES = "extensionContenido";
+
+    public static final String EXTENSION_CONTENIDO_ALL = "extensionContenido.all";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

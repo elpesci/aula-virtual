@@ -11,22 +11,18 @@
         <p class="info">
             <spring:message javaScriptEscape="true" code="content.add.heading.info.label"/>
             <ul>
-                <li>Tipo del archivo</li>
                 <li>Nombre del archivo</li>
-                <li>Archivo de contenito</li>
+                <li>Archivo de contenido</li>
+            </ul>
+        </p>
+        <p>
+            <ul>
+                <c:forEach var="contentTypeName" items="${contentTypeNames}">
+                    <li>${contentTypeName}</li>
+                </c:forEach>
             </ul>
         </p>
         <form:form method="POST" commandName="contentModelForm" action="${target}" enctype="multipart/form-data" class="form-horizontal">
-            <div class="form-group">
-                <form:label path="contentTypeId" cssClass="col-sm-4 control-label">
-                    <spring:message javaScriptEscape="true" code="label.profile"/>:
-                </form:label>
-                <div class="col-sm-8">
-                    <form:select path="contentTypeId" cssClass="form-control" items="${contentTypeNames}" cssErrorClass="form-control fieldError"/>
-                    <span class="error"><form:errors path="contentTypeId"/></span>
-                </div>
-            </div>
-
             <div class="form-group">
                 <c:if test="${action eq 'edit'}">
                     <form:label path="name" cssClass="col-sm-4 control-label">
@@ -44,7 +40,7 @@
                     <spring:message javaScriptEscape="true" code="content.content.label"/>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="content" type="file" accept=".doc" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:input path="content" type="file" accept="${extensionContenido}" cssClass="form-control" cssErrorClass="fieldError"/>
                     <span class="error"><form:errors path="content"/></span>
                 </div>
             </div>

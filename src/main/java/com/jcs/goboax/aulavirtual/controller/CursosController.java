@@ -200,11 +200,13 @@ public class CursosController
     {
         ContentModelForm myContentModelForm = new ContentModelForm();
         Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
+        List<String> myExtensionesContenido = tipoContenidoService.readExtensionesContenido();
 
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("action", "add");
         aModel.put("contentTypeNames", myTipoContenido);
+        aModel.put("extensionContenido", myExtensionesContenido);
 
         return "contenido/add";
     }

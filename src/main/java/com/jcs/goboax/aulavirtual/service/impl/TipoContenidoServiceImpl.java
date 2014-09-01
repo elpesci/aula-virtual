@@ -1,5 +1,6 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
+import com.jcs.goboax.aulavirtual.dao.api.ExtensionContenidoDao;
 import com.jcs.goboax.aulavirtual.dao.api.TipoContenidoDao;
 import com.jcs.goboax.aulavirtual.model.TipoContenido;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
@@ -16,7 +17,10 @@ public class TipoContenidoServiceImpl
         implements TipoContenidoService
 {
     @Autowired
-    TipoContenidoDao tipoContenidoDao;
+    private TipoContenidoDao tipoContenidoDao;
+
+    @Autowired
+    private ExtensionContenidoDao extensionContenidoDao;
 
     @Override
     public List<TipoContenido> readAllTipoContenido()
@@ -34,5 +38,11 @@ public class TipoContenidoServiceImpl
             myMap.put(myTipoContenido.getTipoContenidoId(), myTipoContenido.getDescripcion());
         }
         return myMap;
+    }
+
+    @Override
+    public List<String> readExtensionesContenido()
+    {
+        return extensionContenidoDao.readExtensionesContenido();
     }
 }

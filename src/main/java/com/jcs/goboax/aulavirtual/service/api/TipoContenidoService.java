@@ -10,4 +10,10 @@ public interface TipoContenidoService
     List<TipoContenido> readAllTipoContenido();
 
     public Map<Integer, String> readAllTipoContenidoMap();
+
+    /**
+     * Read all the valid extension to content store.
+     * @return List of the allowed extensions.
+     */
+    List<String> readExtensionesContenido();
 }
