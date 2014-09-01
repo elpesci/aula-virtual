@@ -11,7 +11,7 @@
                 <spring:message javaScriptEscape="true" code="course.add.heading.label"/>
             </c:if>
             <c:if test="${action eq 'edit'}">
-                <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseModel.getName()}"/>
+                <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseModel.name}"/>
             </c:if>
       </h3>
   </div>

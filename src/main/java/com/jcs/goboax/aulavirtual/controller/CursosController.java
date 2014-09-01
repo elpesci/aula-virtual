@@ -93,7 +93,7 @@ public class CursosController
     }
 
     // TODO Create external API and move this call.
-    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public @ResponseBody String cursosList() throws IOException
     {
         List<Curso> myCursos = cursoService.readCourses();
