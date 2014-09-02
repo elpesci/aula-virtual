@@ -236,6 +236,28 @@ public class CursosController
         return "redirect:/cursos/" + aCourseId + "/contents";
 
     }
+
+    @RequestMapping(value = "/content/edit/{contentId}", method = RequestMethod.GET)
+    public String contentEdit(Map<String, Object> aModel,
+                            @PathVariable("contentId") Integer aCourseId)
+    {
+        
+        ContentModelForm myContentModelForm = new ContentModelForm();
+        Curso myCurso = cursoService.readCourseById(aCourseId);
+
+        if (myCurso == null)
+        {
+            flashMessage.error("content.not.exists");
+            return "redirect:/cursos";
+        }
+
+        CourseModel myCourseModel = conversionService.convert(myCurso, CourseModel.class);
+        aModel.put("courseModel", myCourseModel);
+        aModel.put("target", NavigationTargets.COURSE_EDIT);
+        aModel.put("action", "edit");
+
+        return "contenido/add";
+    }
     
     @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
     public String doContentDelete(@PathVariable("id") Integer aContentId)

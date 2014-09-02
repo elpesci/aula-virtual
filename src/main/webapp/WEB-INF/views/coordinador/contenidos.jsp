@@ -22,6 +22,18 @@
             "sAjaxSource": "content/list",
             "createdRow": function (row, data, index) {
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
+
+                var editIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
+
+                var editLink = $('<a/>');
+                myLink = "<c:url value='/cursos/content/edit/" + data.id + "'/>";
+                editLink.attr('href', myLink);
+                editLink.attr('title', 'Editar información del contenido');
+                editLink.html(editIcon);
+
+                $(row).find('.acciones-control').append(editLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
+
                 var deleteIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-times fa-stack-1x"></i></span>';
 
                 var deleteLink = $('<a/>');
