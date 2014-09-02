@@ -5,23 +5,31 @@
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h1><spring:message javaScriptEscape="true" code="content.add.heading.label"/> TODO: NombreDelCurso</h1>
+        <h3><spring:message javaScriptEscape="true" code="content.add.heading.label" arguments="${course.getNombre()}"/></h3>
     </div>
     <div class="panel panel-body">
-        <p class="info">
-            <spring:message javaScriptEscape="true" code="content.add.heading.info.label"/>
-            <ul>
-                <li>Nombre del archivo</li>
-                <li>Archivo de contenido</li>
-            </ul>
-        </p>
-        <p>
-            <ul>
-                <c:forEach var="contentTypeName" items="${contentTypeNames}">
-                    <li>${contentTypeName}</li>
-                </c:forEach>
-            </ul>
-        </p>
+        <div class="row">
+            <div class="col-xs-6">
+                <p class="info left">
+                <spring:message javaScriptEscape="true" code="content.add.heading.info.label"/>
+                <ul>
+                    <li>Nombre del archivo</li>
+                    <li>Archivo de contenido</li>
+                </ul>
+                </p>
+            </div>
+            <div class="col-xs-6">
+                <p class="right">
+                    <spring:message javaScriptEscape="true" code="content.common.allowed.types.label" />:
+                    <ul>
+                        <c:forEach var="contentTypeName" items="${contentTypeNames}">
+                            <li>${contentTypeName}</li>
+                        </c:forEach>
+                    </ul>
+                </p>                                   
+            </div>
+        </div>
+
         <form:form method="POST" commandName="contentModelForm" action="${target}" enctype="multipart/form-data" class="form-horizontal">
             <div class="form-group">
                 <c:if test="${action eq 'edit'}">
