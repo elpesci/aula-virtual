@@ -56,7 +56,14 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E>
      */
     public void remove(E entity)
     {
-        entityManager.remove(entity);
+        if(entityManager.contains(entity)) 
+        {
+            entityManager.remove(entity);
+        }
+        else 
+        {
+            entityManager.remove(entityManager.merge(entity));
+        }
     }
 
     /**

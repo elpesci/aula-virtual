@@ -201,12 +201,14 @@ public class CursosController
         ContentModelForm myContentModelForm = new ContentModelForm();
         Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
         List<String> myExtensionesContenido = tipoContenidoService.readExtensionesContenido();
+        Curso oCurso = cursoService.readCourseById(aCourseId);
 
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("action", "add");
         aModel.put("contentTypeNames", myTipoContenido);
         aModel.put("extensionContenido", myExtensionesContenido);
+        aModel.put("course", oCurso);
 
         return "contenido/add";
     }
@@ -223,6 +225,7 @@ public class CursosController
             aModel.put("target", "/cursos/" + aCourseId + "/content/add");
             aModel.put("action", "add");
             aModel.put("contentTypeNames", myTipoContenido);
+            
             return "contenido/add";
 
         }
@@ -230,8 +233,29 @@ public class CursosController
         LOG.debug(courseModel.getContent().getContentType());
 
         cursoService.createContent(courseModel, aCourseId);
-        return "contenido/add";
+        return "redirect:/cursos/" + aCourseId + "/contents";
 
+    }
+    
+    @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
+    public String doContentDelete(@PathVariable("id") Integer aContentId)
+    {
+        int ownerCourseId = 0;
+        
+        try
+        {
+            Contenido myContenido = contenidoDao.findByKey(aContentId);
+            Curso ownerCourse = myContenido.getCurso();
+            ownerCourseId = ownerCourse.getCursoId();
+            
+            contenidoDao.remove(myContenido);
+        }
+        catch (Exception e)
+        {
+            LOG.error("unable to delete contents,  please see the stackTrace", e);
+        }
+        
+        return "redirect:/cursos/" + ownerCourseId + "/contents";
     }
     
     @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
