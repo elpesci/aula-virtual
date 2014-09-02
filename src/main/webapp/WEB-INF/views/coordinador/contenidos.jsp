@@ -21,6 +21,19 @@
             "sort": "position",
             "sAjaxSource": "content/list",
             "createdRow": function (row, data, index) {
+                <sec:authorize access="hasRole('SUPER_ADMIN')">
+                var deleteIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-times fa-stack-1x"></i></span>';
+
+                var deleteLink = $('<a/>');
+                myLink = "<c:url value='/cursos/content/delete/" + data.id + "'/>";
+                deleteLink.attr('href', myLink);
+                deleteLink.attr('title', 'Eliminar contenido del curso');
+                deleteLink.html(deleteIcon);
+
+                $(row).find('.acciones-control').append(deleteLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
+                </sec:authorize>
+                    
                 var downloadIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-download fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
