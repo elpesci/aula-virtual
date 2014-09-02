@@ -240,22 +240,12 @@ public class CursosController
     @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
     public String doContentDelete(@PathVariable("id") Integer aContentId)
     {
-        int ownerCourseId = 0;
+        Curso myCurso = cursoService.readCourseByContentId(aContentId);
         
-        try
-        {
-            Contenido myContenido = contenidoDao.findByKey(aContentId);
-            Curso ownerCourse = myContenido.getCurso();
-            ownerCourseId = ownerCourse.getCursoId();
-            
-            contenidoDao.remove(myContenido);
-        }
-        catch (Exception e)
-        {
-            LOG.error("unable to delete contents,  please see the stackTrace", e);
-        }
-        
-        return "redirect:/cursos/" + ownerCourseId + "/contents";
+        cursoService.removeContent(aContentId);
+        flashMessage.success("content.delete.succes.message");
+
+        return "redirect:/cursos/" + myCurso.getCursoId() + "/contents";
     }
     
     @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)

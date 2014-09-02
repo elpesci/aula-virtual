@@ -52,4 +52,17 @@ public interface CursoService
      * @return
      */
     List<Contenido> readContents(Integer aCourseId);
+
+    /**
+     * Remove Content given an Id
+     * @param aContent Content Id
+     */
+    void removeContent(Integer aContent);
+
+    /**
+     * Read Course from a content Id
+     * @param aContentId
+     * @return
+     */
+    Curso readCourseByContentId(Integer aContentId);
 }

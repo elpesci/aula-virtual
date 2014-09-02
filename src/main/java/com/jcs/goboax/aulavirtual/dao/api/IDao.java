@@ -18,7 +18,7 @@ public interface IDao<K, E>
 {
     void persist(E entity);
 
-    void remove(E entity);
+    void remove(K entityId);
 
     E findByKey(K entityId);
 
