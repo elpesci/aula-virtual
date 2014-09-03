@@ -100,6 +100,12 @@ public class CursoServiceImpl
         return readContents(myCurso);
     }
 
+    @Override
+    public Contenido readContentById(Integer aContentId)
+    {
+        return contenidoDao.findByKey(aContentId);
+    }
+
     @Transactional
     @Override
     public void removeContent(Integer aContent)

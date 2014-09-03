@@ -239,20 +239,20 @@ public class CursosController
 
     @RequestMapping(value = "/content/edit/{contentId}", method = RequestMethod.GET)
     public String contentEdit(Map<String, Object> aModel,
-                            @PathVariable("contentId") Integer aCourseId)
+                            @PathVariable("contentId") Integer aContentId)
     {
-        
-        ContentModelForm myContentModelForm = new ContentModelForm();
-        Curso myCurso = cursoService.readCourseById(aCourseId);
+        Contenido myContenido = cursoService.readContentById(aContentId);
 
-        if (myCurso == null)
+        if (myContenido == null)
         {
             flashMessage.error("content.not.exists");
             return "redirect:/cursos";
         }
 
-        CourseModel myCourseModel = conversionService.convert(myCurso, CourseModel.class);
-        aModel.put("courseModel", myCourseModel);
+        ContentModelForm myContentModelForm =
+                conversionService.convert(myContenido, ContentModelForm.class);
+
+        aModel.put("contentModelForm", myContentModelForm);
         aModel.put("target", NavigationTargets.COURSE_EDIT);
         aModel.put("action", "edit");
 
