@@ -72,4 +72,14 @@
         <put-attribute name="title" value="Aula Virtual - Permiso Negado"/>
         <put-attribute name="body" value="/WEB-INF/views/accessdenied.jsp"/>
     </definition>
+    
+    <definition extends="base.definition" name="404">
+        <put-attribute name="title" value="Aula Virtual - Página no existe"/>
+        <put-attribute name="body" value="/WEB-INF/views/markup404.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="500">
+        <put-attribute name="title" value="Aula Virtual - Error General"/>
+        <put-attribute name="body" value="/WEB-INF/views/markup500.jsp"/>
+    </definition>
 </tiles-definitions>
