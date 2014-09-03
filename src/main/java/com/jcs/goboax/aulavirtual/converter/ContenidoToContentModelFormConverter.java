@@ -9,8 +9,12 @@ public class ContenidoToContentModelFormConverter
 {
 
     @Override
-    public ContentModelForm convert(Contenido contenido)
+    public ContentModelForm convert(Contenido aContenido)
     {
+        ContentModelForm myContentModelForm = new ContentModelForm();
+        myContentModelForm.setName(aContenido.getNombre());
+//        myContentModelForm.setContent(new CommonsMultipartFile(FileItem
+//                new (new aContenido.getArchivoMaterial())));
         return null;
     }
 }
