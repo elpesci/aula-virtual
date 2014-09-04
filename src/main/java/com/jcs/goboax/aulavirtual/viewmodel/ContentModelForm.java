@@ -6,6 +6,7 @@ public class ContentModelForm
 {
     private String name;
     private CommonsMultipartFile content;
+    private String description;
     private Integer contentTypeId;
 
     public String getName()
@@ -36,5 +37,15 @@ public class ContentModelForm
     public void setContentTypeId(Integer contentTypeId)
     {
         this.contentTypeId = contentTypeId;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 }

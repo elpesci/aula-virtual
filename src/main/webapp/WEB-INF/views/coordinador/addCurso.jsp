@@ -56,7 +56,7 @@
 
         <div class="form-group">
             <form:label path="active" cssClass="col-sm-4 control-label">
-                <spring:message javaScriptEscape="true" code="course.addressedTo.label"/>:
+                <spring:message javaScriptEscape="true" code="course.active.label"/>:
             </form:label>
             <div class="col-sm-8">
                 <form:checkbox path="active" cssClass="form-control" cssErrorClass="fieldError"/>
