@@ -31,7 +31,7 @@ public class CourseModelToCursoConverter
         myCurso.setAudiencia(courseModel.getAddressedTo());
         myCurso.setObjetivo(courseModel.getGoal());
         myCurso.setNombre(courseModel.getName());
-        myCurso.setHabilitado(true);
+        myCurso.setHabilitado(courseModel.isActive());
         return myCurso;
     }
 }

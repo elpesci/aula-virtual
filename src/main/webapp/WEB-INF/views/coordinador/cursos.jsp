@@ -35,6 +35,17 @@
 
                 $(row).find('.acciones-control').append(editLink);
                 $(row).find('.acciones-control').append('&nbsp;&nbsp;');
+
+                var deleteIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-times fa-stack-1x"></i></span>';
+
+                var deleteLink = $('<a/>');
+                myLink = "<c:url value='/cursos/delete/" + data.id + "'/>";
+                deleteLink.attr('href', myLink);
+                deleteLink.attr('title', 'Deshabilitar curso');
+                deleteLink.html(deleteIcon);
+
+                $(row).find('.acciones-control').append(deleteLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
                 </sec:authorize>
 
                 var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';

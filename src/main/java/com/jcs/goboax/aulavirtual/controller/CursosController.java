@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -94,10 +96,18 @@ public class CursosController
 
     // TODO Create external API and move this call.
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-    public @ResponseBody String cursosList() throws IOException
+    public @ResponseBody String cursosList(HttpServletRequest request) throws IOException
     {
-        List<Curso> myCursos = cursoService.readCourses();
-        
+        List<Curso> myCursos = new ArrayList<Curso>();
+        if (request.isUserInRole("SUPER_ADMIN"))
+        {
+            myCursos = cursoService.readCourses();
+        }
+        else
+        {
+            myCursos = cursoService.readCoursesEnable();
+        }
+
         @SuppressWarnings("unchecked")
         List<CourseModel> myCourseModels = (List<CourseModel>) conversionService.convert(
                 myCursos,
@@ -185,6 +195,14 @@ public class CursosController
 
         cursoService.updateCourse(courseModel);
         flashMessage.success("course.success");
+        return "redirect:/cursos";
+    }
+
+    @RequestMapping(value = "/delete/{courseId}", method = RequestMethod.GET)
+    public String removeCourse(@PathVariable(value = "courseId") Integer aCourseId,
+                               Map<String, Object> aModel)
+    {
+        cursoService.disableCourse(aCourseId);
         return "redirect:/cursos";
     }
 

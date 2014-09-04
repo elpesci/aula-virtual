@@ -53,6 +53,16 @@
                     <span class="error"><form:errors path="addressedTo"/></span>
                 </div>
             </div>
+
+        <div class="form-group">
+            <form:label path="active" cssClass="col-sm-4 control-label">
+                <spring:message javaScriptEscape="true" code="course.addressedTo.label"/>:
+            </form:label>
+            <div class="col-sm-8">
+                <form:checkbox path="active" cssClass="form-control" cssErrorClass="fieldError"/>
+                <span class="error"><form:errors path="active"/></span>
+            </div>
+        </div>
                 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">

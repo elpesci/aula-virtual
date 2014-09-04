@@ -13,6 +13,8 @@ import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +40,19 @@ public class CursoServiceImpl
     @Autowired
     private AuthenticationService authenticationService;
 
+    @PreAuthorize("SUPER_ADMIN")
     @Transactional(readOnly = true)
     @Override
     public List<Curso> readCourses()
     {
         return cursoDao.findWithNamedQuery(Curso.CURSO_ALL_QUERYNAME);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Curso> readCoursesEnable()
+    {
+        return cursoDao.findWithNamedQuery(Curso.CURSO_ALL_TO_USERS_QUERYNAME);
     }
 
     @Transactional(readOnly = true)
@@ -71,6 +81,15 @@ public class CursoServiceImpl
         myCurso.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
         cursoDao.update(myCurso);
         return aCourseModel;
+    }
+
+    @Transactional
+    @Override
+    public void disableCourse(Integer aCourseId)
+    {
+        Curso myCurso = cursoDao.findByKey(aCourseId);
+        myCurso.setHabilitado(false);
+        cursoDao.update(myCurso);
     }
 
     @Transactional

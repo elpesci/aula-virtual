@@ -16,6 +16,17 @@ public interface CursoService
      */
     List<Curso> readCourses();
 
+    /**
+     *
+     * @return
+     */
+    List<Curso> readCoursesEnable();
+
+    /**
+     *
+     * @param anId
+     * @return
+     */
     Curso readCourseById(Integer anId);
 
     /**
@@ -32,6 +43,12 @@ public interface CursoService
      * @return
      */
     CourseModel updateCourse(CourseModel aCourseModel);
+
+    /**
+     *
+     * @param aCourseId
+     */
+    void disableCourse(Integer aCourseId);
 
     /**
      * Create new Content.
