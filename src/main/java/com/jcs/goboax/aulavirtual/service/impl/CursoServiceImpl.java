@@ -12,6 +12,7 @@ import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -88,8 +89,11 @@ public class CursoServiceImpl
     public void disableCourse(Integer aCourseId)
     {
         Curso myCurso = cursoDao.findByKey(aCourseId);
-        myCurso.setHabilitado(false);
-        cursoDao.update(myCurso);
+        if (myCurso.getHabilitado() == true)
+        {
+            myCurso.setHabilitado(false);
+            cursoDao.update(myCurso);
+        }
     }
 
     @Transactional

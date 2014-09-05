@@ -15,6 +15,7 @@
                 <ul>
                     <li>Nombre del archivo</li>
                     <li>Archivo de contenido</li>
+                    <li>Descripción del contenido</li>
                 </ul>
                 </p>
             </div>
@@ -41,6 +42,16 @@
                         <span class="error"><form:errors path="name"/></span>
                     </div>
                 </c:if>
+            </div>
+
+            <div class="form-group">
+                <form:label path="description" cssClass="col-sm-4 control-label">
+                    <spring:message javaScriptEscape="true" code="content.description"/>
+                </form:label>
+                <div class="col-sm-8">
+                    <form:input path="description" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="description"/></span>
+                </div>
             </div>
 
             <div class="form-group">

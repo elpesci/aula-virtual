@@ -203,6 +203,9 @@ public class CursosController
                                Map<String, Object> aModel)
     {
         cursoService.disableCourse(aCourseId);
+
+        flashMessage.success("course.disable.success");
+
         return "redirect:/cursos";
     }
 

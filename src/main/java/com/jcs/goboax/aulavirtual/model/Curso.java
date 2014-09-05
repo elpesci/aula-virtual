@@ -1,5 +1,7 @@
 package com.jcs.goboax.aulavirtual.model;
 
+import org.eclipse.persistence.annotations.Cache;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ import javax.persistence.TemporalType;
                 query = "SELECT c FROM Curso c WHERE c.habilitado = true")
 })
 @Entity
+@Cache
 @Table(name = "Curso")
 public class Curso
         implements Serializable
