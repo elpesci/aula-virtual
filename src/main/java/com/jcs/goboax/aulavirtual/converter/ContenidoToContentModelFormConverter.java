@@ -12,6 +12,7 @@ public class ContenidoToContentModelFormConverter
     public ContentModelForm convert(Contenido aContenido)
     {
         ContentModelForm myContentModelForm = new ContentModelForm();
+        myContentModelForm.setId(aContenido.getContenidoId());
         myContentModelForm.setName(aContenido.getNombre());
         myContentModelForm.setDescription(aContenido.getDescripcion());
 

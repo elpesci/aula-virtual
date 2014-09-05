@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
@@ -32,6 +33,7 @@
         </div>
 
         <form:form method="POST" commandName="contentModelForm" action="${target}" enctype="multipart/form-data" class="form-horizontal">
+            <form:hidden path="id"/>
             <div class="form-group">
                 <c:if test="${action eq 'edit'}">
                     <form:label path="name" cssClass="col-sm-4 control-label">
@@ -54,15 +56,17 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <form:label path="content" class="col-sm-4 control-label">
-                    <spring:message javaScriptEscape="true" code="content.content.label"/>
-                </form:label>
-                <div class="col-sm-8">
-                    <form:input path="content" type="file" accept="${extensionContenido}" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="content"/></span>
+            <c:if test="${action eq 'add'}">
+                <div class="form-group">
+                    <form:label path="content" class="col-sm-4 control-label">
+                        <spring:message javaScriptEscape="true" code="content.content.label"/>
+                    </form:label>
+                    <div class="col-sm-8">
+                        <form:input path="content" type="file" accept="${extensionContenido}" cssClass="form-control" cssErrorClass="fieldError"/>
+                        <span class="error"><form:errors path="content"/></span>
+                    </div>
                 </div>
-            </div>
+            </c:if>
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">

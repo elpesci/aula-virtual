@@ -12,9 +12,7 @@ import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,11 +102,25 @@ public class CursoServiceImpl
         Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
         Curso myCurso = cursoDao.findByKey(aCourseId);
         myContenido.setCurso(myCurso);
+        myContenido.setCreadoPor(authenticationService.getUsuario().getUsuarioId());
+        myContenido.setFechaCreacion(new Date());
 
+        // TODO retrieve the correct tipo de contenido.
         TipoContenido tipoContenido = tipoContenidoDao.findByKey(1);
         myContenido.setTipoContenido(tipoContenido);
 
         contenidoDao.persist(myContenido);
+    }
+
+    @Transactional
+    @Override
+    public void updateContent(ContentModelForm aContentModelForm)
+    {
+        Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
+        myContenido.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
+        myContenido.setFechaModificacion(new Date());
+
+        contenidoDao.update(myContenido);
     }
 
     @Transactional(readOnly = true)

@@ -22,7 +22,9 @@ public class ContentModelFormValidator
     {
         ContentModelForm myContentModelForm = (ContentModelForm) anObjet;
         CommonsMultipartFile myMultipartFile = myContentModelForm.getContent();
-        if (myMultipartFile.getSize() <= 0)
+
+        if (myContentModelForm.getId() == null
+                && (myMultipartFile == null || myMultipartFile.getSize() <= 0))
         {
             anErrors.rejectValue("content", "content.empty");
         }

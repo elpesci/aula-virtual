@@ -23,7 +23,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -274,10 +273,30 @@ public class CursosController
                 conversionService.convert(myContenido, ContentModelForm.class);
 
         aModel.put("contentModelForm", myContentModelForm);
-        aModel.put("target", NavigationTargets.COURSE_EDIT);
+        aModel.put("target", NavigationTargets.CONTENT_EDIT);
         aModel.put("action", "edit");
+        aModel.put("course", myContenido.getCurso());
 
         return "contenido/add";
+    }
+
+    @RequestMapping(value = "/content/edit", method = RequestMethod.POST)
+    public String doContentEdit(Map<String, Object> aModel,
+                              @Validated ContentModelForm courseModel, BindingResult result)
+    {
+
+        if (result.hasErrors())
+        {
+            aModel.put("target", NavigationTargets.CONTENT_EDIT);
+            aModel.put("action", "edit");
+
+            flashMessage.error("content.not.exists");
+            return "contenido/add";
+        }
+
+        cursoService.updateContent(courseModel);
+
+        return "redirect:/cursos";
     }
     
     @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
@@ -327,7 +346,7 @@ public class CursosController
         return "contenido/list";
     }
 
-    @RequestMapping(value = "/{cursoId}/content/list", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{cursoId}/content/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public @ResponseBody String contentList(@PathVariable("cursoId") Integer aCourseId) throws IOException
     {
         List<Contenido> myContenidos = cursoService.readContents(aCourseId);

@@ -59,6 +59,12 @@ public interface CursoService
     void createContent(ContentModelForm aContentModelForm, Integer aCourseId);
 
     /**
+     *
+     * @param aContentModelForm
+     */
+    void updateContent(ContentModelForm aContentModelForm);
+
+    /**
      * @param aCourse
      * @return
      */
