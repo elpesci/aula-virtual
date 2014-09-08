@@ -175,4 +175,10 @@ public class UsuarioServiceImpl
     {
         return usuarioDao.findByEmail(anEmail);
     }
+
+    @Override
+    public List<Usuario> readUsuarios()
+    {
+        return usuarioDao.findWithNamedQuery(Usuario.USUARIO_ALL_QUERYNAME);
+    }
 }

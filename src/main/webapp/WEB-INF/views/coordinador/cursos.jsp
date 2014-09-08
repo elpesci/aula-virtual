@@ -6,7 +6,6 @@
 
 <%@ include file="/WEB-INF/views/common/datatable_options.jsp" %>
 
-
 <link rel="stylesheet" type="text/css"
       href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
