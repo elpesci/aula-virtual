@@ -13,8 +13,8 @@
 }
 
 a.dismissFlash {
-	text-decoration: underline;
-	cursor: pointer;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #flashMessagesBox .error, #flashMessagesBox .notice, #flashMessagesBox .success {padding:.5em; /*margin-bottom:1.6em;*/border:1px solid #ddd;}
@@ -66,4 +66,8 @@ ul.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, 
     cursor: pointer;
     background-color: inherit;
     border-color: #428bca;
+}
+
+#content input[type=file] {
+    width: 100%;
 }

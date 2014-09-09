@@ -8,4 +8,7 @@ public abstract class Constants {
     /** Profile Code Default. */
     public static final String PROFILE_CODE_REGISTRATION_DEFAULT = "ALUMNO";
 
+    /** One Space. */
+    public static final String SPACE = " ";
+
 }

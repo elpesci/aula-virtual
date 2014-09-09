@@ -51,7 +51,8 @@ public class Contenido implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
-    private String fechaModificacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
 
     private int modificadoPor;
     
@@ -123,12 +124,12 @@ public class Contenido implements Serializable
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getFechaModificacion()
+    public Date getFechaModificacion()
     {
         return this.fechaModificacion;
     }
 
-    public void setFechaModificacion(String fechaModificacion)
+    public void setFechaModificacion(Date fechaModificacion)
     {
         this.fechaModificacion = fechaModificacion;
     }

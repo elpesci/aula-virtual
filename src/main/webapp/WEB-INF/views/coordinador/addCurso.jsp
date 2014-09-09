@@ -6,7 +6,14 @@
 
 <div class="panel panel-warning">
   <div class="panel-heading">
-      <h1><spring:message javaScriptEscape="true" code="course.add.heading.label"/></h1>
+      <h3>
+            <c:if test="${action eq 'add'}">
+                <spring:message javaScriptEscape="true" code="course.add.heading.label"/>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseModel.name}"/>
+            </c:if>
+      </h3>
   </div>
   <div class="panel-body">
     <p class="info">
@@ -46,6 +53,16 @@
                     <span class="error"><form:errors path="addressedTo"/></span>
                 </div>
             </div>
+
+        <div class="form-group">
+            <form:label path="active" cssClass="col-sm-4 control-label">
+                <spring:message javaScriptEscape="true" code="course.active.label"/>:
+            </form:label>
+            <div class="col-sm-8">
+                <form:checkbox path="active" cssClass="form-control" cssErrorClass="fieldError"/>
+                <span class="error"><form:errors path="active"/></span>
+            </div>
+        </div>
                 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">

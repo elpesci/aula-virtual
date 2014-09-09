@@ -1,5 +1,7 @@
 package com.jcs.goboax.aulavirtual.model;
 
+import org.eclipse.persistence.annotations.Cache;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +17,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@NamedQueries({ @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, query = "SELECT c FROM Curso c") })
+@NamedQueries({
+        @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, query = "SELECT c FROM Curso c"),
+        @NamedQuery(name = Curso.CURSO_ALL_TO_USERS_QUERYNAME,
+                query = "SELECT c FROM Curso c WHERE c.habilitado = true")
+})
 @Entity
+@Cache
 @Table(name = "Curso")
 public class Curso
         implements Serializable
@@ -25,6 +32,8 @@ public class Curso
     private static final long serialVersionUID = 1L;
 
     public final static String CURSO_ALL_QUERYNAME = "curso.all";
+
+    public final static String CURSO_ALL_TO_USERS_QUERYNAME = "curso.allToUsers";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

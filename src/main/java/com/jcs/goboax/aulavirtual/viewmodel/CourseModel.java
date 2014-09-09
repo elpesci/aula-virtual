@@ -6,7 +6,17 @@ public class CourseModel
     private String name;
     private String goal;
     private String addressedTo;
+    private boolean active = true;
 
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    public void setActive(boolean isActive)
+    {
+        this.active = isActive;
+    }
 
     public Integer getId()
     {

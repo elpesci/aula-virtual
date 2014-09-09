@@ -24,7 +24,8 @@ import java.util.List;
  * @param <E> Type of the entity
  * @author julio
  */
-public abstract class BaseDaoImpl<K, E> implements IDao<K, E>
+public abstract class BaseDaoImpl<K, E>
+        implements IDao<K, E>
 {
 
     private final static Logger LOG = LoggerFactory.getLogger(BaseDaoImpl.class);
@@ -52,11 +53,12 @@ public abstract class BaseDaoImpl<K, E> implements IDao<K, E>
     }
 
     /**
-     * @param entity
+     * @param anEntityId
      */
-    public void remove(E entity)
+    public void remove(K anEntityId)
     {
-        entityManager.remove(entity);
+        E ref = this.entityManager.getReference(entityClass, anEntityId);
+        this.entityManager.remove(ref);
     }
 
     /**

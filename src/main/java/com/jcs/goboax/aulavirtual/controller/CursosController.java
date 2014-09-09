@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +71,9 @@ public class CursosController
     @Autowired
     private TipoContenidoService tipoContenidoService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @InitBinder("courseModel")
     private void initBinder(WebDataBinder binder)
     {
@@ -84,15 +89,24 @@ public class CursosController
     @RequestMapping(method = RequestMethod.GET)
     public String cursos() throws IOException
     {
+        LOG.debug("{}", authenticationService.getUsuario().getUsuarioId());
         return "cursos";
     }
 
     // TODO Create external API and move this call.
-    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody String cursosList() throws IOException
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public @ResponseBody String cursosList(HttpServletRequest request) throws IOException
     {
-        List<Curso> myCursos = cursoService.readCourses();
-        
+        List<Curso> myCursos = new ArrayList<Curso>();
+        if (request.isUserInRole("SUPER_ADMIN"))
+        {
+            myCursos = cursoService.readCourses();
+        }
+        else
+        {
+            myCursos = cursoService.readCoursesEnable();
+        }
+
         @SuppressWarnings("unchecked")
         List<CourseModel> myCourseModels = (List<CourseModel>) conversionService.convert(
                 myCursos,
@@ -183,6 +197,17 @@ public class CursosController
         return "redirect:/cursos";
     }
 
+    @RequestMapping(value = "/delete/{courseId}", method = RequestMethod.GET)
+    public String removeCourse(@PathVariable(value = "courseId") Integer aCourseId,
+                               Map<String, Object> aModel)
+    {
+        cursoService.disableCourse(aCourseId);
+
+        flashMessage.success("course.disable.success");
+
+        return "redirect:/cursos";
+    }
+
     @RequestMapping(params = "cancel", value = "/edit", method = RequestMethod.POST)
     public String cancelEditCourse()
     {
@@ -195,11 +220,15 @@ public class CursosController
     {
         ContentModelForm myContentModelForm = new ContentModelForm();
         Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
+        List<String> myExtensionesContenido = tipoContenidoService.readExtensionesContenido();
+        Curso oCurso = cursoService.readCourseById(aCourseId);
 
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("action", "add");
         aModel.put("contentTypeNames", myTipoContenido);
+        aModel.put("extensionContenido", myExtensionesContenido);
+        aModel.put("course", oCurso);
 
         return "contenido/add";
     }
@@ -216,6 +245,7 @@ public class CursosController
             aModel.put("target", "/cursos/" + aCourseId + "/content/add");
             aModel.put("action", "add");
             aModel.put("contentTypeNames", myTipoContenido);
+            
             return "contenido/add";
 
         }
@@ -223,8 +253,67 @@ public class CursosController
         LOG.debug(courseModel.getContent().getContentType());
 
         cursoService.createContent(courseModel, aCourseId);
-        return "contenido/add";
+        return "redirect:/cursos/" + aCourseId + "/contents";
 
+    }
+
+    @RequestMapping(value = "/content/edit/{contentId}", method = RequestMethod.GET)
+    public String contentEdit(Map<String, Object> aModel,
+                            @PathVariable("contentId") Integer aContentId)
+    {
+        Contenido myContenido = cursoService.readContentById(aContentId);
+
+        if (myContenido == null)
+        {
+            flashMessage.error("content.not.exists");
+            return "redirect:/cursos";
+        }
+
+        ContentModelForm myContentModelForm =
+                conversionService.convert(myContenido, ContentModelForm.class);
+
+        aModel.put("contentModelForm", myContentModelForm);
+        aModel.put("target", NavigationTargets.CONTENT_EDIT);
+        aModel.put("action", "edit");
+        aModel.put("course", myContenido.getCurso());
+
+        return "contenido/add";
+    }
+
+    @RequestMapping(value = "/content/edit", method = RequestMethod.POST)
+    public String doContentEdit(Map<String, Object> aModel,
+                              @Validated ContentModelForm courseModel, BindingResult result)
+    {
+
+        if (result.hasErrors())
+        {
+            aModel.put("target", NavigationTargets.CONTENT_EDIT);
+            aModel.put("action", "edit");
+
+            flashMessage.error("content.not.exists");
+            return "contenido/add";
+        }
+
+        cursoService.updateContent(courseModel);
+
+        return "redirect:/cursos";
+    }
+    
+    @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
+    public String doContentDelete(@PathVariable("id") Integer aContentId)
+    {
+        Curso myCurso = cursoService.readCourseByContentId(aContentId);
+        
+        cursoService.removeContent(aContentId);
+        flashMessage.success("content.delete.succes.message");
+
+        return "redirect:/cursos/" + myCurso.getCursoId() + "/contents";
+    }
+    
+    @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
+    public String cancelContentAdd(@PathVariable("courseId") Integer aCourseId)
+    {
+        return "redirect:/cursos/" + aCourseId + "/contents";
     }
 
     @RequestMapping(value = "/content/download/{id}", method = RequestMethod.GET)
@@ -252,11 +341,12 @@ public class CursosController
     @RequestMapping(value = "/{cursoId}/contents", method = RequestMethod.GET)
     public String contents(@PathVariable("cursoId") Integer aCourse, Map<String, Object> aModel)
     {
-        aModel.put("courseId", aCourse);
+        Curso myCurso = cursoService.readCourseById(aCourse);
+        aModel.put("course", myCurso);
         return "contenido/list";
     }
 
-    @RequestMapping(value = "/{cursoId}/content/list", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{cursoId}/content/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public @ResponseBody String contentList(@PathVariable("cursoId") Integer aCourseId) throws IOException
     {
         List<Contenido> myContenidos = cursoService.readContents(aCourseId);

@@ -6,54 +6,31 @@
 
 package com.jcs.goboax.aulavirtual.dao.impl;
 
+import com.jcs.goboax.aulavirtual.dao.api.RegistroAccesoDao;
 import com.jcs.goboax.aulavirtual.model.RegistroAcceso;
-import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author julio
- */
+import javax.persistence.TypedQuery;
+
 @Repository
-public class RegistroAccesoDaoImpl extends BaseDaoImpl<Integer, RegistroAcceso>
+@Transactional
+public class RegistroAccesoDaoImpl
+        extends BaseDaoImpl<Integer, RegistroAcceso>
+        implements RegistroAccesoDao
 {
-    
-    private final static Logger LOG = LoggerFactory.getLogger(BaseDaoImpl.class);
-    
-    public RegistroAcceso insertar(RegistroAcceso acceso){
-        
-        Integer accesoId = acceso.getRegistroAccesoId();
-        if(accesoId != null) {
-            RegistroAcceso entrada = this.findByKey(accesoId);
 
-            if(entrada != null)
-                return null;
-        }
+    private final static Logger LOG = LoggerFactory.getLogger(RegistroAccesoDaoImpl.class);
 
-        this.persist(acceso);
-        
-        return acceso;
-    }
-    
-    public RegistroAcceso actualizar(RegistroAcceso acceso){
-        
-        RegistroAcceso entradaActualizada;
-        entradaActualizada = entityManager.merge(acceso);
-        
-        return entradaActualizada;
-    }
-    
-    public RegistroAcceso getBySessionId(RegistroAcceso acceso){
-        
-        RegistroAcceso entrada;
-        Query q = entityManager.createQuery(
-                    "SELECT r FROM " + entityClass.getName() + " WHERE r.sessionId = :_sessionId");
-        q.setParameter("_sessionId", acceso.getSessionId());
-        
-        entrada = this.getSingleResult(q);
+    @Override
+    public RegistroAcceso readBySessionId(String aSessionId)
+    {
+        TypedQuery<RegistroAcceso> myTypedQuery =
+                entityManager.createNamedQuery(RegistroAcceso.REGISTRO_ACCESO_BY_SESSION, RegistroAcceso.class);
+        myTypedQuery.setParameter(RegistroAcceso.REGISTRO_ACCESO_SESSION_PARAMETER, aSessionId);
 
-        return entrada;
+        return getSingleResult(myTypedQuery);
     }
 }

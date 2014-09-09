@@ -4,28 +4,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%@ include file="/WEB-INF/views/common/datatable_options.jsp" %>
+
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 <script type="text/javascript">
-    var espanol = {"sProcessing": "Procesando...",
-        "sLengthMenu": "Mostrar _MENU_ registros",
-        "sZeroRecords": "No se encontraron resultados",
-        "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
-        "sInfoEmpty": "No existen registros",
-        "sInfoFiltered": "(filtrado de un total de _MAX_ líneas)",
-        "sInfoPostFix": "",
-        "sSearch": "Buscar:",
-        "sUrl": "",
-        "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Ultimo",
-            "sNext": "Siguiente",
-            "sPrevious": "Anterior"
-        }
-    };
-
     $(document).ready(function () {
 
         var dt = $("#example").dataTable({
@@ -36,6 +21,31 @@
             "sort": "position",
             "sAjaxSource": "content/list",
             "createdRow": function (row, data, index) {
+                <sec:authorize access="hasRole('SUPER_ADMIN')">
+
+                var editIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
+
+                var editLink = $('<a/>');
+                myLink = "<c:url value='/cursos/content/edit/" + data.id + "'/>";
+                editLink.attr('href', myLink);
+                editLink.attr('title', 'Editar información del contenido');
+                editLink.html(editIcon);
+
+                $(row).find('.acciones-control').append(editLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
+
+                var deleteIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-times fa-stack-1x"></i></span>';
+
+                var deleteLink = $('<a/>');
+                myLink = "<c:url value='/cursos/content/delete/" + data.id + "'/>";
+                deleteLink.attr('href', myLink);
+                deleteLink.attr('title', 'Eliminar contenido del curso');
+                deleteLink.html(deleteIcon);
+
+                $(row).find('.acciones-control').append(deleteLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
+                </sec:authorize>
+                    
                 var downloadIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-download fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
@@ -60,7 +70,7 @@
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
         var buttonPlaceholder = $("#buttonPlaceholder").html("<a id=add><span class='glyphicon glyphicon-plus'></span> Agregar contenido</a>");
-        myLink = "<c:url value='/cursos/" + ${courseId} + "/content/add' />";
+        myLink = "<c:url value='/cursos/" + ${course.cursoId} + "/content/add' />";
         $('#add').attr('href', myLink).attr('class', 'btn btn-primary btn-sm').attr('title','Haga click para agregar un nuevo archivo de contenido');;
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
@@ -74,7 +84,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <spring:message javaScriptEscape="true" code="content.heading.label"/>
+                        <spring:message javaScriptEscape="true" code="content.heading.label" arguments="${course.nombre}"/>
                     </h3>
                 </div>
                 <div class="panel-body">

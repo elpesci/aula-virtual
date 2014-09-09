@@ -55,4 +55,10 @@ public interface UsuarioService
     void sendActivationComplete(Usuario anUsuario);
 
     Usuario readByEmail(String anEmail);
+
+    /**
+     * Read All Users.
+     * @return
+     */
+    List<Usuario> readUsuarios();
 }
