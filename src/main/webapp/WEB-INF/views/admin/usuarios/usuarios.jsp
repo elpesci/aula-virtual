@@ -25,7 +25,8 @@
             "aoColumns": [
                 { "mData": "name" },
                 { "mData": "username" },
-                { "mData": "profile"}
+                { "mData": "profile"},
+                { "mData": "status"}
             ]
         });
 
@@ -50,6 +51,7 @@
                                 <th><spring:message javaScriptEscape="true" code="usuario.username.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="usuario.fullName.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="usuario.profile.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="usuario.status.label"/></th>
                             </tr>
                             </thead>
                         </table>

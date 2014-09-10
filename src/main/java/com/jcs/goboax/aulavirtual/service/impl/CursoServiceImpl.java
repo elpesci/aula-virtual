@@ -96,24 +96,6 @@ public class CursoServiceImpl
 
     @Transactional
     @Override
-    public void createContent(ContentModelForm aContentModelForm, Integer aCourseId)
-    {
-
-        Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
-        Curso myCurso = cursoDao.findByKey(aCourseId);
-        myContenido.setCurso(myCurso);
-        myContenido.setCreadoPor(authenticationService.getUsuario().getUsuarioId());
-        myContenido.setFechaCreacion(new Date());
-
-        // TODO retrieve the correct tipo de contenido.
-        TipoContenido tipoContenido = tipoContenidoDao.findByKey(1);
-        myContenido.setTipoContenido(tipoContenido);
-
-        contenidoDao.persist(myContenido);
-    }
-
-    @Transactional
-    @Override
     public void updateContent(ContentModelForm aContentModelForm)
     {
         Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
@@ -153,7 +135,7 @@ public class CursoServiceImpl
     public Curso readCourseByContentId(Integer aContentId)
     {
         Contenido myContenido = contenidoDao.findByKey(aContentId);
-        return myContenido.getCurso();
+        return myContenido.getModulo().getCurso();
     }
 
     @Transactional(readOnly = true)

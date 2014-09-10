@@ -27,6 +27,7 @@ public class UsuarioToUsuarioModelConverter
             myProfiles.append(myUsuarioPerfil.getPerfil().getNombre());
         }
         myUsuarioModel.setProfile(myProfiles.toString());
+        myUsuarioModel.setStatus(usuario.getStatus());
 
         return myUsuarioModel;
     }

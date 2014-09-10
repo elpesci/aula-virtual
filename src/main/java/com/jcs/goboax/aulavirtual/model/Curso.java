@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ import javax.persistence.TemporalType;
                 query = "SELECT c FROM Curso c WHERE c.habilitado = true")
 })
 @Entity
-@Cache
+@Cacheable
 @Table(name = "Curso")
 public class Curso
         implements Serializable

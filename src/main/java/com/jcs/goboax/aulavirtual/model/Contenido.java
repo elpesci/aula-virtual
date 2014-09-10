@@ -254,7 +254,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = Contenido.CONTENT_ALL_QUERYNAME, query = "SELECT c FROM Contenido c"),
         @NamedQuery(name = Contenido.CONTENT_BY_COURSE, query = "SELECT c FROM Contenido c "
-                + "WHERE c.curso = :" + Contenido.CONTENT_COURSE_PARAMETER)
+                + "WHERE c.modulo = :" + Contenido.CONTENT_COURSE_PARAMETER)
 })
 @Table(name = "Contenido")
 public class Contenido implements Serializable

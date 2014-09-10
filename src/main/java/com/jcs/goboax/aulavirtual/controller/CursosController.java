@@ -252,7 +252,7 @@ public class CursosController
         LOG.debug(courseModel.getName());
         LOG.debug(courseModel.getContent().getContentType());
 
-        cursoService.createContent(courseModel, aCourseId);
+//        cursoService.createContent(courseModel, aCourseId);
         return "redirect:/cursos/" + aCourseId + "/contents";
 
     }
@@ -275,7 +275,7 @@ public class CursosController
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("target", NavigationTargets.CONTENT_EDIT);
         aModel.put("action", "edit");
-        aModel.put("course", myContenido.getCurso());
+        aModel.put("course", myContenido.getModulo());
 
         return "contenido/add";
     }

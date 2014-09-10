@@ -1,10 +1,13 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
+import com.jcs.goboax.aulavirtual.model.Usuario;
+
 public class UsuarioModel
 {
     private String username;
     private String name;
     private String profile;
+    private Usuario.UsuarioStatus status;
 
     public String getUsername()
     {
@@ -34,5 +37,15 @@ public class UsuarioModel
     public void setProfile(String profile)
     {
         this.profile = profile;
+    }
+
+    public Usuario.UsuarioStatus getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(Usuario.UsuarioStatus status)
+    {
+        this.status = status;
     }
 }

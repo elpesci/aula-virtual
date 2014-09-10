@@ -51,14 +51,6 @@ public interface CursoService
     void disableCourse(Integer aCourseId);
 
     /**
-     * Create new Content.
-     *
-     * @param aContentModelForm
-     * @param aCourseId
-     */
-    void createContent(ContentModelForm aContentModelForm, Integer aCourseId);
-
-    /**
      *
      * @param aContentModelForm
      */
