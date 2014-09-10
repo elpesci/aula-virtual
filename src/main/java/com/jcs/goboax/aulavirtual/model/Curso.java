@@ -57,9 +57,9 @@ public class Curso
 
     private String objetivo;
 
-    // bi-directional many-to-one association to Contenido
+    // bi-directional many-to-one association to Modulo
     @OneToMany(mappedBy = "curso")
-    private List<Contenido> contenidos;
+    private List<Modulo> modulos;
 
     // bi-directional many-to-one association to Examen
     @OneToMany(mappedBy = "curso")
@@ -163,30 +163,30 @@ public class Curso
         this.objetivo = objetivo;
     }
 
-    public List<Contenido> getContenidos()
+    public List<Modulo> getModulos()
     {
-        return this.contenidos;
+        return this.modulos;
     }
 
-    public void setContenidos(List<Contenido> contenidos)
+    public void setModulos(List<Modulo> modulos)
     {
-        this.contenidos = contenidos;
+        this.modulos = modulos;
     }
 
-    public Contenido addContenido(Contenido contenido)
+    public Modulo addModulo(Modulo modulo)
     {
-        getContenidos().add(contenido);
-        contenido.setCurso(this);
+        getModulos().add(modulo);
+        modulo.setCurso(this);
 
-        return contenido;
+        return modulo;
     }
 
-    public Contenido removeContenido(Contenido contenido)
+    public Modulo removeModulo(Modulo modulo)
     {
-        getContenidos().remove(contenido);
-        contenido.setCurso(null);
+        getModulos().remove(modulo);
+        modulo.setCurso(null);
 
-        return contenido;
+        return modulo;
     }
 
     public List<Examen> getExamens()
