@@ -57,6 +57,11 @@
         <put-attribute name="title" value="Aula Virtual - Agegar Curso"/>
         <put-attribute name="body" value="/WEB-INF/views/coordinador/addCurso.jsp"/>
     </definition>
+    
+    <definition extends="base.definition" name="cursos/detail">
+        <put-attribute name="title" value="Aula Virtual - Detalle de Cursos"/>
+        <put-attribute name="body" value="/WEB-INF/views/alumno/cursos.jsp"/>
+    </definition>
 
     <definition extends="base.definition" name="contenido/add">
         <put-attribute name="title" value="Aula Virtual - Agegar Contenido"/>
