@@ -19,6 +19,7 @@
         <class>com.jcs.goboax.aulavirtual.model.TipoContenido</class>
         <class>com.jcs.goboax.aulavirtual.model.Usuario</class>
         <class>com.jcs.goboax.aulavirtual.model.UsuarioPerfil</class>
+        <class>com.jcs.goboax.aulavirtual.model.Modulo</class>
         <properties>
             <property name="eclipselink.logging.level" value="FINEST" />
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

@@ -42,8 +42,10 @@
     </sec:authorize>
 
     <div id="page">
-		<tiles:insertAttribute name="flashMessage"/>
+        <tiles:insertAttribute name="flashMessage"/>
+
         <div id="content">
+            <tiles:insertAttribute name="menu" ignore="true"/>
             <tiles:insertAttribute name="body"/>
             <!-- end #content -->
         </div>

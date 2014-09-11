@@ -5,29 +5,20 @@
 
 <div class="container-fliud">
   <div clas="row">
-      <!-- Listado de cursos -->
-      <div class="col-xs-3">
-        <p class="lead">Cursos</p>
-        <div class="list-group">
-            <a href="#" class="list-group-item active">Curso 1</a>
-            <a href="#" class="list-group-item">Curso 2</a>
-            <a href="#" class="list-group-item">Curso 3</a>
-            <a href="#" class="list-group-item">Ejemplo de nombre de curso extenso</a>
-        </div>
-      </div>
+
       <!-- Detalle de curso -->
       <div class="col-xs-9">
         <!-- <div class="thumbnail">-->
             <div class="panel panel-default">
               <div class="panel-heading">
                   <h3 class="panel-title">
-                      Titulo del Curso
+                      ${course.nombre}
                   </h3>
               </div>
               <div class="panel-body">
                   <div class="row">
                     <div class="col-xs-3 text-right">Objetivo:</div>
-                    <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
+                    <div class="col-xs-9">${course.objetivo}</div>
                   </div>
                   <div class="row">
                     <div class="col-xs-3 text-right">Dirigido a:</div>

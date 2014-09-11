@@ -18,7 +18,7 @@ public class ContenidoDaoImpl
     {
         TypedQuery<Contenido> myTypedQuery =
                 entityManager.createNamedQuery(Contenido.CONTENT_BY_MODULE, entityClass);
-        myTypedQuery.setParameter(Contenido.CONTENT_COURSE_PARAMETER, aModulo);
+        myTypedQuery.setParameter(Contenido.CONTENT_MODULE_PARAMETER, aModulo);
         return myTypedQuery.getResultList();
     }
 }
