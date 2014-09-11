@@ -66,7 +66,7 @@ public class CursosController
     public String cursos() throws IOException
     {
         LOG.debug("{}", authenticationService.getUsuario().getUsuarioId());
-        return "cursos";
+        return "cursos/detail";
     }
 
     // TODO Create external API and move this call.

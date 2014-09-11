@@ -2,7 +2,7 @@ package com.jcs.goboax.aulavirtual.dao.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.model.Contenido;
-import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.model.Modulo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -14,11 +14,11 @@ public class ContenidoDaoImpl
         implements ContenidoDao
 {
     @Override
-    public List<Contenido> readContentsByCourse(Curso aCurso)
+    public List<Contenido> readContentsByModule(Modulo aModulo)
     {
         TypedQuery<Contenido> myTypedQuery =
-                entityManager.createNamedQuery(Contenido.CONTENT_BY_COURSE, entityClass);
-        myTypedQuery.setParameter(Contenido.CONTENT_COURSE_PARAMETER, aCurso);
+                entityManager.createNamedQuery(Contenido.CONTENT_BY_MODULE, entityClass);
+        myTypedQuery.setParameter(Contenido.CONTENT_COURSE_PARAMETER, aModulo);
         return myTypedQuery.getResultList();
     }
 }

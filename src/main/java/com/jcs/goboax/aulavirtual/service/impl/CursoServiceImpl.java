@@ -2,14 +2,10 @@ package com.jcs.goboax.aulavirtual.service.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.ContenidoDao;
 import com.jcs.goboax.aulavirtual.dao.api.CursoDao;
-import com.jcs.goboax.aulavirtual.dao.api.TipoContenidoDao;
-import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
-import com.jcs.goboax.aulavirtual.model.TipoContenido;
 import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
-import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -29,9 +25,6 @@ public class CursoServiceImpl
 
     @Autowired
     private ContenidoDao contenidoDao;
-
-    @Autowired
-    private TipoContenidoDao tipoContenidoDao;
 
     @Autowired
     private ConversionService conversionService;
@@ -94,55 +87,11 @@ public class CursoServiceImpl
         }
     }
 
-    @Transactional
-    @Override
-    public void updateContent(ContentModelForm aContentModelForm)
-    {
-        Contenido myContenido = conversionService.convert(aContentModelForm, Contenido.class);
-        myContenido.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
-        myContenido.setFechaModificacion(new Date());
-
-        contenidoDao.update(myContenido);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Contenido> readContents(Integer aCourseId)
-    {
-        Curso myCurso = cursoDao.findByKey(aCourseId);
-        if (myCurso == null)
-        {
-            throw new AulaVirtualPersistenceException("Course does not exists");
-        }
-        return readContents(myCurso);
-    }
-
-    @Override
-    public Contenido readContentById(Integer aContentId)
-    {
-        return contenidoDao.findByKey(aContentId);
-    }
-
-    @Transactional
-    @Override
-    public void removeContent(Integer aContent)
-    {
-        contenidoDao.remove(aContent);
-    }
-
     @Transactional(readOnly = true)
     @Override
     public Curso readCourseByContentId(Integer aContentId)
     {
         Contenido myContenido = contenidoDao.findByKey(aContentId);
         return myContenido.getModulo().getCurso();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Contenido> readContents(Curso aCourse)
-    {
-
-        return contenidoDao.readContentsByCourse(aCourse);
     }
 }

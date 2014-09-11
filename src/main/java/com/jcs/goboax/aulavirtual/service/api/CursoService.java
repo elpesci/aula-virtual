@@ -1,8 +1,6 @@
 package com.jcs.goboax.aulavirtual.service.api;
 
-import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Curso;
-import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 
 import java.util.List;
@@ -17,13 +15,11 @@ public interface CursoService
     List<Curso> readCourses();
 
     /**
-     *
      * @return
      */
     List<Curso> readCoursesEnable();
 
     /**
-     *
      * @param anId
      * @return
      */
@@ -45,44 +41,13 @@ public interface CursoService
     CourseModel updateCourse(CourseModel aCourseModel);
 
     /**
-     *
      * @param aCourseId
      */
     void disableCourse(Integer aCourseId);
 
     /**
-     *
-     * @param aContentModelForm
-     */
-    void updateContent(ContentModelForm aContentModelForm);
-
-    /**
-     * @param aCourse
-     * @return
-     */
-    List<Contenido> readContents(Curso aCourse);
-
-    /**
-     * @param aCourseId
-     * @return
-     */
-    List<Contenido> readContents(Integer aCourseId);
-
-    /**
-     * Read content by Id
-     * @param aContentId
-     * @return
-     */
-    Contenido readContentById(Integer aContentId);
-
-    /**
-     * Remove Content given an Id
-     * @param aContent Content Id
-     */
-    void removeContent(Integer aContent);
-
-    /**
      * Read Course from a content Id
+     *
      * @param aContentId
      * @return
      */

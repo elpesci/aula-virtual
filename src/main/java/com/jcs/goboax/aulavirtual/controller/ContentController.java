@@ -3,8 +3,7 @@ package com.jcs.goboax.aulavirtual.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Contenido;
-import com.jcs.goboax.aulavirtual.model.Curso;
-import com.jcs.goboax.aulavirtual.service.api.CursoService;
+import com.jcs.goboax.aulavirtual.service.api.ContentService;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
@@ -38,7 +37,7 @@ public class ContentController
     private static final Logger LOG = LoggerFactory.getLogger(ContentController.class);
 
     @Autowired
-    private CursoService cursoService;
+    private ContentService contentService;
 
     @Autowired
     private TipoContenidoService tipoContenidoService;
@@ -56,14 +55,14 @@ public class ContentController
         ContentModelForm myContentModelForm = new ContentModelForm();
         Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
         List<String> myExtensionesContenido = tipoContenidoService.readExtensionesContenido();
-        Curso oCurso = cursoService.readCourseById(aCourseId);
+//        Curso oCurso = contentService.readCourseById(aCourseId);
 
         aModel.put("target", "/cursos/" + aCourseId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("action", "add");
         aModel.put("contentTypeNames", myTipoContenido);
         aModel.put("extensionContenido", myExtensionesContenido);
-        aModel.put("course", oCurso);
+//        aModel.put("course", oCurso);
 
         return "contenido/add";
     }
@@ -96,7 +95,7 @@ public class ContentController
     public String contentEdit(Map<String, Object> aModel,
                               @PathVariable("contentId") Integer aContentId)
     {
-        Contenido myContenido = cursoService.readContentById(aContentId);
+        Contenido myContenido = contentService.readContentById(aContentId);
 
         if (myContenido == null)
         {
@@ -129,7 +128,7 @@ public class ContentController
             return "contenido/add";
         }
 
-        cursoService.updateContent(courseModel);
+        contentService.updateContent(courseModel);
 
         return "redirect:/cursos";
     }
@@ -137,12 +136,12 @@ public class ContentController
     @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
     public String doContentDelete(@PathVariable("id") Integer aContentId)
     {
-        Curso myCurso = cursoService.readCourseByContentId(aContentId);
+        //Curso myCurso = contentService.readCourseByContentId(aContentId);
 
-        cursoService.removeContent(aContentId);
+        contentService.removeContent(aContentId);
         flashMessage.success("content.delete.succes.message");
 
-        return "redirect:/cursos/" + myCurso.getCursoId() + "/contents";
+        return "redirect:/cursos/" + "/contents";
     }
 
     @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
@@ -176,8 +175,8 @@ public class ContentController
     @RequestMapping(value = "/{cursoId}/contents", method = RequestMethod.GET)
     public String contents(@PathVariable("cursoId") Integer aCourse, Map<String, Object> aModel)
     {
-        Curso myCurso = cursoService.readCourseById(aCourse);
-        aModel.put("course", myCurso);
+        //Curso myCurso = cursoService.readCourseById(aCourse);
+//        aModel.put("course", myCurso);
         return "contenido/list";
     }
 
@@ -185,7 +184,7 @@ public class ContentController
     public @ResponseBody
     String contentList(@PathVariable("cursoId") Integer aCourseId) throws IOException
     {
-        List<Contenido> myContenidos = cursoService.readContents(aCourseId);
+        List<Contenido> myContenidos = contentService.readContentsByModule(aCourseId);
 
         @SuppressWarnings("unchecked")
         List<ContentModel> myContentModels = (List<ContentModel>) conversionService.convert(

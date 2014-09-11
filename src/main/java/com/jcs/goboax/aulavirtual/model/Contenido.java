@@ -253,16 +253,17 @@ import java.util.Date;
 @Entity
 @NamedQueries({
         @NamedQuery(name = Contenido.CONTENT_ALL_QUERYNAME, query = "SELECT c FROM Contenido c"),
-        @NamedQuery(name = Contenido.CONTENT_BY_COURSE, query = "SELECT c FROM Contenido c "
-                + "WHERE c.modulo = :" + Contenido.CONTENT_COURSE_PARAMETER)
+        @NamedQuery(name = Contenido.CONTENT_BY_MODULE,
+                query = "SELECT c FROM Contenido c WHERE c.modulo = :"
+                        + Contenido.CONTENT_MODULE_PARAMETER)
 })
 @Table(name = "Contenido")
 public class Contenido implements Serializable
 {
     public static final String CONTENT_ALL_QUERYNAME = "contenido.findAll";
-    public static final String CONTENT_BY_COURSE = "contenido.findByCourse";
+    public static final String CONTENT_BY_MODULE = "contenido.findByModelu";
 
-    public static final String CONTENT_COURSE_PARAMETER = "curso";
+    public static final String CONTENT_MODULE_PARAMETER = "module";
 
     private static final long serialVersionUID = 1L;
 

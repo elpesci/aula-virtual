@@ -1,7 +1,7 @@
 package com.jcs.goboax.aulavirtual.dao.api;
 
 import com.jcs.goboax.aulavirtual.model.Contenido;
-import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.model.Modulo;
 
 import java.util.List;
 
@@ -9,9 +9,8 @@ public interface ContenidoDao
         extends IDao<Integer, Contenido>
 {
     /**
-     *
-     * @param aCurso
+     * @param aModulo
      * @return
      */
-    List<Contenido> readContentsByCourse(Curso aCurso);
+    List<Contenido> readContentsByModule(Modulo aModulo);
 }
