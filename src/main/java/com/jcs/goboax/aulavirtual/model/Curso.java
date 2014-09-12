@@ -73,6 +73,7 @@ public class Curso
         return this.cursoId;
     }
 
+
     public void setCursoId(int cursoId)
     {
         this.cursoId = cursoId;

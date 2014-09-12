@@ -63,37 +63,17 @@ public class CursosController
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String cursos(HttpServletRequest request, Map<String, Object> aModel) throws IOException
+    public String cursos() throws IOException
     {
-        LOG.debug("{}", authenticationService.getUsuario().getUsuarioId());
-
-        List<Curso> myCursos = new ArrayList<Curso>();
-        if (request.isUserInRole("SUPER_ADMIN"))
-        {
-            myCursos = cursoService.readCourses();
-        }
-        else
-        {
-            myCursos = cursoService.readCoursesEnable();
-        }
-
-        @SuppressWarnings("unchecked")
-        List<CourseModel> myCourseModels = (List<CourseModel>) conversionService.convert(
-                myCursos,
-                TypeDescriptor.collection(List.class,
-                        TypeDescriptor.valueOf(Curso.class)),
-                TypeDescriptor.collection(List.class,
-                        TypeDescriptor.valueOf(CourseModel.class)));
-
-        aModel.put("courses", myCourseModels);
         return "cursos/detail";
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
     public String cursos(@PathVariable("courseId") Integer aCourseId,
-                         HttpServletRequest request, Map<String, Object> aModel) throws IOException
+                         Map<String, Object> aModel) throws IOException
     {
         Curso myCurso = cursoService.readCourseById(aCourseId);
+        LOG.debug("{}", myCurso.getModulos().get(0).getNombre());
         aModel.put("course", myCurso);
 
         return "cursos/detail";

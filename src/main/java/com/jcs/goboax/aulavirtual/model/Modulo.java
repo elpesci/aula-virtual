@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.List;
  * The persistent class for the Modulo database table.
  */
 @Entity
+@Table(name = "Modulo")
 @NamedQuery(name = "Modulo.findAll", query = "SELECT m FROM Modulo m")
 public class Modulo implements Serializable
 {

@@ -4,125 +4,85 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class="container-fliud">
-  <div clas="row">
+    <div clas="row">
 
-      <!-- Detalle de curso -->
-      <div class="col-xs-9">
-        <!-- <div class="thumbnail">-->
+        <!-- Detalle de curso -->
+        <div class="col-xs-9">
+            <!-- <div class="thumbnail">-->
             <div class="panel panel-default">
-              <div class="panel-heading">
-                  <h3 class="panel-title">
-                      ${course.nombre}
-                  </h3>
-              </div>
-              <div class="panel-body">
-                  <div class="row">
-                    <div class="col-xs-3 text-right">Objetivo:</div>
-                    <div class="col-xs-9">${course.objetivo}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xs-3 text-right">Dirigido a:</div>
-                    <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div></div>
-              </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <c:out value="${course.nombre}"/>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-3 text-right"><spring:message code="course.goal.label"/>:</div>
+                        <div class="col-xs-9">${course.objetivo}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 text-right">Dirigido a:</div>
+                        <div class="col-xs-9">
+                            <c:out value="${course.audiencia}"/>
+                        </div>
+                    </div>
+                </div>
             </div>
-        <!-- </div> -->
-        <h3>Temario</h3>
-        <div class="well">
-          <!-- Inicia Modulo -->
-          <div class="row">
-            <h3>Nombre del modulo 1</h3>
-            <div class="row">
-              <div class="col-xs-3 text-right">Objetivo General:</div>
-              <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
+            <!-- </div> -->
+            <h3>Temario</h3>
+
+            <div class="well">
+                <c:forEach items="${course.modulos}" var="module">
+                    <!-- Inicia Modulo -->
+                    <div class="row">
+                        <h3><c:out value="${module.nombre}"/></h3>
+
+                        <div class="row">
+                            <div class="col-xs-3 text-right">Objetivo General:</div>
+                            <div class="col-xs-9">
+                                <c:out value="${module.objetivoGeneral}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 text-right">Objetivo Específico:</div>
+                            <div class="col-xs-9">
+                                <c:out value="${module.objetivoEspecifico}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 text-right">Temas:</div>
+                            <div class="col-xs-9">
+                                <ol>
+                                    <li>Tema 1</li>
+                                    <li>Tema 2</li>
+                                    <li>Tema 3</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 text-right">Apoyos:</div>
+                            <div class="col-xs-9">
+                                <ul>
+                                    <li><a href="#" title="Descargar archivo de apoyo"><i
+                                            class="glyphicon glyphicon-cloud-download"></i> Apoyo 1</a></li>
+                                    <li><a href="#" title="Descargar archivo de apoyo"><i
+                                            class="glyphicon glyphicon-cloud-download"></i> Apoyo 2</a></li>
+                                    <li><a href="#" title="Descargar archivo de apoyo"><i
+                                            class="glyphicon glyphicon-cloud-download"></i> Apoyo 3</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </c:forEach>
+
             </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Objetivo Específico:</div>
-              <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Temas:</div>
-              <div class="col-xs-9">
-                <ol>
-                  <li>Tema 1</li>
-                  <li>Tema 2</li>
-                  <li>Tema 3</li>
-                </ol>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Apoyos:</div>
-              <div class="col-xs-9">
-                <ul>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 1</a></li>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 2</a></li>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 3</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <!-- Inicia Modulo -->
-          <div class="row">
-            <h3>Nombre del modulo 2</h3>
-            <div class="row">
-              <div class="col-xs-3 text-right">Objetivo General:</div>
-              <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Objetivo Específico:</div>
-              <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Temas:</div>
-              <div class="col-xs-9">
-                <ol>
-                  <li>Tema 1</li>
-                </ol>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Apoyos:</div>
-              <div class="col-xs-9">
-                <ul>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 1</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <!-- Inicia Modulo -->
-          <div class="row">
-            <h3>Nombre del modulo 3</h3>
-            <div class="row">
-              <div class="col-xs-3 text-right">Objetivo General:</div>
-              <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Objetivo Específico:</div>
-              <div class="col-xs-9">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque mollis ipsum erat, in volutpat purus tempor ut. Aliquam leo leo, laoreet nullam</div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Temas:</div>
-              <div class="col-xs-9">
-                <ol>
-                  <li>Tema 1</li>
-                  <li>Tema 2</li>
-                  <li>Tema 3</li>
-                </ol>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3 text-right">Apoyos:</div>
-              <div class="col-xs-9">
-                <ul>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 1</a></li>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 2</a></li>
-                  <li><a href="#" title="Descargar archivo de apoyo"><i class="glyphicon glyphicon-cloud-download"></i> Apoyo 3</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-  </div>
+    </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#menu_${course.cursoId}').addClass('active');
+    });
+</script>
