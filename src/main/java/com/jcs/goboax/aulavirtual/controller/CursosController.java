@@ -73,7 +73,6 @@ public class CursosController
                          Map<String, Object> aModel) throws IOException
     {
         Curso myCurso = cursoService.readCourseById(aCourseId);
-        LOG.debug("{}", myCurso.getModulos().get(0).getNombre());
         aModel.put("course", myCurso);
 
         return "cursos/detail";

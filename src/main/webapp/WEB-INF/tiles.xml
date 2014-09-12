@@ -76,6 +76,16 @@
         <put-attribute name="body" value="/WEB-INF/views/coordinador/contenidos.jsp"/>
     </definition>
 
+    <definition extends="base.definition" name="modulos">
+        <put-attribute name="title" value="Aula Virtual - Lista de Modulos"/>
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/addModulo.jsp"/>
+    </definition>
+
+    <definition extends="base.definition" name="modulos/add">
+        <put-attribute name="title" value="Aula Virtual - Agregar de Modulo"/>
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/modulos.jsp"/>
+    </definition>
+
     <definition extends="base.definition" name="usuarios">
         <put-attribute name="title" value="Aula Virtual - Lista de Usuarios"/>
         <put-attribute name="body" value="/WEB-INF/views/admin/usuarios/usuarios.jsp"/>

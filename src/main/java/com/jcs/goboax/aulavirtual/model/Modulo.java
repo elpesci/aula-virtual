@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,10 +21,20 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Modulo")
-@NamedQuery(name = "Modulo.findAll", query = "SELECT m FROM Modulo m")
+@NamedQueries({
+        @NamedQuery(name = Modulo.MODULE_ALL, query = "SELECT m FROM Modulo m"),
+        @NamedQuery(name = Modulo.MODULE_BY_COURSE,
+            query = "SELECT m FROM Modulo m where m.curso = :" + Modulo.MODULE_COURSE_PARAMETER)
+})
 public class Modulo implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public final static String MODULE_ALL = "modulo.findAll";
+
+    public final static String MODULE_BY_COURSE = "modulo.byCourse";
+
+    public final static String MODULE_COURSE_PARAMETER = "course";
 
     @Id
     private int moduloId;

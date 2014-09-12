@@ -21,13 +21,13 @@
             "bProcessing": false,
             "bServerSide": false,
             "sort": "position",
-            "sAjaxSource": "cursos/list",
+            "sAjaxSource": "modulos/list?cursoId=${courseId}",
             "createdRow": function (row, data, index) {
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
                 var editIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
 
                 var editLink = $('<a/>');
-                myLink = "<c:url value='/cursos/" + data.id + "/edit'/>";
+                myLink = "<c:url value='/modulos/" + data.id + "/edit'/>";
                 editLink.attr('href', myLink);
                 editLink.attr('title', 'Editar información del modulo');
                 editLink.html(editIcon);
@@ -38,9 +38,9 @@
                 var deleteIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-times fa-stack-1x"></i></span>';
 
                 var deleteLink = $('<a/>');
-                myLink = "<c:url value='/cursos/delete/" + data.id + "'/>";
+                myLink = "<c:url value='/modulos/delete/" + data.id + "'/>";
                 deleteLink.attr('href', myLink);
-                deleteLink.attr('title', 'Deshabilitar curso');
+                deleteLink.attr('title', 'Deshabilitar modulo');
                 deleteLink.html(deleteIcon);
 
                 $(row).find('.acciones-control').append(deleteLink);
@@ -50,7 +50,7 @@
                 var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
-                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
+                myLink = "<c:url value='/contents/" + data.id + "/contents'/>";
                 contentLink.attr('href', myLink);
                 contentLink.attr('title', 'Ver contenidos del modulo');
                 contentLink.html(contentIcon);
@@ -61,7 +61,7 @@
             "pagingType": "simple_numbers",
             "aoColumns": [
                 { "mData": "name" },
-                { "mData": "goal" },
+                { "mData": "generalGoal" },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="contentLink_' + id + '"/>';
@@ -73,8 +73,8 @@
         });
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
-        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar curso</a>");
-        $('#add').attr('href', '<c:url value='/cursos/add'/>').attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo curso');
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar modulo</a>");
+        $('#add').attr('href', '<c:url value='/modulos/add'/>').attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo modulo');
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
     });
