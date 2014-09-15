@@ -5,25 +5,27 @@
 
 
 <div class="panel panel-warning">
-  <div class="panel-heading">
-      <h3>
+    <div class="panel-heading">
+        <h3>
             <c:if test="${action eq 'add'}">
-                <spring:message javaScriptEscape="true" code="course.add.heading.label"/>
+                <spring:message javaScriptEscape="true" code="module.add.heading.label"/>
             </c:if>
             <c:if test="${action eq 'edit'}">
-                <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseModel.name}"/>
+                <spring:message javaScriptEscape="true" code="course.edit.heading.label"
+                                arguments="${courseModel.name}"/>
             </c:if>
-      </h3>
-  </div>
-  <div class="panel-body">
-    <p class="info">
-        <spring:message javaScriptEscape="true" code="course.add.info.row1.label"/>
-    </p>
-    <p class="info">
-        <spring:message javaScriptEscape="true" code="course.add.info.row2.label"/>
-    </p>
-    <form:form method="POST" action="${target}" commandName="courseModel" cssClass="form-horizontal">
-        <form:hidden path="id"/>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <p class="info">
+            <spring:message javaScriptEscape="true" code="module.add.heading.info.label"/>
+        </p>
+
+        <p class="info">
+            <spring:message javaScriptEscape="true" code="course.add.info.row2.label"/>
+        </p>
+        <form:form method="POST" action="${target}" commandName="moduleModelForm" cssClass="form-horizontal">
+            <form:hidden path="id"/>
             <div class="form-group">
                 <form:label path="name" cssClass="col-sm-4 control-label">
                     <spring:message javaScriptEscape="true" code="module.name.label"/>:
@@ -33,37 +35,28 @@
                     <span class="error"><form:errors path="name"/></span>
                 </div>
             </div>
-            
+
             <div class="form-group">
-                <form:label path="goal" cssClass="col-sm-4 control-label">
+                <form:label path="generalGoal" cssClass="col-sm-4 control-label">
                     <spring:message javaScriptEscape="true" code="module.goal.label"/>:
-                </form:label>                    
-                <div class="col-sm-8">
-                    <form:textarea path="goal" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="goal"/></span>
-                </div>
-            </div>
-                
-            <div class="form-group">
-                <form:label path="addressedTo" cssClass="col-sm-4 control-label">
-                    <spring:message javaScriptEscape="true" code="module.specificGoal.label"/>:
                 </form:label>
                 <div class="col-sm-8">
-                    <form:textarea path="addressedTo" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="addressedTo"/></span>
+                    <form:textarea path="generalGoal" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="generalGoal"/></span>
                 </div>
             </div>
 
-        <div class="form-group">
-            <form:label path="active" cssClass="col-sm-4 control-label">
-                <spring:message javaScriptEscape="true" code="course.active.label"/>:
-            </form:label>
-            <div class="col-sm-8">
-                <form:checkbox path="active" cssClass="form-control" cssErrorClass="fieldError"/>
-                <span class="error"><form:errors path="active"/></span>
+            <div class="form-group">
+                <form:label path="specificGoal" cssClass="col-sm-4 control-label">
+                    <spring:message javaScriptEscape="true" code="module.specificGoal.label"/>:
+                </form:label>
+                <div class="col-sm-8">
+                    <form:textarea path="specificGoal" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="specificGoal"/></span>
+                </div>
             </div>
-        </div>
-                
+
+
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
                     <c:if test="${action eq 'add'}">
@@ -78,6 +71,6 @@
                            value="<spring:message javaScriptEscape="true" code="cancel"/>"/>
                 </div>
             </div>
-    </form:form>
-  </div>
+        </form:form>
+    </div>
 </div>

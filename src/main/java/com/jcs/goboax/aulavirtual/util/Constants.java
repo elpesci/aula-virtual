@@ -11,4 +11,19 @@ public abstract class Constants {
     /** One Space. */
     public static final String SPACE = " ";
 
+    /**
+     * String used to send the action to the view, i.e add, edit.
+     */
+    public static final String ACTION = "action";
+
+    /**
+     * Add string for the action.
+     */
+    public static final String ADD = "add";
+
+    /**
+     * Edit string for the action.
+     */
+    public static final String EDIT = "edit";
+
 }

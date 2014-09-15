@@ -1,6 +1,6 @@
 <!DOCTYPE tiles-definitions PUBLIC
-      "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
-      "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
     <definition name="public.base.definition"
@@ -61,7 +61,7 @@
 
     <definition extends="base.definition" name="cursos/detail"
                 preparer="com.jcs.goboax.aulavirtual.ViewPreparer.CourseMenuViewPreparer">
-    <put-attribute name="title" value="Aula Virtual - Detalle de Cursos"/>
+        <put-attribute name="title" value="Aula Virtual - Detalle de Cursos"/>
         <put-attribute name="body" value="/WEB-INF/views/alumno/cursos.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/tiles/leftMenu.jsp"/>
     </definition>
@@ -78,12 +78,12 @@
 
     <definition extends="base.definition" name="modulos">
         <put-attribute name="title" value="Aula Virtual - Lista de Modulos"/>
-        <put-attribute name="body" value="/WEB-INF/views/coordinador/addModulo.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/modulos.jsp"/>
     </definition>
 
     <definition extends="base.definition" name="modulos/add">
         <put-attribute name="title" value="Aula Virtual - Agregar de Modulo"/>
-        <put-attribute name="body" value="/WEB-INF/views/coordinador/modulos.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/coordinador/addModulo.jsp"/>
     </definition>
 
     <definition extends="base.definition" name="usuarios">
@@ -95,12 +95,12 @@
         <put-attribute name="title" value="Aula Virtual - Permiso Negado"/>
         <put-attribute name="body" value="/WEB-INF/views/accessdenied.jsp"/>
     </definition>
-    
+
     <definition extends="base.definition" name="404">
         <put-attribute name="title" value="Aula Virtual - Página no existe"/>
         <put-attribute name="body" value="/WEB-INF/views/markup404.jsp"/>
     </definition>
-    
+
     <definition extends="base.definition" name="500">
         <put-attribute name="title" value="Aula Virtual - Error General"/>
         <put-attribute name="body" value="/WEB-INF/views/markup500.jsp"/>

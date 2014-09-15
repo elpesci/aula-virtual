@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
+import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.viewmodel.ModuleModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
@@ -88,7 +89,10 @@ public class ModuleController
     public String moduleAdd(@RequestParam("courseId") Integer aCourseId,
                              Map<String, Object> aModel)
     {
+        ModuleModelForm myModuleModelForm = new ModuleModelForm();
 
+        aModel.put(Constants.ACTION, Constants.ADD);
+        aModel.put("moduleModelForm", myModuleModelForm);
 
         return "modulos/add";
     }
