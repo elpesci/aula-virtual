@@ -1,13 +1,23 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+
 public class ModuleModelForm
 {
     private int id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String generalGoal;
+    @NotEmpty
     private String specificGoal;
+    @NotEmpty
     private String sylabus;
+    @NotNull
+    private Integer courseId;
 
     public int getId()
     {
@@ -57,5 +67,15 @@ public class ModuleModelForm
     public void setSylabus(String sylabus)
     {
         this.sylabus = sylabus;
+    }
+
+    public Integer getCourseId()
+    {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId)
+    {
+        this.courseId = courseId;
     }
 }

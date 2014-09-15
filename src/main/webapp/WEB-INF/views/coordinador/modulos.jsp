@@ -74,7 +74,7 @@
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
         var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar modulo</a>");
-        $('#add').attr('href', '<c:url value='/modulos/add'/>').attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo modulo');
+        $('#add').attr('href', "<c:url value='/modulos/add?courseId=" + ${courseId} + "'/>").attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo modulo');
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
     });

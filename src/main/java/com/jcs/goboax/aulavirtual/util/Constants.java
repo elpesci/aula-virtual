@@ -26,4 +26,7 @@ public abstract class Constants {
      */
     public static final String EDIT = "edit";
 
+    /** String used to set the target form. */
+    public static final String TARGET = "target";
+
 }

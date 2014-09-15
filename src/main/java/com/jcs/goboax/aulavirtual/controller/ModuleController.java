@@ -6,6 +6,7 @@ import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ModuleModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
 import org.slf4j.Logger;
@@ -15,6 +16,8 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,10 +93,27 @@ public class ModuleController
                              Map<String, Object> aModel)
     {
         ModuleModelForm myModuleModelForm = new ModuleModelForm();
+        myModuleModelForm.setCourseId(aCourseId);
 
         aModel.put(Constants.ACTION, Constants.ADD);
+        aModel.put(Constants.TARGET, NavigationTargets.MODULE_ADD);
         aModel.put("moduleModelForm", myModuleModelForm);
 
         return "modulos/add";
+    }
+
+    @RequestMapping(params = "save", value = "/add", method = RequestMethod.POST)
+    public String moduleAdd(@Validated ModuleModelForm moduleModelForm,
+                            BindingResult result, Map<String, Object> aModel)
+    {
+        if (result.hasErrors())
+        {
+            aModel.put(Constants.ACTION, Constants.ADD);
+            aModel.put(Constants.TARGET, NavigationTargets.MODULE_ADD);
+            return "modulos/add";
+        }
+
+        flashMessage.success("module.add.success");
+        return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
     }
 }

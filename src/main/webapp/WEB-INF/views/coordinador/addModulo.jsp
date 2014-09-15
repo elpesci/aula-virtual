@@ -26,6 +26,7 @@
         </p>
         <form:form method="POST" action="${target}" commandName="moduleModelForm" cssClass="form-horizontal">
             <form:hidden path="id"/>
+            <form:hidden path="courseId"/>
             <div class="form-group">
                 <form:label path="name" cssClass="col-sm-4 control-label">
                     <spring:message javaScriptEscape="true" code="module.name.label"/>:
@@ -41,7 +42,7 @@
                     <spring:message javaScriptEscape="true" code="module.goal.label"/>:
                 </form:label>
                 <div class="col-sm-8">
-                    <form:textarea path="generalGoal" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:textarea path="generalGoal" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                     <span class="error"><form:errors path="generalGoal"/></span>
                 </div>
             </div>
@@ -51,11 +52,20 @@
                     <spring:message javaScriptEscape="true" code="module.specificGoal.label"/>:
                 </form:label>
                 <div class="col-sm-8">
-                    <form:textarea path="specificGoal" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <form:textarea path="specificGoal" cssClass="form-control" cssErrorClass="form-control fieldError"/>
                     <span class="error"><form:errors path="specificGoal"/></span>
                 </div>
             </div>
 
+            <div class="form-group">
+                <form:label path="sylabus" cssClass="col-sm-4 control-label">
+                    <spring:message javaScriptEscape="true" code="module.specificGoal.label"/>:
+                </form:label>
+                <div class="col-sm-8">
+                    <form:textarea path="sylabus" cssClass="form-control" cssErrorClass="form-control fieldError"/>
+                    <span class="error"><form:errors path="sylabus"/></span>
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
