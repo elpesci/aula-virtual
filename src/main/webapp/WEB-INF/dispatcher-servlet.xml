@@ -145,6 +145,7 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.ContenidoToContentModelFormConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.UsuarioToUsuarioModelConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.ModuloToModuleModelFormConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ModuleModelFormToModuloConverter"/>
             </list>
         </property>
     </bean>

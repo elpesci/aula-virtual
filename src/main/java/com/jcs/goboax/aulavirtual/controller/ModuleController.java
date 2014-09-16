@@ -113,7 +113,15 @@ public class ModuleController
             return "modulos/add";
         }
 
+        moduleService.createModule(moduleModelForm);
+
         flashMessage.success("module.add.success");
+        return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
+    }
+
+    @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
+    public String moduleAdd(ModuleModelForm moduleModelForm)
+    {
         return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
     }
 }

@@ -2,6 +2,8 @@ package com.jcs.goboax.aulavirtual.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,15 +30,12 @@ import java.util.List;
 })
 public class Modulo implements Serializable
 {
-    private static final long serialVersionUID = 1L;
-
     public final static String MODULE_ALL = "modulo.findAll";
-
     public final static String MODULE_BY_COURSE = "modulo.byCourse";
-
     public final static String MODULE_COURSE_PARAMETER = "course";
-
+    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int moduloId;
 
     private int creadoPor;

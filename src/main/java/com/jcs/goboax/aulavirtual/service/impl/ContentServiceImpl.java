@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 public class ContentServiceImpl
-    implements ContentService
+        implements ContentService
 {
     @Autowired
     private ContenidoDao contenidoDao;
@@ -68,7 +68,7 @@ public class ContentServiceImpl
         Modulo myModulo = moduloDao.findByKey(aModuleId);
         if (myModulo == null)
         {
-            throw new AulaVirtualPersistenceException("Course does not exists");
+            throw new AulaVirtualPersistenceException("Module does not exists");
         }
         return readContentsByModule(myModulo);
     }
@@ -90,7 +90,6 @@ public class ContentServiceImpl
     @Override
     public List<Contenido> readContentsByModule(Modulo aModulo)
     {
-
         return contenidoDao.readContentsByModule(aModulo);
     }
 }

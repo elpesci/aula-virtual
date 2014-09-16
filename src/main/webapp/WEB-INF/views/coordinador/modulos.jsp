@@ -50,7 +50,7 @@
                 var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
-                myLink = "<c:url value='/contents/" + data.id + "/contents'/>";
+                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
                 contentLink.attr('href', myLink);
                 contentLink.attr('title', 'Ver contenidos del modulo');
                 contentLink.html(contentIcon);
@@ -86,7 +86,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <spring:message javaScriptEscape="true" code="course.heading.label"/>
+                        <spring:message javaScriptEscape="true" code="module.heading.label"/>
                     </h3>
                 </div>
                 <div class="panel-body">

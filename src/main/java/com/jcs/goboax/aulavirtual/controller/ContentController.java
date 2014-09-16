@@ -3,7 +3,9 @@ package com.jcs.goboax.aulavirtual.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Contenido;
+import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.service.api.ContentService;
+import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
@@ -35,6 +37,9 @@ import java.util.Map;
 public class ContentController
 {
     private static final Logger LOG = LoggerFactory.getLogger(ContentController.class);
+
+    @Autowired
+    private ModuleService moduleService;
 
     @Autowired
     private ContentService contentService;
@@ -172,19 +177,20 @@ public class ContentController
 
     }
 
-    @RequestMapping(value = "/{cursoId}/contents", method = RequestMethod.GET)
-    public String contents(@PathVariable("cursoId") Integer aCourse, Map<String, Object> aModel)
+    @RequestMapping(value = "/{moduleId}/contents", method = RequestMethod.GET)
+    public String contents(@PathVariable("moduleId") Integer aModuleId, Map<String, Object> aModel)
     {
-        //Curso myCurso = cursoService.readCourseById(aCourse);
-//        aModel.put("course", myCurso);
+        Modulo myModulo = moduleService.readModuleById(aModuleId);
+        aModel.put("module", myModulo);
+
         return "contenido/list";
     }
 
-    @RequestMapping(value = "/{cursoId}/content/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    @RequestMapping(value = "/{moduleId}/content/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public @ResponseBody
-    String contentList(@PathVariable("cursoId") Integer aCourseId) throws IOException
+    String contentList(@PathVariable("moduleId") Integer aModuleId) throws IOException
     {
-        List<Contenido> myContenidos = contentService.readContentsByModule(aCourseId);
+        List<Contenido> myContenidos = contentService.readContentsByModule(aModuleId);
 
         @SuppressWarnings("unchecked")
         List<ContentModel> myContentModels = (List<ContentModel>) conversionService.convert(
