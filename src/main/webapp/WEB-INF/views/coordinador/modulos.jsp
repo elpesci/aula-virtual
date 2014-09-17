@@ -50,7 +50,7 @@
                 var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
-                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
+                myLink = "<c:url value='/modulo/" + data.id + "/contents'/>";
                 contentLink.attr('href', myLink);
                 contentLink.attr('title', 'Ver contenidos del modulo');
                 contentLink.html(contentIcon);

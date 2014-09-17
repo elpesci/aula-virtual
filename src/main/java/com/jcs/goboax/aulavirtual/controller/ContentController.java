@@ -7,6 +7,7 @@ import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.service.api.ContentService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
+import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
@@ -19,6 +20,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/cursos")
+@RequestMapping("/modulo")
 public class ContentController
 {
     private static final Logger LOG = LoggerFactory.getLogger(ContentController.class);
@@ -53,47 +55,52 @@ public class ContentController
     @Autowired
     private ConversionService conversionService;
 
-    @RequestMapping(value = "/{courseId}/content/add", method = RequestMethod.GET)
-    public String contentAdd(@PathVariable("courseId") Integer aCourseId,
+    @RequestMapping(value = "/{moduleId}/content/add", method = RequestMethod.GET)
+    public String contentAdd(@PathVariable("moduleId") Integer aModuleId,
                              Map<String, Object> aModel)
     {
         ContentModelForm myContentModelForm = new ContentModelForm();
-        Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
-        List<String> myExtensionesContenido = tipoContenidoService.readExtensionesContenido();
-//        Curso oCurso = contentService.readCourseById(aCourseId);
+        Modulo myModulo = moduleService.readModuleById(aModuleId);
 
-        aModel.put("target", "/cursos/" + aCourseId + "/content/add");
+        aModel.put(Constants.TARGET, "/modulo/" + aModuleId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
-        aModel.put("action", "add");
-        aModel.put("contentTypeNames", myTipoContenido);
-        aModel.put("extensionContenido", myExtensionesContenido);
-//        aModel.put("course", oCurso);
+        aModel.put(Constants.ACTION, Constants.ADD);
+        aModel.put("module", myModulo);
 
         return "contenido/add";
     }
 
-    @RequestMapping(value = "/{courseId}/content/add", method = RequestMethod.POST)
-    public String contentAdd(@PathVariable("courseId") Integer aCourseId,
-                             @Validated ContentModelForm courseModel, BindingResult result,
+    @RequestMapping(params = "save", value = "/{moduleId}/content/add", method = RequestMethod.POST)
+    public String contentAdd(@PathVariable("moduleId") Integer aModuleId,
+                             @Validated ContentModelForm aContentModelForm, BindingResult result,
                              Map<String, Object> aModel)
     {
         if (result.hasErrors())
         {
             Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
 
-            aModel.put("target", "/cursos/" + aCourseId + "/content/add");
-            aModel.put("action", "add");
+            aModel.put(Constants.TARGET, "/modulo/" + aModuleId + "/content/add");
+            aModel.put(Constants.ACTION, Constants.ADD);
             aModel.put("contentTypeNames", myTipoContenido);
 
             return "contenido/add";
 
         }
-        LOG.debug(courseModel.getName());
-        LOG.debug(courseModel.getContent().getContentType());
+        LOG.debug(aContentModelForm.getName());
+        LOG.debug(aContentModelForm.getContent().getContentType());
 
-//        cursoService.createContent(courseModel, aCourseId);
+        contentService.createContent(aContentModelForm, aModuleId);
+
+        flashMessage.success("content.add.success");
+
+        return "redirect:/modulo/" + aModuleId + "/contents";
+
+    }
+
+    @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
+    public String cancelContentAdd(@PathVariable("courseId") Integer aCourseId)
+    {
         return "redirect:/cursos/" + aCourseId + "/contents";
-
     }
 
     @RequestMapping(value = "/content/edit/{contentId}", method = RequestMethod.GET)
@@ -149,31 +156,24 @@ public class ContentController
         return "redirect:/cursos/" + "/contents";
     }
 
-    @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
-    public String cancelContentAdd(@PathVariable("courseId") Integer aCourseId)
-    {
-        return "redirect:/cursos/" + aCourseId + "/contents";
-    }
-
     @RequestMapping(value = "/content/download/{id}", method = RequestMethod.GET)
     public void doDownload(HttpServletRequest request,
                            HttpServletResponse response, @PathVariable("id") Integer anId)
             throws IOException
     {
-//
-//        try
-//        {
-//            Contenido myContenido = contenidoDao.findByKey(anId);
-//            byte[] myFileContent = myContenido.getArchivoMaterial();
-//            response.setContentType(myContenido.getContentType());
-//            response.setHeader("Content-disposition", "attachment; filename=\""
-//                    + myContenido.getNombre() + "\"");
-//            FileCopyUtils.copy(myFileContent, response.getOutputStream());
-//        }
-//        catch (IOException e)
-//        {
-//            LOG.error("unable to create file,  please see the stackTrace", e);
-//        }
+        try
+        {
+            Contenido myContenido = contentService.readContentById(anId);
+            byte[] myFileContent = myContenido.getArchivoMaterial();
+            response.setContentType(myContenido.getContentType());
+            response.setHeader("Content-disposition", "attachment; filename=\""
+                    + myContenido.getNombre() + "\"");
+            FileCopyUtils.copy(myFileContent, response.getOutputStream());
+        }
+        catch (IOException e)
+        {
+            LOG.error("unable to create file,  please see the stackTrace", e);
+        }
 
     }
 

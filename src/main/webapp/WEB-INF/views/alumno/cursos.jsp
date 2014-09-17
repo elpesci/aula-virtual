@@ -63,12 +63,15 @@
                             <div class="col-xs-3 text-right">Apoyos:</div>
                             <div class="col-xs-9">
                                 <ul>
-                                    <li><a href="#" title="Descargar archivo de apoyo"><i
-                                            class="glyphicon glyphicon-cloud-download"></i> Apoyo 1</a></li>
-                                    <li><a href="#" title="Descargar archivo de apoyo"><i
-                                            class="glyphicon glyphicon-cloud-download"></i> Apoyo 2</a></li>
-                                    <li><a href="#" title="Descargar archivo de apoyo"><i
-                                            class="glyphicon glyphicon-cloud-download"></i> Apoyo 3</a></li>
+                                    <c:forEach var="content" items="${module.contenidos}">
+                                        <c:url var="linkDownload"
+                                               value="/modulo/content/download/${content.contenidoId}"/>
+                                        <li><a href="${linkDownload}"
+                                               title="Descargar archivo de apoyo"><i
+                                                class="glyphicon glyphicon-cloud-download"></i>
+                                            <c:out value="${content.nombre}"/>
+                                        </a></li>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>
