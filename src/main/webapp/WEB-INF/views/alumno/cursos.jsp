@@ -67,8 +67,8 @@
                                         <c:url var="linkDownload"
                                                value="/modulo/content/download/${content.contenidoId}"/>
                                         <li><a href="${linkDownload}"
-                                               title="Descargar archivo de apoyo"><i
-                                                class="glyphicon glyphicon-cloud-download"></i>
+                                               title="Descargar archivo de apoyo">
+                                            <i class="glyphicon glyphicon-cloud-download"></i>
                                             <c:out value="${content.nombre}"/>
                                         </a></li>
                                     </c:forEach>

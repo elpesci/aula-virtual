@@ -56,7 +56,6 @@
                 contentLink.html(contentIcon);
 
                 $(row).find('.acciones-control').append(contentLink);
-
             },
             "pagingType": "simple_numbers",
             "aoColumns": [

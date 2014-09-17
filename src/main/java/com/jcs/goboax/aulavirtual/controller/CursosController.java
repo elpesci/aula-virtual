@@ -49,7 +49,7 @@ public class CursosController
 
     @Autowired
     private ConversionService conversionService;
-    
+
     @Autowired
     private FlashMessage flashMessage;
 
@@ -63,7 +63,21 @@ public class CursosController
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String cursos() throws IOException
+    public String cursos(HttpServletRequest aServletRequest) throws IOException
+    {
+        if (aServletRequest.isUserInRole("SUPER_ADMIN")
+                || aServletRequest.isUserInRole("COORDINADOR"))
+        {
+            return "cursos";
+        }
+        else
+        {
+            return "cursos/detail";
+        }
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public String cursosDetail() throws IOException
     {
         return "cursos/detail";
     }
@@ -80,7 +94,9 @@ public class CursosController
 
     // TODO Create external API and move this call.
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-    public @ResponseBody String cursosList(HttpServletRequest request) throws IOException
+    public
+    @ResponseBody
+    String cursosList(HttpServletRequest request) throws IOException
     {
         List<Curso> myCursos = new ArrayList<Curso>();
         if (request.isUserInRole("SUPER_ADMIN"))
@@ -124,7 +140,7 @@ public class CursosController
 
     @RequestMapping(params = "save", value = "/add", method = RequestMethod.POST)
     public String cursosAddDo(@Validated CourseModel courseModel,
-            BindingResult result, Map<String, Object> aModel)
+                              BindingResult result, Map<String, Object> aModel)
     {
         LOG.debug("Adding Curso ...");
         if (result.hasErrors())
@@ -138,7 +154,7 @@ public class CursosController
         flashMessage.success("course.success");
         return "redirect:/cursos";
     }
-    
+
     @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
     public String cancelAddCourse()
     {
