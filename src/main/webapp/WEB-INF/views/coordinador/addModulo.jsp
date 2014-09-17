@@ -8,11 +8,12 @@
     <div class="panel-heading">
         <h3>
             <c:if test="${action eq 'add'}">
-                <spring:message javaScriptEscape="true" code="module.add.heading.label"/>
+                <spring:message javaScriptEscape="true" code="module.add.heading.label"
+                                arguments="${course.nombre}" />
             </c:if>
             <c:if test="${action eq 'edit'}">
                 <spring:message javaScriptEscape="true" code="course.edit.heading.label"
-                                arguments="${courseModel.name}"/>
+                                arguments="${course.nombre}"/>
             </c:if>
         </h3>
     </div>
@@ -22,7 +23,7 @@
         </p>
 
         <p class="info">
-            <spring:message javaScriptEscape="true" code="course.add.info.row2.label"/>
+            <spring:message javaScriptEscape="true" code="module.add.heading.info.row2.label"/>
         </p>
         <form:form method="POST" action="${target}" commandName="moduleModelForm" cssClass="form-horizontal">
             <form:hidden path="id"/>
@@ -59,7 +60,7 @@
 
             <div class="form-group">
                 <form:label path="sylabus" cssClass="col-sm-4 control-label">
-                    <spring:message javaScriptEscape="true" code="module.specificGoal.label"/>:
+                    <spring:message javaScriptEscape="true" code="module.sylabus.label"/>:
                 </form:label>
                 <div class="col-sm-8">
                     <form:textarea path="sylabus" cssClass="form-control" cssErrorClass="form-control fieldError"/>

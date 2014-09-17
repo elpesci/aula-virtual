@@ -179,6 +179,6 @@ public class UsuarioServiceImpl
     @Override
     public List<Usuario> readUsuarios()
     {
-        return usuarioDao.findWithNamedQuery(Usuario.USUARIO_ALL_QUERYNAME);
+        return usuarioDao.findWithNamedQuery(Usuario.USUARIO_NOT_SUPERADMIN);
     }
 }

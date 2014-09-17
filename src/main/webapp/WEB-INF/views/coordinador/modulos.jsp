@@ -21,13 +21,13 @@
             "bProcessing": false,
             "bServerSide": false,
             "sort": "position",
-            "sAjaxSource": "modulos/list?cursoId=${courseId}",
+            "sAjaxSource": "modulos/list?cursoId=${course.cursoId}",
             "createdRow": function (row, data, index) {
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
                 var editIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
 
                 var editLink = $('<a/>');
-                myLink = "<c:url value='/modulos/" + data.id + "/edit'/>";
+                myLink = "<c:url value='/modulos/edit/" + data.id + "'/>";
                 editLink.attr('href', myLink);
                 editLink.attr('title', 'Editar información del modulo');
                 editLink.html(editIcon);
@@ -74,7 +74,7 @@
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
         var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar modulo</a>");
-        $('#add').attr('href', "<c:url value='/modulos/add?courseId=" + ${courseId} + "'/>").attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo modulo');
+        $('#add').attr('href', "<c:url value='/modulos/add?courseId=" + ${course.cursoId} + "'/>").attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo modulo');
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
     });
@@ -86,7 +86,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <spring:message javaScriptEscape="true" code="module.heading.label"/>
+                        <spring:message javaScriptEscape="true" code="module.heading.label"
+                            arguments="${course.nombre}"/>
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -95,9 +96,9 @@
                                width="100%">
                             <thead>
                             <tr>
-                                <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
-                                <th><spring:message javaScriptEscape="true" code="course.goal.label"/></th>
-                                <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="module.name.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="module.goal.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="label.actions"/></th>
                             </tr>
                             </thead>
                         </table>

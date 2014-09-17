@@ -10,4 +10,6 @@ public abstract class NavigationTargets
 
     public static final String MODULE_ADD = "/modulos/add";
 
+    public static final String MODULE_EDIT = "/modulos/edit";
+
 }

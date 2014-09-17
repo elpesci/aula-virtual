@@ -37,15 +37,30 @@ public class ModuleServiceImpl
         moduloDao.persist(myModulo);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Modulo> readModulesByCourse(Integer aCourseId)
     {
         return moduloDao.readByCourse(aCourseId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Modulo readModuleById(Integer aModuleId)
     {
         return moduloDao.findByKey(aModuleId);
+    }
+
+    @Transactional
+    @Override
+    public ModuleModelForm updateModule(ModuleModelForm aModuleModelForm)
+    {
+        Modulo myModulo = conversionService.convert(aModuleModelForm, Modulo.class);
+        myModulo.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
+        myModulo.setFechaModificacion(new Date());
+
+        moduloDao.update(myModulo);
+
+        return conversionService.convert(myModulo, ModuleModelForm.class);
     }
 }
