@@ -159,12 +159,12 @@ public class ContentController
     @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
     public String doContentDelete(@PathVariable("id") Integer aContentId)
     {
-        //Curso myCurso = contentService.readCourseByContentId(aContentId);
+        Contenido myContenido = contentService.readContentById(aContentId);
 
         contentService.removeContent(aContentId);
         flashMessage.success("content.delete.succes.message");
 
-        return "redirect:/cursos/" + "/contents";
+        return "redirect:/modulo/" + myContenido.getModulo().getModuloId() + "/contents";
     }
 
     @RequestMapping(value = "/content/download/{id}", method = RequestMethod.GET)
