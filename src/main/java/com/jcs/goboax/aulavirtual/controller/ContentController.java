@@ -148,6 +148,14 @@ public class ContentController
         return "redirect:/cursos";
     }
 
+    @RequestMapping(value = "/content/edit", params = "cancel", method = RequestMethod.POST)
+    public String doContentEditCancel(Map<String, Object> aModel,
+                                      ContentModelForm contentModelForm, BindingResult result)
+    {
+        Contenido myContenido = contentService.readContentById(contentModelForm.getId());
+        return "redirect:/modulo/" + myContenido.getModulo().getModuloId() + "/contents";
+    }
+
     @RequestMapping(value = "/content/delete/{id}", method = RequestMethod.GET )
     public String doContentDelete(@PathVariable("id") Integer aContentId)
     {
