@@ -17,6 +17,7 @@ public class ModuloToModuleModelFormConverter
         myModuleModelForm.setSpecificGoal(aModulo.getObjetivoEspecifico());
         myModuleModelForm.setSylabus(aModulo.getTemario());
         myModuleModelForm.setCourseId(aModulo.getCurso().getCursoId());
+        myModuleModelForm.setActive(aModulo.isHabilitado());
 
         return myModuleModelForm;
     }

@@ -19,6 +19,8 @@ public class ModuleModelForm
     @NotNull
     private Integer courseId;
 
+    private Boolean active = true;
+
     public Integer getId()
     {
         return id;
@@ -77,5 +79,15 @@ public class ModuleModelForm
     public void setCourseId(Integer courseId)
     {
         this.courseId = courseId;
+    }
+
+    public Boolean getActive()
+    {
+        return active;
+    }
+
+    public void setActive(Boolean active)
+    {
+        this.active = active;
     }
 }

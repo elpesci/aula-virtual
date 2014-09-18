@@ -56,6 +56,8 @@ public class Modulo implements Serializable
 
     private String temario;
 
+    private boolean habilitado;
+
     //bi-directional many-to-one association to Contenido
     @OneToMany(mappedBy = "modulo")
     private List<Contenido> contenidos;
@@ -157,6 +159,16 @@ public class Modulo implements Serializable
     public void setTemario(String temario)
     {
         this.temario = temario;
+    }
+
+    public boolean isHabilitado()
+    {
+        return habilitado;
+    }
+
+    public void setHabilitado(boolean habilitado)
+    {
+        this.habilitado = habilitado;
     }
 
     public List<Contenido> getContenidos()

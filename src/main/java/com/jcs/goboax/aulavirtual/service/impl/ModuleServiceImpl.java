@@ -63,4 +63,19 @@ public class ModuleServiceImpl
 
         return conversionService.convert(myModulo, ModuleModelForm.class);
     }
+
+    @Transactional
+    @Override
+    public void disableModule(Integer moduleId)
+    {
+        Modulo myModulo = moduloDao.findByKey(moduleId);
+        if (myModulo.isHabilitado() == true)
+        {
+            myModulo.setHabilitado(false);
+            myModulo.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
+            myModulo.setFechaModificacion(new Date());
+
+            moduloDao.update(myModulo);
+        }
+    }
 }

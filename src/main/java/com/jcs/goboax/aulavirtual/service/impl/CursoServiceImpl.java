@@ -83,6 +83,9 @@ public class CursoServiceImpl
         if (myCurso.getHabilitado() == true)
         {
             myCurso.setHabilitado(false);
+            myCurso.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
+            myCurso.setFechaModificacion(new Date());
+
             cursoDao.update(myCurso);
         }
     }

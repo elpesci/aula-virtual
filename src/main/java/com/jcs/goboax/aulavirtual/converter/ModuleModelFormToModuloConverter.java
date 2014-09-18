@@ -34,6 +34,7 @@ public class ModuleModelFormToModuloConverter
         myModulo.setObjetivoGeneral(aModuleModelForm.getGeneralGoal());
         myModulo.setObjetivoEspecifico(aModuleModelForm.getSpecificGoal());
         myModulo.setTemario(aModuleModelForm.getSylabus());
+        myModulo.setHabilitado(aModuleModelForm.getActive());
 
         return myModulo;
     }

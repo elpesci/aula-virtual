@@ -180,4 +180,16 @@ public class ModuleController
     {
         return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
     }
+
+    @RequestMapping(value = "/delete/{moduleId}", method = RequestMethod.GET)
+    public String removeCourse(@PathVariable(value = "moduleId") Integer aModuleId,
+                               Map<String, Object> aModel)
+    {
+        Modulo myModulo = moduleService.readModuleById(aModuleId);
+        moduleService.disableModule(aModuleId);
+
+        flashMessage.success("module.disable.success");
+
+        return "redirect:/modulos?cursoId=" + myModulo.getCurso().getCursoId();
+    }
 }
