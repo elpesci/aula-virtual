@@ -2,7 +2,9 @@ package com.jcs.goboax.aulavirtual.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.Modulo;
+import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
@@ -18,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +42,9 @@ public class ModuleController
     private ModuleService moduleService;
 
     @Autowired
+    private CursoService cursoService;
+
+    @Autowired
     private FlashMessage flashMessage;
 
     @Autowired
@@ -48,7 +54,9 @@ public class ModuleController
     public String modulos(@RequestParam("cursoId") Integer aCourseId,
                           Map<String, Object> aModel) throws IOException
     {
-        aModel.put("courseId", aCourseId);
+        Curso myCurso = cursoService.readCourseById(aCourseId);
+
+        aModel.put("course", myCurso);
         return "modulos";
     }
 
@@ -95,9 +103,12 @@ public class ModuleController
         ModuleModelForm myModuleModelForm = new ModuleModelForm();
         myModuleModelForm.setCourseId(aCourseId);
 
+        Curso myCurso = cursoService.readCourseById(aCourseId);
+
         aModel.put(Constants.ACTION, Constants.ADD);
         aModel.put(Constants.TARGET, NavigationTargets.MODULE_ADD);
         aModel.put("moduleModelForm", myModuleModelForm);
+        aModel.put("course", myCurso);
 
         return "modulos/add";
     }
@@ -121,6 +132,51 @@ public class ModuleController
 
     @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
     public String moduleAdd(ModuleModelForm moduleModelForm)
+    {
+        return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
+    }
+
+    @RequestMapping(value = "/edit/{moduleId}", method = RequestMethod.GET)
+    public String moduleEdit(@PathVariable("moduleId") Integer aModuleId,
+                            Map<String, Object> aModel)
+    {
+        Modulo myModulo = moduleService.readModuleById(aModuleId);
+
+        if (myModulo == null)
+        {
+            flashMessage.error("module.not.exists");
+            return "redirect:/cursos";
+        }
+
+        ModuleModelForm myModuleModelForm = conversionService.convert(myModulo, ModuleModelForm.class);
+
+        aModel.put(Constants.ACTION, Constants.EDIT);
+        aModel.put(Constants.TARGET, NavigationTargets.MODULE_EDIT);
+        aModel.put("moduleModelForm", myModuleModelForm);
+        aModel.put("course", myModulo.getCurso());
+
+        return "modulos/add";
+    }
+
+    @RequestMapping(params = "save", value = "/edit", method = RequestMethod.POST)
+    public String moduleEdit(@Validated ModuleModelForm moduleModelForm,
+                            BindingResult result, Map<String, Object> aModel)
+    {
+        if (result.hasErrors())
+        {
+            aModel.put(Constants.ACTION, Constants.EDIT);
+            aModel.put(Constants.TARGET, NavigationTargets.MODULE_EDIT);
+            return "modulos/add";
+        }
+
+        moduleService.updateModule(moduleModelForm);
+
+        flashMessage.success("module.edit.success");
+        return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
+    }
+
+    @RequestMapping(params = "cancel", value = "/edit", method = RequestMethod.POST)
+    public String moduleEdit(ModuleModelForm moduleModelForm)
     {
         return "redirect:/modulos?cursoId=" + moduleModelForm.getCourseId();
     }

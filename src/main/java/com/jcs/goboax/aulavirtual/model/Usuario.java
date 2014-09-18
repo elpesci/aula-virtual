@@ -1,11 +1,8 @@
 package com.jcs.goboax.aulavirtual.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,10 +20,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The persistent class for the Usuario database table.
@@ -35,7 +34,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NamedQueries({
         @NamedQuery(name = Usuario.USUARIO_ALL_QUERYNAME, query = "SELECT u FROM Usuario u"),
         @NamedQuery(name = Usuario.USUARIO_BY_EMAIL, query = "SELECT u FROM Usuario u "
-                + "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER)})
+                + "WHERE u.username = :" + Usuario.USUARIO_EMAIL_PARAMETER),
+        @NamedQuery(name = Usuario.USUARIO_NOT_SUPERADMIN, query = "SELECT u FROM Usuario u "
+                + "JOIN u.usuarioPerfils up JOIN up.perfil p WHERE p.codigo <> 'SUPER_ADMIN'")
+})
 @Table(name = "Usuario")
 public class Usuario
         implements UserDetails, Serializable
@@ -47,6 +49,7 @@ public class Usuario
 
     public static final String USUARIO_ALL_QUERYNAME = "usuario.findAll";
     public static final String USUARIO_BY_EMAIL = "usuario.findByEmail";
+    public static final String USUARIO_NOT_SUPERADMIN = "usuario.notsuperAdmin";
 
     public static final String USUARIO_EMAIL_PARAMETER = "email";
 

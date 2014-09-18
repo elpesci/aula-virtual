@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
+import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.validator.CourseModelValidator;
@@ -188,8 +189,8 @@ public class CursosController
         LOG.debug("Editing Curso ...");
         if (result.hasErrors())
         {
-            aModel.put("target", NavigationTargets.COURSE_EDIT);
-            aModel.put("action", "edit");
+            aModel.put(Constants.TARGET, NavigationTargets.COURSE_EDIT);
+            aModel.put(Constants.ACTION, Constants.EDIT);
             return "cursos/add";
         }
 

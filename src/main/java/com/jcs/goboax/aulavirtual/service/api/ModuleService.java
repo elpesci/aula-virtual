@@ -14,4 +14,6 @@ public interface ModuleService
 
     Modulo readModuleById(Integer aModuleId);
 
+    ModuleModelForm updateModule(ModuleModelForm aModuleModelForm);
+
 }
