@@ -6,7 +6,14 @@
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h3><spring:message javaScriptEscape="true" code="content.add.heading.label" arguments="${module.nombre}"/></h3>
+        <h3>
+            <c:if test="${action eq 'add'}">
+                <spring:message javaScriptEscape="true" code="content.add.heading.label" arguments="${module.nombre}"/>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <spring:message javaScriptEscape="true" code="content.edit.heading.label" arguments="${module.nombre}"/>
+            </c:if>
+        </h3>
     </div>
     <div class="panel panel-body">
         <div class="row">
@@ -28,7 +35,7 @@
                             <li>${contentTypeName}</li>
                         </c:forEach>
                     </ul>
-                </p>                                   
+                </p>
             </div>
         </div>
 

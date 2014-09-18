@@ -124,12 +124,12 @@ public class ContentController
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("target", NavigationTargets.CONTENT_EDIT);
         aModel.put("action", "edit");
-        aModel.put("course", myContenido.getModulo());
+        aModel.put("module", myContenido.getModulo());
 
         return "contenido/add";
     }
 
-    @RequestMapping(value = "/content/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/content/edit", params = "save", method = RequestMethod.POST)
     public String doContentEdit(Map<String, Object> aModel,
                                 @Validated ContentModelForm courseModel, BindingResult result)
     {

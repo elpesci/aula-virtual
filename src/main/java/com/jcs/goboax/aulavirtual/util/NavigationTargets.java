@@ -6,7 +6,7 @@ public abstract class NavigationTargets
 
     public static final String COURSE_EDIT = "/cursos/edit";
 
-    public static final String CONTENT_EDIT = "/cursos/content/edit/";
+    public static final String CONTENT_EDIT = "/modulo/content/edit/";
 
     public static final String MODULE_ADD = "/modulos/add";
 
