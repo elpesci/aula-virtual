@@ -90,17 +90,20 @@ public class ContentController
         LOG.debug(aContentModelForm.getContent().getContentType());
 
         contentService.createContent(aContentModelForm, aModuleId);
+        Modulo myModulo = moduleService.readModuleById(aModuleId);
 
         flashMessage.success("content.add.success");
+
+        aModel.put("module", myModulo);
 
         return "redirect:/modulo/" + aModuleId + "/contents";
 
     }
 
-    @RequestMapping(params = "cancel", value = "/{courseId}/content/add", method = RequestMethod.POST)
-    public String cancelContentAdd(@PathVariable("courseId") Integer aCourseId)
+    @RequestMapping(params = "cancel", value = "/{moduleId}/content/add", method = RequestMethod.POST)
+    public String cancelContentAdd(@PathVariable("moduleId") Integer aModuleId)
     {
-        return "redirect:/cursos/" + aCourseId + "/contents";
+        return "redirect:/modulo/" + aModuleId + "/contents";
     }
 
     @RequestMapping(value = "/content/edit/{contentId}", method = RequestMethod.GET)
