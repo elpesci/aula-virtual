@@ -29,7 +29,7 @@
                 var editLink = $('<a/>');
                 myLink = "<c:url value='/modulos/edit/" + data.id + "'/>";
                 editLink.attr('href', myLink);
-                editLink.attr('title', 'Editar información del modulo');
+                editLink.attr('title', 'Editar información del módulo');
                 editLink.html(editIcon);
 
                 $(row).find('.acciones-control').append(editLink);
@@ -40,7 +40,7 @@
                 var deleteLink = $('<a/>');
                 myLink = "<c:url value='/modulos/delete/" + data.id + "'/>";
                 deleteLink.attr('href', myLink);
-                deleteLink.attr('title', 'Deshabilitar modulo');
+                deleteLink.attr('title', 'Deshabilitar módulo');
                 deleteLink.html(deleteIcon);
 
                 $(row).find('.acciones-control').append(deleteLink);
@@ -52,7 +52,7 @@
                 var contentLink = $('<a/>');
                 myLink = "<c:url value='/modulo/" + data.id + "/contents'/>";
                 contentLink.attr('href', myLink);
-                contentLink.attr('title', 'Ver contenidos del modulo');
+                contentLink.attr('title', 'Ver contenidos del módulo');
                 contentLink.html(contentIcon);
 
                 $(row).find('.acciones-control').append(contentLink);
@@ -60,21 +60,22 @@
             },
             "pagingType": "simple_numbers",
             "aoColumns": [
-                { "mData": "name" },
-                { "mData": "generalGoal" },
+                { "mData": "name", "width": "30%" },
+                { "mData": "generalGoal", "width": "50%" },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="contentLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
-                    "orderable": false
+                    "orderable": false,
+                    "width": "20%"
                 }
             ]
         });
 
         <sec:authorize access="hasRole('SUPER_ADMIN')">
-        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar modulo</a>");
-        $('#add').attr('href', "<c:url value='/modulos/add?courseId=" + ${course.cursoId} + "'/>").attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo modulo');
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Agregar módulo</a>");
+        $('#add').attr('href', "<c:url value='/modulos/add?courseId=" + ${course.cursoId} + "'/>").attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para agregar un nuevo módulo');
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
         </sec:authorize>
     });

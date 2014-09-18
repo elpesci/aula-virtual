@@ -52,21 +52,22 @@
                 var contentLink = $('<a/>');
                 myLink = "<c:url value='/modulos?cursoId=" + data.id + "'/>";
                 contentLink.attr('href', myLink);
-                contentLink.attr('title', 'Ver modulos del curso');
+                contentLink.attr('title', 'Ver módulos del curso');
                 contentLink.html(contentIcon);
 
                 $(row).find('.acciones-control').append(contentLink);
             },
             "pagingType": "simple_numbers",
             "aoColumns": [
-                { "mData": "name" },
-                { "mData": "goal" },
+                { "mData": "name", "width": "30%" },
+                { "mData": "goal", "width": "50%" },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="contentLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
-                    "orderable": false
+                    "orderable": false,
+                    "width": "20%"
                 }
             ]
         });
