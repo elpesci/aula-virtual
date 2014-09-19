@@ -136,10 +136,11 @@ public class ContentController
 
         if (result.hasErrors())
         {
-            aModel.put("target", NavigationTargets.CONTENT_EDIT);
-            aModel.put("action", "edit");
+            Contenido myContenido = contentService.readContentById(contentModelForm.getId());
+            aModel.put(Constants.TARGET, NavigationTargets.CONTENT_EDIT);
+            aModel.put(Constants.ACTION, Constants.EDIT);
+            aModel.put("module", myContenido.getModulo());
 
-            flashMessage.error("content.not.exists");
             return "contenido/add";
         }
 

@@ -92,7 +92,9 @@
                         <spring:message javaScriptEscape="true" code="label.profile"/>:
                         <span class="error"><form:errors path="profile"/></span>
                     </form:label>
-                    <form:select path="profile" cssClass="col-sm-offset-4 col-sm-8" items="${profiles}"/>
+                    <div class="col-sm-8">
+                        <form:select path="profile" cssClass="form-control" items="${profiles}"/>
+                    </div>
                 </sec:authorize>
             </div>
 

@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div>
-                <a href="<c:url value='/modulos?cursoId=${module.getCurso().getCursoId()}'/>" class="btn btn-link">
+                <a href="<c:url value='/modulos?cursoId=${module.curso.cursoId}'/>" class="btn btn-link">
                     <i class="fa fa-reply"></i>
                     <spring:message javaScriptEscape="true" code="back.to.modules.link.label"/>
                 </a>
