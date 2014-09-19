@@ -12,18 +12,28 @@
                                 arguments="${course.nombre}" />
             </c:if>
             <c:if test="${action eq 'edit'}">
-                <spring:message javaScriptEscape="true" code="course.edit.heading.label"
+                <spring:message javaScriptEscape="true" code="module.edit.heading.label"
                                 arguments="${course.nombre}"/>
             </c:if>
         </h3>
     </div>
     <div class="panel-body">
         <p class="info">
-            <spring:message javaScriptEscape="true" code="module.add.heading.info.label"/>
+            <c:if test="${action eq 'add'}">
+                <spring:message javaScriptEscape="true" code="module.add.heading.info.label"/>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <spring:message javaScriptEscape="true" code="module.edit.heading.info.label"/>
+            </c:if>
         </p>
 
         <p class="info">
-            <spring:message javaScriptEscape="true" code="module.add.heading.info.row2.label"/>
+            <c:if test="${action eq 'add'}">
+                <spring:message javaScriptEscape="true" code="module.add.heading.info.row2.label"/>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <spring:message javaScriptEscape="true" code="module.edit.heading.info.row2.label"/>
+            </c:if>
         </p>
         <form:form method="POST" action="${target}" commandName="moduleModelForm" cssClass="form-horizontal">
             <form:hidden path="id"/>
@@ -70,7 +80,7 @@
 
             <div class="form-group">
                 <form:label path="active" cssClass="col-sm-4 control-label">
-                    <spring:message javaScriptEscape="true" code="course.active.label"/>:
+                    <spring:message javaScriptEscape="true" code="module.active.label"/>:
                 </form:label>
                 <div class="col-sm-8">
                     <form:checkbox path="active" cssClass="form-control" cssErrorClass="fieldError"/>

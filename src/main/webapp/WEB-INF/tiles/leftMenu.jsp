@@ -6,7 +6,7 @@
 <tiles:importAttribute name="courses"/>
 <!-- Listado de cursos -->
 <div class="col-xs-3">
-    <p class="lead">Cursos</p>
+    <p class="lead"><i class="fa fa-university"></i> Cursos</p>
 
     <div class="list-group">
         <c:forEach items="${courses}" var="course">

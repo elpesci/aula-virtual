@@ -61,7 +61,15 @@
             "pagingType": "simple_numbers",
             "aoColumns": [
                 { "mData": "name", "width": "30%" },
-                { "mData": "generalGoal", "width": "50%" },
+                { "mData": "generalGoal", "width": "45%" },
+                { "mData": "active", 
+                  "mRender": function(active) {
+                      return (active === true) 
+                        ? '<span><i class="fa fa-certificate streetLight_green"></i> Sí</span>' 
+                        : '<span><i class="fa fa-certificate streetLight_red"></i> No</span>';
+                  },
+                  "orderable": false,
+                  "width": "5%"},
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="contentLink_' + id + '"/>';
@@ -87,6 +95,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
+                        <i class="fa fa-cubes"></i>
                         <spring:message javaScriptEscape="true" code="module.heading.label"
                             arguments="${course.nombre}"/>
                     </h3>
@@ -99,12 +108,19 @@
                             <tr>
                                 <th><spring:message javaScriptEscape="true" code="module.name.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="module.goal.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="module.is.active.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="label.actions"/></th>
                             </tr>
                             </thead>
                         </table>
                     </form:form>
                 </div>
+            </div>
+            <div>
+                <a id="backLink" href="<c:url value="/cursos"/>" class="btn btn-link">
+                    <i class="fa fa-reply"></i>
+                    <spring:message javaScriptEscape="true" code="back.to.courses.link.label"/>
+                </a>
             </div>
         </div>
     </div>

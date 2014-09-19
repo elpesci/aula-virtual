@@ -39,7 +39,7 @@
                 var deleteLink = $('<a/>');
                 myLink = "<c:url value='/modulo/content/delete/" + data.id + "'/>";
                 deleteLink.attr('href', myLink);
-                deleteLink.attr('title', 'Eliminar contenido del curso');
+                deleteLink.attr('title', 'Eliminar archivo de contenido del módulo');
                 deleteLink.html(deleteIcon);
 
                 $(row).find('.acciones-control').append(deleteLink);
@@ -84,6 +84,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
+                        <i class="fa fa-file-text-o"></i>
                         <spring:message javaScriptEscape="true" code="content.heading.label"
                                         arguments="${module.nombre}"/>
                     </h3>
@@ -93,13 +94,19 @@
                         <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th><spring:message htmlEscape="true" javaScriptEscape="true" code="content.name.label"/></th>
-                                <th><spring:message htmlEscape="true" javaScriptEscape="true" code="contentent.download.label"/></th>
+                                <th><spring:message htmlEscape="true" javaScriptEscape="true" code="content.description.label"/></th>
+                                <th><spring:message htmlEscape="true" javaScriptEscape="true" code="label.actions"/></th>
                             </tr>
                             </thead>
                         </table>
                     </form:form>
                 </div>
+            </div>
+            <div>
+                <a href="<c:url value='/modulos?cursoId=${module.getCurso().getCursoId()}'/>" class="btn btn-link">
+                    <i class="fa fa-reply"></i>
+                    <spring:message javaScriptEscape="true" code="back.to.modules.link.label"/>
+                </a>
             </div>
         </div>
     </div>
