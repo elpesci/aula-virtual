@@ -20,6 +20,7 @@
                         <div class="col-xs-3 text-right"><spring:message code="course.goal.label"/>:</div>
                         <div class="col-xs-9">${course.objetivo}</div>
                     </div>
+                    <br/>
                     <div class="row">
                         <div class="col-xs-3 text-right">Dirigido a:</div>
                         <div class="col-xs-9">
@@ -43,34 +44,40 @@
                                 <c:out value="${module.objetivoGeneral}"/>
                             </div>
                         </div>
+                        <br/>
                         <div class="row">
                             <div class="col-xs-3 text-right">Objetivo Específico:</div>
                             <div class="col-xs-9">
                                 <c:out value="${module.objetivoEspecifico}"/>
                             </div>
                         </div>
+                        <br/>
                         <div class="row">
                             <div class="col-xs-3 text-right">Temas:</div>
                             <div class="col-xs-9">
-                                <ol>
+                                <ul class="temario">
                                     <li>Tema 1</li>
                                     <li>Tema 2</li>
                                     <li>Tema 3</li>
-                                </ol>
+                                </ul>
                             </div>
                         </div>
+                        <br/>
                         <div class="row">
                             <div class="col-xs-3 text-right">Apoyos:</div>
                             <div class="col-xs-9">
-                                <ul>
+                                <ul class="temario">
                                     <c:forEach var="content" items="${module.contenidos}">
                                         <c:url var="linkDownload"
                                                value="/modulo/content/download/${content.contenidoId}"/>
                                         <li><a href="${linkDownload}"
                                                title="Descargar archivo de apoyo">
                                             <i class="glyphicon glyphicon-cloud-download"></i>
-                                            <c:out value="${content.nombre}"/>
-                                        </a></li>
+                                            <c:out value="${content.descripcion}"/>
+                                            </a>
+                                            &nbsp;
+                                            (<c:out value="${content.nombre}"/>)
+                                        </li>
                                     </c:forEach>
                                 </ul>
                             </div>

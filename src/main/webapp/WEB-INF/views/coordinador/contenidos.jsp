@@ -57,7 +57,7 @@
                 $(row).find('.acciones-control').append(contentLink);
             },
             "aoColumns": [
-                { "mData": "name" },
+                { "mData": "description" },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="contentLink_' + id + '"/>';

@@ -112,3 +112,8 @@ ul.pagination > .active > a, .pagination > .active > span, .pagination > .active
 .streetLight_red {
     color: red;
 }
+
+#content ul.temario li {
+    background: none;
+    padding-left: 0;
+}

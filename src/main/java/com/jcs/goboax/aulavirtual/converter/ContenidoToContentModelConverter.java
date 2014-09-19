@@ -13,6 +13,7 @@ public class ContenidoToContentModelConverter
         ContentModel myContentModel = new ContentModel();
         myContentModel.setId(aContenido.getContenidoId());
         myContentModel.setName(aContenido.getNombre());
+        myContentModel.setDescription(aContenido.getDescripcion());
         return myContentModel;
     }
 }
