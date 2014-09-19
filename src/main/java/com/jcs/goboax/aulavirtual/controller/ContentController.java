@@ -131,7 +131,7 @@ public class ContentController
 
     @RequestMapping(value = "/content/edit", params = "save", method = RequestMethod.POST)
     public String doContentEdit(Map<String, Object> aModel,
-                                @Validated ContentModelForm courseModel, BindingResult result)
+                                @Validated ContentModelForm contentModelForm, BindingResult result)
     {
 
         if (result.hasErrors())
@@ -143,9 +143,9 @@ public class ContentController
             return "contenido/add";
         }
 
-        contentService.updateContent(courseModel);
-
-        return "redirect:/cursos";
+        contentService.updateContent(contentModelForm);
+        Contenido myContenido = contentService.readContentById(contentModelForm.getId());
+        return "redirect:/modulo/" + myContenido.getModulo().getModuloId() + "/contents";
     }
 
     @RequestMapping(value = "/content/edit", params = "cancel", method = RequestMethod.POST)
