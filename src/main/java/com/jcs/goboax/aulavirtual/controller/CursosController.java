@@ -73,14 +73,14 @@ public class CursosController
         }
         else
         {
-            return "cursos/detail";
+            return "cursos/welcome";
         }
     }
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String cursosDetail() throws IOException
     {
-        return "cursos/detail";
+        return "cursos/welcome";
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)

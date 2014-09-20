@@ -66,6 +66,13 @@
         <put-attribute name="menu" value="/WEB-INF/tiles/leftMenu.jsp"/>
     </definition>
 
+    <definition extends="base.definition" name="cursos/welcome"
+                preparer="com.jcs.goboax.aulavirtual.ViewPreparer.CourseMenuViewPreparer">
+        <put-attribute name="title" value="Aula Virtual - Detalle de Cursos"/>
+        <put-attribute name="body" value="/WEB-INF/views/alumno/welcome.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/tiles/leftMenu.jsp"/>
+    </definition>
+
     <definition extends="base.definition" name="contenido/add">
         <put-attribute name="title" value="Aula Virtual - Agegar Contenido"/>
         <put-attribute name="body" value="/WEB-INF/views/coordinador/addContenido.jsp"/>
