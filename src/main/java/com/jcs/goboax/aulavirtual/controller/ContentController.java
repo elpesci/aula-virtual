@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Contenido;
 import com.jcs.goboax.aulavirtual.model.Modulo;
+import com.jcs.goboax.aulavirtual.model.TipoContenido;
 import com.jcs.goboax.aulavirtual.service.api.ContentService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
@@ -61,11 +62,13 @@ public class ContentController
     {
         ContentModelForm myContentModelForm = new ContentModelForm();
         Modulo myModulo = moduleService.readModuleById(aModuleId);
+        List<TipoContenido> myContentTypes = tipoContenidoService.readAllTipoContenido();
 
         aModel.put(Constants.TARGET, "/modulo/" + aModuleId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put(Constants.ACTION, Constants.ADD);
         aModel.put("module", myModulo);
+        aModel.put("contentTypes", myContentTypes);
 
         return "contenido/add";
     }
@@ -120,11 +123,13 @@ public class ContentController
 
         ContentModelForm myContentModelForm =
                 conversionService.convert(myContenido, ContentModelForm.class);
+        List<TipoContenido> myContentTypes = tipoContenidoService.readAllTipoContenido();
 
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put("target", NavigationTargets.CONTENT_EDIT);
         aModel.put("action", "edit");
         aModel.put("module", myContenido.getModulo());
+        aModel.put("contentTypes", myContentTypes);
 
         return "contenido/add";
     }
