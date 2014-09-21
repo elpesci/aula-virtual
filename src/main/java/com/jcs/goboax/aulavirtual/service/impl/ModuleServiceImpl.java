@@ -44,6 +44,12 @@ public class ModuleServiceImpl
         return moduloDao.readByCourse(aCourseId);
     }
 
+    @Override
+    public List<Modulo> readModulesByCourse(Integer aCourseId, Boolean onlyActives)
+    {
+        return moduloDao.readByCourse(aCourseId, onlyActives);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Modulo readModuleById(Integer aModuleId)

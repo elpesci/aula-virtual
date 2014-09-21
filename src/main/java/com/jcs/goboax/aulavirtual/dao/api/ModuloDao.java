@@ -11,4 +11,20 @@ public interface ModuloDao
     List<Modulo> readByCourse(Curso aCurso);
 
     List<Modulo> readByCourse(Integer aCursoId);
+
+    /**
+     * Retrieve all the modules given a course
+     * @param aCurso Course to filter the modules.
+     * @param onlyActives When it's true retrieve only actives, otherwise retrieve all of them.
+     * @return
+     */
+    List<Modulo> readByCourse(Curso aCurso, Boolean onlyActives);
+
+    /**
+     * Retreive
+     * @param aCourseId
+     * @param onlyActives When it's true retrieve only actives, otherwise retrieve all of them.
+     * @return
+     */
+    List<Modulo> readByCourse(Integer aCourseId, Boolean onlyActives);
 }

@@ -33,4 +33,25 @@ public class ModuloDaoImpl
         Curso myCurso = cursoDao.findByKey(aCursoId);
         return readByCourse(myCurso);
     }
+
+    @Override
+    public List<Modulo> readByCourse(Curso aCurso, Boolean onlyActives)
+    {
+        if (onlyActives == null || onlyActives == false)
+        {
+            return readByCourse(aCurso);
+        }
+
+        TypedQuery<Modulo> myQuery = entityManager.createNamedQuery(Modulo.MODULE_ACTIVE_BY_COURSE, Modulo.class);
+        myQuery.setParameter(Modulo.MODULE_COURSE_PARAMETER, aCurso);
+
+        return myQuery.getResultList();
+    }
+
+    @Override
+    public List<Modulo> readByCourse(Integer aCourseId, Boolean onlyActives)
+    {
+        Curso myCurso = cursoDao.findByKey(aCourseId);
+        return readByCourse(myCurso, onlyActives);
+    }
 }

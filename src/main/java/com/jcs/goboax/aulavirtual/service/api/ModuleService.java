@@ -12,6 +12,8 @@ public interface ModuleService
 
     List<Modulo> readModulesByCourse(Integer aCourseId);
 
+    List<Modulo> readModulesByCourse(Integer aCourseId, Boolean onlyActives);
+
     Modulo readModuleById(Integer aModuleId);
 
     ModuleModelForm updateModule(ModuleModelForm aModuleModelForm);

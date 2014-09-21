@@ -26,12 +26,16 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = Modulo.MODULE_ALL, query = "SELECT m FROM Modulo m"),
         @NamedQuery(name = Modulo.MODULE_BY_COURSE,
-            query = "SELECT m FROM Modulo m where m.curso = :" + Modulo.MODULE_COURSE_PARAMETER)
+            query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER),
+        @NamedQuery(name = Modulo.MODULE_ACTIVE_BY_COURSE,
+            query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER
+                    + " AND m.habilitado = true")
 })
 public class Modulo implements Serializable
 {
     public final static String MODULE_ALL = "modulo.findAll";
     public final static String MODULE_BY_COURSE = "modulo.byCourse";
+    public final static String MODULE_ACTIVE_BY_COURSE = "modulo.activeByCourse";
     public final static String MODULE_COURSE_PARAMETER = "course";
     private static final long serialVersionUID = 1L;
     @Id
