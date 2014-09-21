@@ -117,3 +117,14 @@ ul.pagination > .active > a, .pagination > .active > span, .pagination > .active
     background: none;
     padding-left: 0;
 }
+
+#content .syllabus ul { list-style: lower-roman; }
+#content .syllabus ul li { list-style: lower-roman; background: none; margin-left: 15px; padding-left: 0; }
+
+#content #contentarea ul li {
+    list-style: lower-latin;
+    background: none; 
+    padding: 2px 0px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+}

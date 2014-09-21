@@ -34,6 +34,7 @@
 
             <div class="well">
                 <c:forEach items="${course.modulos}" var="module">
+                    <c:if test="${module.habilitado}">
                     <!-- Inicia Modulo -->
                     <div class="row">
                         <h3><c:out value="${module.nombre}"/></h3>
@@ -55,11 +56,9 @@
                         <div class="row">
                             <div class="col-xs-3 text-right">Temas:</div>
                             <div class="col-xs-9">
-                                <ul class="temario">
-                                    <li>Tema 1</li>
-                                    <li>Tema 2</li>
-                                    <li>Tema 3</li>
-                                </ul>
+                                <div class="syllabus">
+                                <c:out value="${module.temario}" escapeXml="false"/>
+                                </div>
                             </div>
                         </div>
                         <br/>
@@ -84,6 +83,7 @@
                         </div>
                     </div>
                     <hr>
+                    </c:if>
                 </c:forEach>
 
             </div>
