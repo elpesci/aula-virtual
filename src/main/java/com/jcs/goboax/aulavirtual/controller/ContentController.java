@@ -11,6 +11,7 @@ import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
+import com.jcs.goboax.aulavirtual.validator.ContentModelFormValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,14 +59,14 @@ public class ContentController
     @Autowired
     private ConversionService conversionService;
 
-//    @Autowired
-//    private ContentModelFormValidator contentModelFormValidator;
+    @Autowired
+    private ContentModelFormValidator contentModelFormValidator;
 
-//    @InitBinder("contentModelForm")
-//    private void initBinder(WebDataBinder binder)
-//    {
-//        binder.addValidators(contentModelFormValidator);
-//    }
+    @InitBinder("contentModelForm")
+    private void initBinder(WebDataBinder binder)
+    {
+        binder.addValidators(contentModelFormValidator);
+    }
 
     @RequestMapping(value = "/{moduleId}/content/add", method = RequestMethod.GET)
     public String contentAdd(@PathVariable("moduleId") Integer aModuleId,

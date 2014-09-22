@@ -40,13 +40,16 @@ public class ContentModelFormValidator
             anErrors.rejectValue("content", "content.empty");
         }
 
-        String myExtension = FilenameUtils.getExtension(myContentModelForm.getContent().getOriginalFilename());
-        List<String> myExtensions = extensionContenidoDao.readExtensionesContenido();
-        LOG.debug("Extension {}, List Extensions {}", myExtension, myExtensions);
-
-        if (!myExtensions.contains(myExtension))
+        if(myContentModelForm.getId() == null || myContentModelForm.getId() == 0)
         {
-            anErrors.rejectValue("content", "content.wrong.extension");
+            String myExtension = FilenameUtils.getExtension(myMultipartFile.getOriginalFilename());
+            List<String> myExtensions = extensionContenidoDao.readExtensionesContenido();
+            LOG.debug("Extension {}, List Extensions {}", myExtension, myExtensions);
+
+            if (!myExtensions.contains(myExtension))
+            {
+                anErrors.rejectValue("content", "content.wrong.extension");
+            }
         }
     }
 
