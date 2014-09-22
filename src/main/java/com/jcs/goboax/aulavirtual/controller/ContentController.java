@@ -56,6 +56,15 @@ public class ContentController
     @Autowired
     private ConversionService conversionService;
 
+//    @Autowired
+//    private ContentModelFormValidator contentModelFormValidator;
+
+//    @InitBinder("contentModelForm")
+//    private void initBinder(WebDataBinder binder)
+//    {
+//        binder.addValidators(contentModelFormValidator);
+//    }
+
     @RequestMapping(value = "/{moduleId}/content/add", method = RequestMethod.GET)
     public String contentAdd(@PathVariable("moduleId") Integer aModuleId,
                              Map<String, Object> aModel)

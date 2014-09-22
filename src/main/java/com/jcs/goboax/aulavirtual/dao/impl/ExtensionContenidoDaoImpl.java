@@ -13,6 +13,7 @@ public class ExtensionContenidoDaoImpl
     implements ExtensionContenidoDao
 {
     @Override
+    //TODO change a List for a Set
     public List<String> readExtensionesContenido()
     {
         TypedQuery<String> myTypedQuery =
