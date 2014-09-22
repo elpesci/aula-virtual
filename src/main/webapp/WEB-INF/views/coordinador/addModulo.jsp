@@ -73,7 +73,8 @@
                     <spring:message javaScriptEscape="true" code="module.sylabus.label"/>:
                 </form:label>
                 <div class="col-sm-8">
-                    <form:textarea path="sylabus" cssClass="form-control" cssErrorClass="form-control fieldError"/>
+                    <form:textarea id="syllabusText" path="sylabus" cssClass="form-control" cssErrorClass="form-control fieldError" cssStyle="display: none;"/>
+                    <div id="rte"></div>
                     <span class="error"><form:errors path="sylabus"/></span>
                 </div>
             </div>
@@ -105,3 +106,18 @@
         </form:form>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready( function() {
+        $("#rte").Editor();
+
+        $("#contentarea").html($("#syllabusText").text());
+        
+        $(".btn-primary").click(function(event) {
+            //event.preventDefault();
+            
+            $("#syllabusText").text($("#contentarea").html());
+
+            //$("#moduleModelForm").submit();
+        });
+    });
+</script>
