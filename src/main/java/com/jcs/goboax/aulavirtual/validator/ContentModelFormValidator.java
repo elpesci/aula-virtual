@@ -1,6 +1,6 @@
 package com.jcs.goboax.aulavirtual.validator;
 
-import com.jcs.goboax.aulavirtual.dao.api.ExtensionContenidoDao;
+import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class ContentModelFormValidator
     private static final Logger LOG = LoggerFactory.getLogger(ContentModelFormValidator.class);
 
     @Autowired
-    private ExtensionContenidoDao extensionContenidoDao;
+    private TipoContenidoService tipoContenidoService;
 
     @Override
     public boolean supports(Class<?> aClass)
@@ -43,7 +43,7 @@ public class ContentModelFormValidator
         if(myContentModelForm.getId() == null || myContentModelForm.getId() == 0)
         {
             String myExtension = FilenameUtils.getExtension(myMultipartFile.getOriginalFilename());
-            List<String> myExtensions = extensionContenidoDao.readExtensionesContenido();
+            List<String> myExtensions = tipoContenidoService.readExtensionesContenido();
             LOG.debug("Extension {}, List Extensions {}", myExtension, myExtensions);
 
             if (!myExtensions.contains(myExtension))

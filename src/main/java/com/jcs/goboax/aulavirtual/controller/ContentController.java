@@ -11,6 +11,7 @@ import com.jcs.goboax.aulavirtual.service.api.TipoContenidoService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
+import com.jcs.goboax.aulavirtual.util.Utils;
 import com.jcs.goboax.aulavirtual.validator.ContentModelFormValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ContentModelForm;
@@ -75,12 +76,14 @@ public class ContentController
         ContentModelForm myContentModelForm = new ContentModelForm();
         Modulo myModulo = moduleService.readModuleById(aModuleId);
         List<TipoContenido> myContentTypes = tipoContenidoService.readAllTipoContenido();
+        List<String> myContentExtensions = tipoContenidoService.readExtensionesContenido();
 
         aModel.put(Constants.TARGET, "/modulo/" + aModuleId + "/content/add");
         aModel.put("contentModelForm", myContentModelForm);
         aModel.put(Constants.ACTION, Constants.ADD);
         aModel.put("module", myModulo);
         aModel.put("contentTypes", myContentTypes);
+        aModel.put("extensionContenido", Utils.convertListExtensionsToAcceptString(myContentExtensions));
 
         return "contenido/add";
     }
@@ -93,11 +96,13 @@ public class ContentController
         if (result.hasErrors())
         {
             List<TipoContenido> myContentTypes = tipoContenidoService.readAllTipoContenido();
+            List<String> myContentExtensions = tipoContenidoService.readExtensionesContenido();
             Modulo myModulo = moduleService.readModuleById(aModuleId);
             aModel.put(Constants.TARGET, "/modulo/" + aModuleId + "/content/add");
             aModel.put(Constants.ACTION, Constants.ADD);
             aModel.put("contentTypes", myContentTypes);
             aModel.put("module", myModulo);
+            aModel.put("extensionContenido", Utils.convertListExtensionsToAcceptString(myContentExtensions));
 
             return "contenido/add";
 

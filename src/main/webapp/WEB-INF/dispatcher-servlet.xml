@@ -17,8 +17,8 @@
                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-
-                            http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+                           http://www.springframework.org/schema/cache
+                           http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <import resource="spring-security.xml"/>
     <context:component-scan base-package="com.jcs.goboax.aulavirtual"/>
@@ -41,7 +41,8 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
-    <context:property-placeholder location="classpath:jdbc.properties, classpath:mail.properties, classpath:recaptcha.properties"/>
+    <context:property-placeholder
+            location="classpath:jdbc.properties, classpath:mail.properties, classpath:recaptcha.properties"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -83,14 +84,15 @@
         <property name="privateKey" value="${recaptcha.privatekey}"/>
     </bean>
 
-    <cache:annotation-driven/>
+
+    <cache:annotation-driven cache-manager="cacheManager" key-generator="enhancedDefaultKeyGenerator"/>
+    <bean id ="enhancedDefaultKeyGenerator" class="com.jcs.goboax.aulavirtual.cache.interceptor.EnhancedDefaultKeyGenerator"/>
 
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcache"/>
     </bean>
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation" value="classpath:ehcache.xml"/>
-        <property name="shared" value="true"/>
     </bean>
 
     <bean id="dataSource"

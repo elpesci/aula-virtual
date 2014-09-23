@@ -38,4 +38,13 @@ public class LoginControllerTest
                 .andExpect(status().isOk())
                 .andExpect(view().name("forward:/"));
     }
+
+    @Test
+    public void loginFail() throws Exception
+    {
+        mockMvc.perform(get("/login?error=0"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("forward:/"));
+    }
+
 }

@@ -1,9 +1,5 @@
 package com.jcs.goboax.aulavirtual.model;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +10,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = Perfil.PROFILE_ALL_QUERYNAME, query = "SELECT p FROM Perfil p"),
+        @NamedQuery(name = Perfil.PROFILE_ALL_QUERYNAME, query = "SELECT p FROM Perfil p WHERE p.codigo <> 'SUPER_ADMIN'"),
         @NamedQuery(name = Perfil.PROFILE_BY_CODE_QUERYNAME, query = "SELECT p FROM Perfil p WHERE p.codigo = :"
                 + Perfil.PROFILE_BY_CODE_PARAMETER) })
 @Entity
