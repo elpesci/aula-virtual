@@ -92,11 +92,12 @@ public class ContentController
     {
         if (result.hasErrors())
         {
-            Map<Integer, String> myTipoContenido = tipoContenidoService.readAllTipoContenidoMap();
-
+            List<TipoContenido> myContentTypes = tipoContenidoService.readAllTipoContenido();
+            Modulo myModulo = moduleService.readModuleById(aModuleId);
             aModel.put(Constants.TARGET, "/modulo/" + aModuleId + "/content/add");
             aModel.put(Constants.ACTION, Constants.ADD);
-            aModel.put("contentTypeNames", myTipoContenido);
+            aModel.put("contentTypes", myContentTypes);
+            aModel.put("module", myModulo);
 
             return "contenido/add";
 
@@ -154,9 +155,11 @@ public class ContentController
         if (result.hasErrors())
         {
             Contenido myContenido = contentService.readContentById(contentModelForm.getId());
+            List<TipoContenido> myContentTypes = tipoContenidoService.readAllTipoContenido();
             aModel.put(Constants.TARGET, NavigationTargets.CONTENT_EDIT);
             aModel.put(Constants.ACTION, Constants.EDIT);
             aModel.put("module", myContenido.getModulo());
+            aModel.put("contentTypes", myContentTypes);
 
             return "contenido/add";
         }
