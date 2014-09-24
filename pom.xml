@@ -10,6 +10,12 @@
 
     <name>AulaVirtual</name>
 
+    <scm>
+        <url>https://github.com/elpesci/aula-virtual</url>
+        <connection>scm:git:git://github.com/elpesci/aula-virtual.git</connection>
+        <developerConnection>scm:git:git@github.com://github.com/elpesci/aula-virtual.git</developerConnection>
+    </scm>
+
     <properties>
         <java.version>1.6</java.version>
         <spring.version>3.2.2.RELEASE</spring.version>
@@ -319,20 +325,11 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <port>9090</port>
+                    <port>8080</port>
                     <path>/</path>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.4.v20120524</version>
-                <configuration>
-                    <webAppConfig>
-                        <contextPath>/${project.name}</contextPath>
-                    </webAppConfig>
-                </configuration>
-            </plugin>
+
             <!-- Enabling and configuring regular resources filtering.
      See also section "resources" below -->
             <plugin>
@@ -342,6 +339,23 @@
                 <configuration>
                     <!-- specify UTF-8, ISO-8859-1 or any other file encoding -->
                     <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
                 </configuration>
             </plugin>
         </plugins>
@@ -357,9 +371,9 @@
 
     <!-- Profiles start here -->
     <profiles>
-        <!-- Development environment @ my laptop -->
+        <!-- Stage environment @ acardenas.net -->
         <profile>
-            <id>development</id>
+            <id>acardenas</id>
             <properties>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
                 <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull
@@ -367,6 +381,17 @@
                 <db.username>avDev</db.username>
                 <db.password>Password#1</db.password>
                 <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
+                <url.domain>http://acardenas.net</url.domain>
+                <mail.host>smtp.gmail.com</mail.host>
+                <mail.port>587</mail.port>
+                <mail.username>dev.salsasoft@gmail.com</mail.username>
+                <mail.password>xsw2ZAQ!</mail.password>
+                <mail.transport.protocol>smtp</mail.transport.protocol>
+                <mail.smtp.auth>true</mail.smtp.auth>
+                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
+                <mail.smtp.socketFactory.port>465</mail.smtp.socketFactory.port>
+                <mail.smtp.socketFactory.fallback>false</mail.smtp.socketFactory.fallback>
+                <mail.debug>false</mail.debug>
             </properties>
             <dependencies>
                 <dependency>
@@ -376,9 +401,9 @@
                 </dependency>
             </dependencies>
         </profile>
-        <!-- Production environment @ production server -->
+        <!-- Development environment @ my laptop -->
         <profile>
-            <id>production</id>
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -389,6 +414,43 @@
                 <db.username>avDev</db.username>
                 <db.password>Password#1</db.password>
                 <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
+                <url.domain>http://localhost:8080</url.domain>
+                <mail.host>smtp.gmail.com</mail.host>
+                <mail.port>587</mail.port>
+                <mail.username>dev.salsasoft@gmail.com</mail.username>
+                <mail.password>xsw2ZAQ!</mail.password>
+                <mail.transport.protocol>smtp</mail.transport.protocol>
+                <mail.smtp.auth>true</mail.smtp.auth>
+                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
+                <mail.smtp.socketFactory.port>465</mail.smtp.socketFactory.port>
+                <mail.smtp.socketFactory.fallback>false</mail.smtp.socketFactory.fallback>
+                <mail.debug>true</mail.debug>
+            </properties>
+        </profile>
+        <!-- Production environment @ production server -->
+        <profile>
+            <id>production</id>
+            <build>
+                <finalName>ROOT</finalName>
+            </build>
+            <properties>
+                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+                <db.connectionURL>jdbc:mysql://192.168.0.42:5500/aula_virtual?zeroDateTimeBehavior=convertToNull
+                </db.connectionURL>
+                <db.username>aula_virtual</db.username>
+                <db.password>c4p4c1t4c10n</db.password>
+                <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
+                <url.domain>http://aula.finanzasoaxaca.gob.mx</url.domain>
+                <mail.host>smtp.gmail.com</mail.host>
+                <mail.port>587</mail.port>
+                <mail.username>dev.salsasoft@gmail.com</mail.username>
+                <mail.password>xsw2ZAQ!</mail.password>
+                <mail.transport.protocol>smtp</mail.transport.protocol>
+                <mail.smtp.auth>true</mail.smtp.auth>
+                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
+                <mail.smtp.socketFactory.port>465</mail.smtp.socketFactory.port>
+                <mail.smtp.socketFactory.fallback>false</mail.smtp.socketFactory.fallback>
+                <mail.debug>false</mail.debug>
             </properties>
         </profile>
     </profiles>
