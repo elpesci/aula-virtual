@@ -400,6 +400,7 @@
         <profile>
             <id>acardenas</id>
             <properties>
+                <eclipselink.logging.level>INFO</eclipselink.logging.level>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
                 <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull
                 </db.connectionURL>
@@ -433,6 +434,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <eclipselink.logging.level>FINE</eclipselink.logging.level>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
                 <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull
                 </db.connectionURL>
@@ -459,6 +461,7 @@
                 <finalName>ROOT</finalName>
             </build>
             <properties>
+                <eclipselink.logging.level>INFO</eclipselink.logging.level>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
                 <db.connectionURL>jdbc:mysql://192.168.0.42:5500/aula_virtual?zeroDateTimeBehavior=convertToNull
                 </db.connectionURL>

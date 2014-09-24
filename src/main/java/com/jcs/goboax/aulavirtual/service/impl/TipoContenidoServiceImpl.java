@@ -24,7 +24,7 @@ public class TipoContenidoServiceImpl
     @Autowired
     private ExtensionContenidoDao extensionContenidoDao;
 
-    @Cacheable(value = "readResults")
+//    @Cacheable(value = "readResults")
     @Override
     public List<TipoContenido> readAllTipoContenido()
     {

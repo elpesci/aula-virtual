@@ -4,7 +4,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <properties>
-            <property name="eclipselink.logging.level" value="FINE" />
+            <property name="eclipselink.logging.level" value="${eclipselink.logging.level}" />
                         <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
             <property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>
