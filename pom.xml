@@ -12,7 +12,7 @@
 
     <scm>
         <url>https://github.com/elpesci/aula-virtual</url>
-        <connection>scm:git:git://github.com/elpesci/aula-virtual.git</connection>
+        <connection>scm:git:https://github.com/elpesci/aula-virtual.git</connection>
         <developerConnection>scm:git:git@github.com://github.com/elpesci/aula-virtual.git</developerConnection>
     </scm>
 
