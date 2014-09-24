@@ -9,9 +9,6 @@
         Gerardo Pandal Graff #1, Reyes Mantec�n, San Bartolo Coyotepec,
         Centro, Oaxaca. C.P. 71257<br /> Conmutador (951) 50 1 69 00
     </p>
-    <p>
-        Build number: ${buildNumber}
-    </p>
 </div>
 
 <div id=blockUI style="display: none;">
