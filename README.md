@@ -12,7 +12,7 @@ Development Release
 mvn clean install
   ````
 
-The command above will generates AulaVirtual.war
+The command above will generate AulaVirtual.war
 
 Production Release
 -------------------
@@ -20,4 +20,4 @@ Production Release
 mvn clean install -P production
   ````
   
-  The command above will generates ROOT.war
+  The command above will generate ROOT.war
