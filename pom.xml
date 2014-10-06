@@ -354,7 +354,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>true</doCheck>
+                    <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
                 </configuration>
             </plugin>
@@ -469,10 +469,10 @@
                 <db.password>c4p4c1t4c10n</db.password>
                 <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
                 <url.domain>http://aula.finanzasoaxaca.gob.mx</url.domain>
-                <mail.host>smtp.gmail.com</mail.host>
+                <mail.host>finanzasoaxaca.gob.mx</mail.host>
                 <mail.port>587</mail.port>
-                <mail.username>dev.salsasoft@gmail.com</mail.username>
-                <mail.password>xsw2ZAQ!</mail.password>
+                <mail.username>capacitacion.ppi@finanzasoaxaca.gob.mx</mail.username>
+                <mail.password>inicial2014</mail.password>
                 <mail.transport.protocol>smtp</mail.transport.protocol>
                 <mail.smtp.auth>true</mail.smtp.auth>
                 <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
