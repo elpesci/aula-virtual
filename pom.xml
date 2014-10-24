@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -354,7 +354,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>true</doCheck>
+                    <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
                 </configuration>
             </plugin>
@@ -442,10 +442,10 @@
                 <db.password>Password#1</db.password>
                 <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
                 <url.domain>http://localhost:8080</url.domain>
-                <mail.host>smtp.gmail.com</mail.host>
+                <mail.host>finanzasoaxaca.gob.mx</mail.host>
                 <mail.port>587</mail.port>
-                <mail.username>dev.salsasoft@gmail.com</mail.username>
-                <mail.password>xsw2ZAQ!</mail.password>
+                <mail.username>capacitacion.ppi</mail.username>
+                <mail.password>inicial2014</mail.password>
                 <mail.transport.protocol>smtp</mail.transport.protocol>
                 <mail.smtp.auth>true</mail.smtp.auth>
                 <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
@@ -463,7 +463,7 @@
             <properties>
                 <eclipselink.logging.level>INFO</eclipselink.logging.level>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-                <db.connectionURL>jdbc:mysql://192.168.0.42:5500/aula_virtual?zeroDateTimeBehavior=convertToNull
+                <db.connectionURL>jdbc:mysql://172.17.90.70:5500/aula_virtual?zeroDateTimeBehavior=convertToNull
                 </db.connectionURL>
                 <db.username>aula_virtual</db.username>
                 <db.password>c4p4c1t4c10n</db.password>
