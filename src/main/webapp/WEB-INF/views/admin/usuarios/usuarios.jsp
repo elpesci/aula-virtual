@@ -25,10 +25,14 @@
             "aoColumns": [
                 { "mData": "name" },
                 { "mData": "username" },
-                { "mData": "profile"}
+                { "mData": "profile"},
+                { "mData": "status"}
             ]
         });
 
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Registrar Usuario</a>");
+        $('#add').attr('href', '<c:url value='/login/registration'/>').attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para registrar un nuevo usuario');
+        $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
     });
 </script>
 
@@ -50,6 +54,7 @@
                                 <th><spring:message javaScriptEscape="true" code="usuario.username.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="usuario.fullName.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="usuario.profile.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="usuario.status.label"/></th>
                             </tr>
                             </thead>
                         </table>

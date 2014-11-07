@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/aop
@@ -17,8 +17,8 @@
                            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-
-                            http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+                           http://www.springframework.org/schema/cache
+                           http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <import resource="spring-security.xml"/>
     <context:component-scan base-package="com.jcs.goboax.aulavirtual"/>
@@ -41,7 +41,8 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
-    <context:property-placeholder location="classpath:jdbc.properties, classpath:mail.properties, classpath:recaptcha.properties"/>
+    <context:property-placeholder
+            location="classpath:jdbc.properties, classpath:mail.properties, classpath:recaptcha.properties"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -57,6 +58,11 @@
                 <value>/WEB-INF/tiles.xml</value>
             </list>
         </property>
+
+        <!-- resolving preparer names as Spring bean definition names -->
+        <property name="preparerFactoryClass"
+                  value="org.springframework.web.servlet.view.tiles3.SimpleSpringPreparerFactory"/>
+
     </bean>
 
     <mvc:annotation-driven validator="validator"/>
@@ -78,14 +84,15 @@
         <property name="privateKey" value="${recaptcha.privatekey}"/>
     </bean>
 
-    <cache:annotation-driven/>
+
+    <cache:annotation-driven cache-manager="cacheManager" key-generator="enhancedDefaultKeyGenerator"/>
+    <bean id ="enhancedDefaultKeyGenerator" class="com.jcs.goboax.aulavirtual.cache.interceptor.EnhancedDefaultKeyGenerator"/>
 
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcache"/>
     </bean>
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation" value="classpath:ehcache.xml"/>
-        <property name="shared" value="true"/>
     </bean>
 
     <bean id="dataSource"
@@ -139,6 +146,8 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.ContenidoToContentModelConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.ContenidoToContentModelFormConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.UsuarioToUsuarioModelConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ModuloToModuleModelFormConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ModuleModelFormToModuloConverter"/>
             </list>
         </property>
     </bean>

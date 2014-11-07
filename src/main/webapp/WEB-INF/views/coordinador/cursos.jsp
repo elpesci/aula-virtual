@@ -47,27 +47,27 @@
                 $(row).find('.acciones-control').append('&nbsp;&nbsp;');
                 </sec:authorize>
 
-                var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-file-text-o fa-stack-1x"></i></span>';
+                var contentIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-cubes fa-stack-1x"></i></span>';
 
                 var contentLink = $('<a/>');
-                myLink = "<c:url value='/cursos/" + data.id + "/contents'/>";
+                myLink = "<c:url value='/modulos?cursoId=" + data.id + "'/>";
                 contentLink.attr('href', myLink);
-                contentLink.attr('title', 'Ver contenidos del curso');
+                contentLink.attr('title', 'Administrar módulos del curso');
                 contentLink.html(contentIcon);
 
                 $(row).find('.acciones-control').append(contentLink);
-
             },
             "pagingType": "simple_numbers",
             "aoColumns": [
-                { "mData": "name" },
-                { "mData": "goal" },
+                { "mData": "name", "width": "30%" },
+                { "mData": "goal", "width": "50%" },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="contentLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
-                    "orderable": false
+                    "orderable": false,
+                    "width": "20%"
                 }
             ]
         });
@@ -86,6 +86,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
+                        <i class="fa fa-university"></i>
                         <spring:message javaScriptEscape="true" code="course.heading.label"/>
                     </h3>
                 </div>

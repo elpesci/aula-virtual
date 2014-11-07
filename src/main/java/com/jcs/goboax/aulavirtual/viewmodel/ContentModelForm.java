@@ -1,5 +1,7 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class ContentModelForm
@@ -7,6 +9,8 @@ public class ContentModelForm
     private Integer id;
     private String name;
     private CommonsMultipartFile content;
+    @NotEmpty
+    @Length(max = 150)
     private String description;
     private Integer contentTypeId;
 

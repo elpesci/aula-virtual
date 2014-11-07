@@ -1,5 +1,6 @@
 package com.jcs.goboax.aulavirtual.controller;
 
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.jcs.goboax.aulavirtual.util.FlashMessage;
 
 @Controller
 public class LoginController
@@ -31,7 +30,6 @@ public class LoginController
     {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
-
         if (!(auth instanceof AnonymousAuthenticationToken))
         {
             return new ModelAndView("forward:/");
@@ -49,7 +47,7 @@ public class LoginController
             LOG.debug("{}", "Login Error");
             model.addObject("error", true);
         }
-        
+
         model.setViewName("login");
         return model;
     }

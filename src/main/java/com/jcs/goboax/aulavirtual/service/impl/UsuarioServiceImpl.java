@@ -16,6 +16,7 @@ import com.jcs.goboax.aulavirtual.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,8 @@ public class UsuarioServiceImpl
     @Autowired
     private EmailService emailService;
 
+    @Cacheable(value = "readResults")
+    @Transactional(readOnly = true)
     @Override
     public List<Perfil> readPerfiles()
     {
@@ -179,6 +182,6 @@ public class UsuarioServiceImpl
     @Override
     public List<Usuario> readUsuarios()
     {
-        return usuarioDao.findWithNamedQuery(Usuario.USUARIO_ALL_QUERYNAME);
+        return usuarioDao.findWithNamedQuery(Usuario.USUARIO_NOT_SUPERADMIN);
     }
 }

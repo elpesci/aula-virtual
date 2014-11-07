@@ -1,11 +1,6 @@
 package com.jcs.goboax.aulavirtual.model;
 
-import org.eclipse.persistence.annotations.Cache;
-
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +11,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, query = "SELECT c FROM Curso c"),
@@ -23,18 +21,15 @@ import javax.persistence.TemporalType;
                 query = "SELECT c FROM Curso c WHERE c.habilitado = true")
 })
 @Entity
-@Cache
+@Cacheable
 @Table(name = "Curso")
 public class Curso
         implements Serializable
 {
 
-    private static final long serialVersionUID = 1L;
-
     public final static String CURSO_ALL_QUERYNAME = "curso.all";
-
     public final static String CURSO_ALL_TO_USERS_QUERYNAME = "curso.allToUsers";
-
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cursoId;
@@ -57,9 +52,9 @@ public class Curso
 
     private String objetivo;
 
-    // bi-directional many-to-one association to Contenido
+    // bi-directional many-to-one association to Modulo
     @OneToMany(mappedBy = "curso")
-    private List<Contenido> contenidos;
+    private List<Modulo> modulos;
 
     // bi-directional many-to-one association to Examen
     @OneToMany(mappedBy = "curso")
@@ -77,6 +72,7 @@ public class Curso
     {
         return this.cursoId;
     }
+
 
     public void setCursoId(int cursoId)
     {
@@ -163,30 +159,30 @@ public class Curso
         this.objetivo = objetivo;
     }
 
-    public List<Contenido> getContenidos()
+    public List<Modulo> getModulos()
     {
-        return this.contenidos;
+        return this.modulos;
     }
 
-    public void setContenidos(List<Contenido> contenidos)
+    public void setModulos(List<Modulo> modulos)
     {
-        this.contenidos = contenidos;
+        this.modulos = modulos;
     }
 
-    public Contenido addContenido(Contenido contenido)
+    public Modulo addModulo(Modulo modulo)
     {
-        getContenidos().add(contenido);
-        contenido.setCurso(this);
+        getModulos().add(modulo);
+        modulo.setCurso(this);
 
-        return contenido;
+        return modulo;
     }
 
-    public Contenido removeContenido(Contenido contenido)
+    public Modulo removeModulo(Modulo modulo)
     {
-        getContenidos().remove(contenido);
-        contenido.setCurso(null);
+        getModulos().remove(modulo);
+        modulo.setCurso(null);
 
-        return contenido;
+        return modulo;
     }
 
     public List<Examen> getExamens()

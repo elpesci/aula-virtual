@@ -3,6 +3,10 @@
 <!-- start #menu -->
     <ul id="MenuBar1" class="MenuBarHorizontal">
         <li><a href="<c:url value="/cursos"/>" title="Administrar cursos y sus contenidos"> <i class="fa fa-university"></i> Cursos</a></li>
+        <sec:authorize access="hasAnyRole('SUPER_ADMIN','COORDINADOR')">
+            <li><a href="<c:url value="/cursos/detail"/>" title="Visualizar cursos"> <i class="fa fa-university"></i>
+                Ver Cursos</a></li>
+        </sec:authorize>
         <sec:authorize access="hasRole('SUPER_ADMIN')">
             <li><a href="<c:url value="/usuario" />" title="Administrar Usuarios"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
         </sec:authorize>

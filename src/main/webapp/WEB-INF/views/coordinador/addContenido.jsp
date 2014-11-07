@@ -6,29 +6,40 @@
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h3><spring:message javaScriptEscape="true" code="content.add.heading.label" arguments="${course.nombre}"/></h3>
+        <h3>
+            <c:if test="${action eq 'add'}">
+                <spring:message javaScriptEscape="true" code="content.add.heading.label" arguments="${module.nombre}"/>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <spring:message javaScriptEscape="true" code="content.edit.heading.label" arguments="${module.nombre}"/>
+            </c:if>
+        </h3>
     </div>
     <div class="panel panel-body">
         <div class="row">
             <div class="col-xs-6">
                 <p class="info left">
-                <spring:message javaScriptEscape="true" code="content.add.heading.info.label"/>
-                <ul>
-                    <li>Nombre del archivo</li>
-                    <li>Archivo de contenido</li>
-                    <li>Descripción del contenido</li>
-                </ul>
+                <c:if test="${action eq 'add'}">
+                    <spring:message javaScriptEscape="true" code="content.add.heading.info.label"/>
+                    <ul>
+                        <li>Descripción del contenido</li>
+                        <li>Archivo de contenido</li>
+                    </ul>
+                </c:if>
+                <c:if test="${action eq 'edit'}">
+                    <spring:message javaScriptEscape="true" code="content.edit.heading.info.label"/>
+                </c:if>
                 </p>
             </div>
             <div class="col-xs-6">
                 <p class="right">
                     <spring:message javaScriptEscape="true" code="content.common.allowed.types.label" />:
                     <ul>
-                        <c:forEach var="contentTypeName" items="${contentTypeNames}">
-                            <li>${contentTypeName}</li>
+                        <c:forEach var="contentType" items="${contentTypes}">
+                            <li>${contentType.descripcion}</li>
                         </c:forEach>
                     </ul>
-                </p>                                   
+                </p>
             </div>
         </div>
 

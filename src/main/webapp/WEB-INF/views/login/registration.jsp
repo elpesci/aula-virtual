@@ -92,7 +92,9 @@
                         <spring:message javaScriptEscape="true" code="label.profile"/>:
                         <span class="error"><form:errors path="profile"/></span>
                     </form:label>
-                    <form:select path="profile" cssClass="col-sm-offset-4 col-sm-8" items="${profiles}"/>
+                    <div class="col-sm-8">
+                        <form:select path="profile" cssClass="form-control" items="${profiles}"/>
+                    </div>
                 </sec:authorize>
             </div>
 
@@ -110,8 +112,14 @@
                 <div class="col-sm-offset-4 col-sm-8">
                     <input type="submit" name="save" class="btn btn-primary"
                            value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
-                    <input type="submit" name="cancel" class="btn btn-danger"
-                           value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
+                    <sec:authorize access="hasRole('SUPER_ADMIN')">
+                        <input type=button class="btn btn-danger" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"
+                         onCLick="history.back()">
+                    </sec:authorize>
+                    <sec:authorize access="!hasRole('SUPER_ADMIN')">
+                        <input type="submit" name="cancel" class="btn btn-danger"
+                               value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"/>
+                    </sec:authorize>
                 </div>
             </div>
         </form:form>

@@ -1,14 +1,17 @@
 package com.jcs.goboax.aulavirtual.util;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
+import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 public abstract class Utils
 {
+    private static final String PERIOD = ".";
+
     public static String encodePassword(String aRawPassword)
     {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -39,5 +42,10 @@ public abstract class Utils
         myMessageDigest = MessageDigest.getInstance("SHA-256");
         myMessageDigest.update(saltedKey.getBytes(), 0, aString.length());
         return myMessageDigest.digest();
+    }
+
+    public static String convertListExtensionsToAcceptString(List<String> anExtensions)
+    {
+        return PERIOD + StringUtils.join(anExtensions, ",.");
     }
 }

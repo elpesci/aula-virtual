@@ -15,15 +15,8 @@
         <div class="col-xs-5">
             <div class="jumbotron">
                 <h1>¡Bienvenido a Aula Virtual!</h1>
-                <p class="info">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Mauris lobortis dolor id turpis pulvinar rutrum. 
-                    Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-                    Proin ultrices sit amet arcu quis tempus. 
-                    Cras consectetur ultrices nibh, eleifend ullamcorper eros hendrerit blandit. 
-                    Fusce id suscipit metus, ac dignissim leo. Ut ut condimentum orci, a ullamcorper enim. 
-                    Sed convallis accumsan placerat. Quisque in hendrerit turpis. 
-                    Maecenas consequat, turpis id sollicitudin ullamcorper, felis nibh faucibus ipsum, eu adipiscing nulla magna ut nisi. 
-                    Suspendisse potenti.
+                <p class="info">
+                    Bienvenido al portal de capacitación de la Secretaría de Finanzas del Gobierno de Oaxaca. En este espacio virtual, te brindamos una serie de cursos de gran valor público y social que tienen como propósito ofrecerte una solución integral dentro de tus diferentes áreas de competencia. Esperamos que estas herramientas que ponemos a tu disposición cumplan con tus expectativas de capacitación.
                 </p>
             </div>
         </div>
