@@ -5,7 +5,7 @@
 
     <groupId>com.jcs</groupId>
     <artifactId>AulaVirtual</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>war</packaging>
 
     <name>AulaVirtual</name>
@@ -354,7 +354,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>false</doCheck>
+                    <doCheck>true</doCheck>
                     <doUpdate>false</doUpdate>
                 </configuration>
             </plugin>
