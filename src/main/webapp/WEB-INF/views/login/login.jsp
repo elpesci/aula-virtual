@@ -10,9 +10,9 @@
     </script>
 </c:if>
                 
-<div class="container theme-showcase" role="main">
+<div class="container-fluid theme-showcase" role="main">
     <div class="row">
-        <div class="col-xs-5">
+        <div class="col-lg-6">
             <div class="jumbotron">
                 <h1>¡Bienvenido a Aula Virtual!</h1>
                 <p class="info">
@@ -20,7 +20,8 @@
                 </p>
             </div>
         </div>
-        <div class="col-xs-4">
+        <div class="clearfix" />
+        <div class="col-lg-6">
                 
             <div class="panel panel-warning">
                 <div class="panel-heading">

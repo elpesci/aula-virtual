@@ -442,10 +442,10 @@
                 <db.password>Password#1</db.password>
                 <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
                 <url.domain>http://localhost:8080</url.domain>
-                <mail.host>finanzasoaxaca.gob.mx</mail.host>
+                <mail.host>smtp.gmail.com</mail.host>
                 <mail.port>587</mail.port>
-                <mail.username>capacitacion.ppi</mail.username>
-                <mail.password>inicial2014</mail.password>
+                <mail.username>dev.salsasoft@gmail.com</mail.username>
+                <mail.password>xsw2ZAQ!</mail.password>
                 <mail.transport.protocol>smtp</mail.transport.protocol>
                 <mail.smtp.auth>true</mail.smtp.auth>
                 <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>

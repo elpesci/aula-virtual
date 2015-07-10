@@ -148,7 +148,7 @@ ul.MenuBarHorizontal iframe
 	ul.MenuBarHorizontal li.MenuBarItemIE
 	{
 		display: inline;
-		f\loat: left;
+		float: left;
 		background: none;
 	}
 }
