@@ -112,4 +112,9 @@
         <put-attribute name="title" value="Aula Virtual - Error General"/>
         <put-attribute name="body" value="/WEB-INF/views/markup500.jsp"/>
     </definition>
+    
+    <definition extends="base.definition" name="testEngine">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/index.jsp"/>
+    </definition>
 </tiles-definitions>
