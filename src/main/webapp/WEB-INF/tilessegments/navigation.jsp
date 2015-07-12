@@ -5,7 +5,7 @@
         <li><a href="<c:url value="/cursos"/>" title="Administrar cursos y sus contenidos"> <i class="fa fa-university"></i> Cursos</a></li>
         <sec:authorize access="hasAnyRole('SUPER_ADMIN','COORDINADOR')">
             <li>
-                <a href="<c:url value="/motorEval"/>" title="Motor de exámenes"> <i class="fa fa-leanpub"></i> Exámenes</a>
+                <a href="<c:url value="/motorEval"/>" title="Motor de exámenes"> <i class="fa fa-check-square-o"></i> Exámenes</a>
             </li>
             <li>
                 <a href="<c:url value="/cursos/detail"/>" title="Visualizar cursos"> <i class="fa fa-university"></i> Ver Cursos</a>

@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <i class="fa fa-leanpub"></i>
+                        <i class="fa fa-check-square-o"></i>
                         <spring:message javaScriptEscape="true" code="testEngine.settings.heading.label"/>
                     </h3>
                 </div>
