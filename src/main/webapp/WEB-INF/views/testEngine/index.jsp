@@ -47,10 +47,11 @@
             },
             "pagingType": "simple_numbers",
             "aoColumns": [
-                { "mData": "name", "width": "80%" },
+                { "mData": "name", "width": "40%" },
+                { "mData": "settings", "width": "40%" },
                 { "mData": "id",
                     "mRender": function (id) {
-                        return  '<div id="questionsLink_' + id + '"/>';
+                        return  '<div id="testLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
                     "orderable": false,
@@ -83,8 +84,9 @@
                         <table id="examsTable" class="table table-striped table-bordered display" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th><spring:message javaScriptEscape="true" code="course.course.label"/></th>
-                                <th><spring:message javaScriptEscape="true" code="course.actions.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col1Header.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.co21Header.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.co31Header.label"/></th>
                             </tr>
                             </thead>
                         </table>
