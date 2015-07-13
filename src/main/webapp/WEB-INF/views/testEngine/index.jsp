@@ -85,8 +85,8 @@
                             <thead>
                             <tr>
                                 <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col1Header.label"/></th>
-                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.co21Header.label"/></th>
-                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.co31Header.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col2Header.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col3Header.label"/></th>
                             </tr>
                             </thead>
                         </table>
