@@ -26,7 +26,7 @@
                 var settingsIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-cog fa-stack-1x"></i></span>';
 
                 var settingsLink = $('<a/>');
-                myLink = "<c:url value='/motorEval/" + data.id + "/setup'/>";
+                myLink = "<c:url value='/motorEval/configEdit/" + data.id + "'/>";
                 settingsLink.attr('href', myLink);
                 settingsLink.attr('title', 'Configurar parámetros de examen');
                 settingsLink.html(settingsIcon);
@@ -37,7 +37,7 @@
                 var questionsIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
 
                 var questionsLink = $('<a/>');
-                myLink = "<c:url value='/motorEval?examenId=" + data.id + "'/>";
+                myLink = "<c:url value='/motorEval/preguntasEdit/" + data.id + "'/>";
                 questionsLink.attr('href', myLink);
                 questionsLink.attr('title', 'Agregar preguntas al examen');
                 questionsLink.html(questionsIcon);
@@ -48,7 +48,7 @@
             "pagingType": "simple_numbers",
             "aoColumns": [
                 { "mData": "name", "width": "40%" },
-                { "mData": "settings", "width": "40%" },
+                { "mData": "settings", "width": "40%", "orderable": false },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="testLink_' + id + '"/>';
