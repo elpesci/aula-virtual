@@ -41,6 +41,12 @@ public class TestEngineContoller {
     
     private static final Logger LOG = LoggerFactory
             .getLogger(TestEngineContoller.class);
+
+    @Autowired
+    private CursoService cursoService;
+
+    @Autowired
+    private ConversionService conversionService;
     
     @RequestMapping(method = RequestMethod.GET)
     public String motorEval(HttpServletRequest aServletRequest) throws IOException
@@ -54,5 +60,40 @@ public class TestEngineContoller {
         {
             return "accessdenied";
         }
+    }
+    
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public
+    @ResponseBody
+    String testList(HttpServletRequest request) throws IOException
+    {
+        List<Curso> myCursos = new ArrayList<Curso>();
+        if (request.isUserInRole("SUPER_ADMIN") || request.isUserInRole("COORDINADOR"))
+        {
+            myCursos = cursoService.readCourses();
+        }
+        else
+        {
+            myCursos = cursoService.readCoursesEnable();
+        }
+
+        @SuppressWarnings("unchecked")
+        List<CourseModel> myCourseModels = (List<CourseModel>) conversionService.convert(
+                myCursos,
+                TypeDescriptor.collection(List.class,
+                        TypeDescriptor.valueOf(Curso.class)),
+                TypeDescriptor.collection(List.class,
+                        TypeDescriptor.valueOf(CourseModel.class)));
+
+        ObjectToJsonObject<CourseModel> myCursoToJsonObject = new ObjectToJsonObject<CourseModel>();
+
+        myCursoToJsonObject.setiTotalDisplayRecords(myCursos.size());
+        myCursoToJsonObject.setiTotalRecords(myCursos.size());
+        myCursoToJsonObject.setAaData(myCourseModels);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json2 = gson.toJson(myCursoToJsonObject);
+
+        return json2;
     }
 }
