@@ -13,3 +13,4 @@ dropDDL_ddlGeneration.jdbc
 /nb-configuration.xml
 *.gitignore~
 bin/
+*.xml~
