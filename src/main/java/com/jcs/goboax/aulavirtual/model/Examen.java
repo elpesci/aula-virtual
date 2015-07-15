@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,12 +23,16 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@NamedQuery(name = "Examen.findAll", query = "SELECT e FROM Examen e")
+@NamedQueries({
+    @NamedQuery(name = Examen.EXAMEN_ALL_QUERYNAME, query = "SELECT e FROM Examen e")
+})
 @Table(name="Examen")
 public class Examen
         implements Serializable
 {
     private static final long serialVersionUID = 1L;
+    
+    public static final String EXAMEN_ALL_QUERYNAME = "Examen.findAll";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
