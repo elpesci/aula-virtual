@@ -12,6 +12,12 @@ public interface ExamenService {
      * Retrieve all available Exams
      * @return 
      */
-    List<ExamModel> readExams();
+    List<Examen> readExams();
+    
+    /**
+     * Save an Exam
+     * @param anExamModel 
+     */
+    void createExam(ExamModel anExamModel);
     
 }

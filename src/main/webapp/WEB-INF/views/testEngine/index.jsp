@@ -47,7 +47,7 @@
             },
             "pagingType": "simple_numbers",
             "aoColumns": [
-                { "mData": "name", "width": "40%" },
+                { "mData": "courseName", "width": "40%" },
                 { "mData": "settings", "width": "40%", "orderable": false },
                 { "mData": "id",
                     "mRender": function (id) {
