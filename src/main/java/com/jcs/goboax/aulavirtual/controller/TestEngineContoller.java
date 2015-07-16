@@ -60,9 +60,6 @@ public class TestEngineContoller {
             exams = examenService.readExams();
         }
         
-        String info = String.format("Number of Exams: {0}", exams.size());
-        LOG.info(info);
-        
         @SuppressWarnings("unchecked")
         ObjectToJsonObject<ExamModel> myExamToJsonObject = new ObjectToJsonObject<ExamModel>();
 
