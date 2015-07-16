@@ -12,7 +12,7 @@
                 Etiqueta Alta Examen
             </c:if>
             <c:if test="${action eq 'edit'}">
-                <!-- <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseModel.name}"/> -->
+                <!-- <spring:message javaScriptEscape="true" code="course.edit.heading.label" arguments="${courseName}"/> -->
                 Etiqueta Actualizar examen de curso {0} 
             </c:if>
       </h3>
@@ -29,26 +29,26 @@
     <form:form method="POST" action="${target}" commandName="examModel" cssClass="form-horizontal">
         <form:hidden path="id"/>
             <div class="form-group">
-                <form:label path="courses" cssClass="col-sm-4 control-label">
+                <form:label path="courseName" cssClass="col-sm-4 control-label">
                     <spring:message javaScriptEscape="true" code="course.name.label"/>:
                 </form:label>
                 <div class="col-sm-8">
-                    <form:select path="courses" cssClass="form-control" cssErrorClass="fieldError" items="${courses}"/>
-                    <span class="error"><form:errors path="courses"/></span>
+                    <form:select path="courseName" cssClass="form-control" cssErrorClass="fieldError" items="${courses}"/>
+                    <span class="error"><form:errors path="courseName"/></span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="numOfQuestions" cssClass="col-sm-4 control-label">
                     <!-- <spring:message javaScriptEscape="true" code="course.goal.label"/>: -->
                     Número de preguntas de las que constará el examen:
-                </form:label>                    
+                </form:label>
                 <div class="col-sm-8">
                     <form:input type="number" path="numOfQuestions" cssClass="form-control" cssErrorClass="fieldError" />
                     <span class="error"><form:errors path="numOfQuestions"/></span>
                 </div>
             </div>
-                
+
             <div class="form-group">
                 <form:label path="numAnswersPerQuestion" cssClass="col-sm-4 control-label">
                     <!-- <spring:message javaScriptEscape="true" code="course.addressedTo.label"/>: -->
@@ -59,7 +59,7 @@
                     <span class="error"><form:errors path="numAnswersPerQuestion"/></span>
                 </div>
             </div>
-                
+
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
                     <c:if test="${action eq 'add'}">
