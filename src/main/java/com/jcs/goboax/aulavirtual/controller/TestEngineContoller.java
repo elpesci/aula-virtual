@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,11 +94,23 @@ public class TestEngineContoller {
     public String examenAdd(Map<String, Object> aModel)
     {
         List<Curso> myCursos = cursoService.readCourses();
+        Map<Integer, String> myCursosMap = new HashMap<Integer, String>();
+        
+        for(Curso aCurso : myCursos){
+            myCursosMap.put(aCurso.getCursoId(), aCurso.getNombre());
+        }
+        
         ExamModel myExamModel = new ExamModel();
-        aModel.put("courses", myCursos);
+        aModel.put("courses", myCursosMap);
         aModel.put("examModel", myExamModel);
         aModel.put("target", NavigationTargets.EXAM_ADD);
         aModel.put("action", "add");
         return "testEngine/add";
+    }
+
+    @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
+    public String cancelExamenAdd()
+    {
+        return "redirect:/motorEval";
     }
 }

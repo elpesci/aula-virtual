@@ -14,6 +14,7 @@ public class ExamenToExamModelConverter
         
         ExamModel myExamModel = new ExamModel();
         myExamModel.setId(aExamen.getExamenId());
+        myExamModel.setCourseId(aExamen.getCurso().getCursoId());
         myExamModel.setCourseName(aExamen.getCurso().getNombre());
         myExamModel.setNumOfQuestions(aExamen.getNumPreguntas());
         myExamModel.setNumAnswersPerQuestion(aExamen.getNumRespuestasPregunta());
