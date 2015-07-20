@@ -59,6 +59,8 @@ public class Modulo implements Serializable
     private String objetivoGeneral;
 
     private String temario;
+    
+    private String tareas;
 
     private boolean habilitado;
 
@@ -209,6 +211,14 @@ public class Modulo implements Serializable
     public void setCurso(Curso curso)
     {
         this.curso = curso;
+    }
+
+    public String getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(String tareas) {
+        this.tareas = tareas;
     }
 
 }

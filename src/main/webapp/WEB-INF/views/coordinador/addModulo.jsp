@@ -74,8 +74,19 @@
                 </form:label>
                 <div class="col-sm-8">
                     <form:textarea id="syllabusText" path="sylabus" cssClass="form-control" cssErrorClass="form-control fieldError" cssStyle="display: none;"/>
-                    <div id="rte"></div>
+                    <div id="rte" class="richText"></div>
                     <span class="error"><form:errors path="sylabus"/></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <form:label path="tasks" cssClass="col-sm-4 control-label">
+                    <spring:message javaScriptEscape="true" code="module.tasks.label"/>:
+                </form:label>
+                <div class="col-sm-8">
+                    <form:textarea id="tasksText" path="tasks" cssClass="form-control" cssErrorClass="form-control fieldError" cssStyle="display: none;"/>
+                    <div id="rteTasks" class="richText"></div>
+                    <span class="error"><form:errors path="tasks"/></span>
                 </div>
             </div>
 
@@ -109,13 +120,19 @@
 <script type="text/javascript">
     $(document).ready( function() {
         $("#rte").Editor();
+        $("#rteTasks").Editor();
 
-        $("#contentarea").html($("#syllabusText").text());
+        var syllabusRTElement = $(".Editor-editor")[0];
+        var tasksRTElement = $(".Editor-editor")[1];
+        
+        $(syllabusRTElement).html($("#syllabusText").text());
+        $(tasksRTElement).html($("#tasksText").text());
         
         $(".btn-primary").click(function(event) {
             //event.preventDefault();
             
-            $("#syllabusText").text($("#contentarea").html());
+            $("#syllabusText").text($(syllabusRTElement).html());
+            $("#tasksText").text($(tasksRTElement).html());
 
             //$("#moduleModelForm").submit();
         });
