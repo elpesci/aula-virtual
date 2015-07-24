@@ -11,6 +11,7 @@ import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ModuleModelForm;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
+import com.jcs.goboax.aulavirtual.viewmodel.SlimCatalogModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -191,5 +193,33 @@ public class ModuleController
         flashMessage.success("module.disable.success");
 
         return "redirect:/modulos?cursoId=" + myModulo.getCurso().getCursoId();
+    }
+    
+    @RequestMapping(value = "/course/{cursoId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public @ResponseBody String getModulesByCourseId(HttpServletRequest request,
+                       @PathVariable("cursoId") Integer aCourseId) throws IOException 
+    {
+        List<Modulo> myModulos = new ArrayList<Modulo>();
+        // Get only active modules
+        myModulos = moduleService.readModulesByCourse(aCourseId, Boolean.TRUE);
+        
+        List<SlimCatalogModel> slimModulesCatalog = new ArrayList<SlimCatalogModel>();
+        
+        for(Modulo aModulo : myModulos){
+            SlimCatalogModel myScm = new SlimCatalogModel();
+            myScm.setId(aModulo.getModuloId());
+            myScm.setDescription(aModulo.getNombre());
+            
+            slimModulesCatalog.add(myScm);
+        }
+        
+        Map<String, List<SlimCatalogModel>> modulesCatalog = new HashMap<String, List<SlimCatalogModel>>();
+        
+        modulesCatalog.put("modulos", slimModulesCatalog);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json2 = gson.toJson(modulesCatalog);
+
+        return json2;
     }
 }

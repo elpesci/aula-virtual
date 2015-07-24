@@ -3,6 +3,7 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 public class ExamModel {
     private Integer id;
     private Integer courseId;
+    private Integer moduleId;
     private String courseName;
     private short numOfQuestions;
     private short numAnswersPerQuestion;
@@ -75,6 +76,20 @@ public class ExamModel {
      */
     public void setCourseId(Integer courseId) {
         this.courseId = courseId;
+    }
+
+    /**
+     * @return the moduleId
+     */
+    public Integer getModuleId() {
+        return moduleId;
+    }
+
+    /**
+     * @param moduleId the moduleId to set
+     */
+    public void setModuleId(Integer moduleId) {
+        this.moduleId = moduleId;
     }
     
     

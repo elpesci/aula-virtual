@@ -25,6 +25,7 @@
             <spring:message javaScriptEscape="true" code="testEngine.settings.info1.update.label" arguments="${courseName}"/>
         </c:if>
         <ul>
+            <li><spring:message javaScriptEscape="true" code="testEngine.settings.info.li0.label" /></li>
             <li><spring:message javaScriptEscape="true" code="testEngine.settings.info.li1.label" /></li>
             <li><spring:message javaScriptEscape="true" code="testEngine.settings.info.li2.label" /></li>
             <li><spring:message javaScriptEscape="true" code="testEngine.settings.info.li3.label" /></li>
@@ -49,6 +50,13 @@
                             <form:select path="courseId" cssClass="form-control" cssErrorClass="fieldError" items="${courses}" />
                             <span class="error"><form:errors path="courseName"/></span>
                         </div>
+                    </div>
+                        
+                    <div class="form-group">
+                        <form:label path="moduleId" cssClass="col-sm-4 control-label">
+                            <spring:message javaScriptEscape="true" code="testEngine.settings.nameOfModule.label"/>:
+                        </form:label>
+                        <div id="moduleDdl" class="col-sm-8"></div>
                     </div>
                         
                     <div class="form-group">
@@ -100,7 +108,14 @@
   </div>
 </div>
     
+    <select id="moduleId" name="moduleId" class="form-control">
+        <option value=""></option>
+    </select>
+    
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/jsrender.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery.observable.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery.views.min.js"/>"></script>
     
     <script id="koMVVM" type="text/javascript">
         function Respuesta() {
@@ -119,8 +134,44 @@
         }
     </script>
     
+    <script id="modulesDdlTmpl" type="text/x-jsrender">
+        <select id='moduleId' name='moduleId' class="form-control">
+            {{for modulos}}
+            <option value='{{:id}}'>{{:description}}</option>
+            {{/for}}
+        </select>
+    </script>
+    
+    <script id="viewFunctions" type="text/javascript">
+        function populateModules(courseId) {
+            // TODO: $.ajax() call to /modulos//course/{cursoId}
+            // Render the <select> using modulesDdlTmpl
+            var actionUrl = '../modulos/course/' + courseId;
+            
+            $.ajax({
+                url : actionUrl,
+                method: 'GET'
+            })
+            .done(function (data, textStatus, jqXHR) {
+                var markUp = $.render.modulesSelector(data);
+                $("#moduleDdl").html(markUp);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {})
+            .always(function () {});
+        }
+    </script>
+    
     <script type="text/javascript">
         $(document).ready(function () {
+            // Registering jsViews template
+            $.templates("modulesSelector", "#modulesDdlTmpl");
+        
+            var cursoId = $("#courseId").val();
+            populateModules(cursoId);
             
+            $("#cursoId").on("change", function (event, data) {
+                var cursoId = $(this).val();
+                populateModules(cursoId);
+            });
         });
     </script>

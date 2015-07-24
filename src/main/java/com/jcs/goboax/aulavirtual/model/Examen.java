@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
@@ -52,10 +52,17 @@ public class Examen
 
     private short numRespuestasPregunta;
 
+    /*
     // bi-directional many-to-one association to Curso
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cursoId")
     private Curso curso;
+    */
+    
+    // bi-directional one-to-one association to Modulo
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "moduloId")
+    private Modulo modulo;
 
     // bi-directional many-to-one association to Pregunta
     @OneToMany(mappedBy = "examen")
@@ -135,6 +142,7 @@ public class Examen
         this.numRespuestasPregunta = numRespuestasPregunta;
     }
 
+    /*
     public Curso getCurso()
     {
         return this.curso;
@@ -144,6 +152,7 @@ public class Examen
     {
         this.curso = curso;
     }
+    */
 
     public List<Pregunta> getPreguntas()
     {
@@ -169,6 +178,14 @@ public class Examen
         pregunta.setExamen(null);
 
         return pregunta;
+    }
+
+    public Modulo getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -72,6 +73,10 @@ public class Modulo implements Serializable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cursoId")
     private Curso curso;
+    
+    //bi-directional one-to-one association to Examen
+    @OneToOne(mappedBy = "modulo")
+    private Examen examen;
 
     public Modulo()
     {
@@ -221,4 +226,27 @@ public class Modulo implements Serializable
         this.tareas = tareas;
     }
 
+    public Examen getExamen() {
+        return examen;
+    }
+
+    public void setExamen(Examen examen) {
+        this.examen = examen;
+    }
+    
+    public Examen addExamen(Examen anExamen)
+    {
+        anExamen.setModulo(this);
+        setExamen(anExamen);
+
+        return anExamen;
+    }
+
+    public Examen removeExamen(Examen anExamen)
+    {
+        anExamen.setModulo(null);
+        setExamen(null);
+
+        return anExamen;
+    }
 }
