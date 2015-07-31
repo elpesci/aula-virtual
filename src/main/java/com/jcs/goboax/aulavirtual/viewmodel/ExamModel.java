@@ -2,7 +2,6 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class ExamModel {
     private Integer id;
@@ -15,97 +14,63 @@ public class ExamModel {
     
     private String courseName;
     
-    @NotEmpty
-    //@Min(1)
+    @Min(1)
+    @NotNull
     private int numOfQuestions;
     
-    @NotEmpty
-    //@Min(1)
+    @NotNull
+    @Min(1)
     private int numAnswersPerQuestion;
 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the courseName
-     */
-    public String getCourseName() {
-        return courseName;
-    }
+	public Integer getCourseId() {
+		return courseId;
+	}
 
-    /**
-     * @param courseName the courseName to set
-     */
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
+	public void setCourseId(Integer courseId) {
+		this.courseId = courseId;
+	}
 
-    /**
-     * @return the numOfQuestions
-     */
-    public int getNumOfQuestions() {
-        return numOfQuestions;
-    }
+	public Integer getModuleId() {
+		return moduleId;
+	}
 
-    /**
-     * @param numOfQuestions the numOfQuestions to set
-     */
-    public void setNumOfQuestions(int numOfQuestions) {
-        this.numOfQuestions = numOfQuestions;
-    }
+	public void setModuleId(Integer moduleId) {
+		this.moduleId = moduleId;
+	}
 
-    /**
-     * @return the numAnswersPerQuestion
-     */
-    public int getNumAnswersPerQuestion() {
-        return numAnswersPerQuestion;
-    }
+	public String getCourseName() {
+		return courseName;
+	}
 
-    /**
-     * @param numAnswersPerQuestion the numAnswersPerQuestion to set
-     */
-    public void setNumAnswersPerQuestion(int numAnswersPerQuestion) {
-        this.numAnswersPerQuestion = numAnswersPerQuestion;
-    }
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 
-    /**
-     * @return the courseId
-     */
-    public Integer getCourseId() {
-        return courseId;
-    }
+	public int getNumOfQuestions() {
+		return numOfQuestions;
+	}
 
-    /**
-     * @param courseId the courseId to set
-     */
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
+	public void setNumOfQuestions(int numOfQuestions) {
+		this.numOfQuestions = numOfQuestions;
+	}
 
-    /**
-     * @return the moduleId
-     */
-    public Integer getModuleId() {
-        return moduleId;
-    }
+	public int getNumAnswersPerQuestion() {
+		return numAnswersPerQuestion;
+	}
 
-    /**
-     * @param moduleId the moduleId to set
-     */
-    public void setModuleId(Integer moduleId) {
-        this.moduleId = moduleId;
-    }
+	public void setNumAnswersPerQuestion(int numAnswersPerQuestion) {
+		this.numAnswersPerQuestion = numAnswersPerQuestion;
+	}
+
+
     
     
 }
