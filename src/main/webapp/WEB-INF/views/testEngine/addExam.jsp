@@ -78,21 +78,12 @@
                               <span class="error"><form:errors path="numAnswersPerQuestion"/></span>
                           </div>
                     </div>
-                          
-                          <div class="form-group">
-                              <label class="col-sm-4 control-label">
-                                  <spring:message javaScriptEscape="true" code="testEngine.settings.questions.label"/>:
-                              </label>
-                              <div class="col-sm-8">
-                                    Preguntas Placeholder
-                                </div>
-                          </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             <c:if test="${action eq 'add'}">
                                 <input type="submit" name="save" class="btn btn-primary"
-                                       value="<spring:message javaScriptEscape="true" code="save"/>"/>
+                                       value="<spring:message javaScriptEscape="true" code="testEngine.question.saveAndContinue.label"/>"/>
                             </c:if>
                             <c:if test="${action eq 'edit'}">
                                 <input type="submit" name="save" class="btn btn-primary"
@@ -108,31 +99,9 @@
   </div>
 </div>
     
-    <select id="moduleId" name="moduleId" class="form-control">
-        <option value=""></option>
-    </select>
-    
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/jsrender.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/jquery.observable.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/jquery.views.min.js"/>"></script>
-    
-    <script id="koMVVM" type="text/javascript">
-        function Respuesta() {
-            var textoRespuesta = ko.observable("");
-            var esRespuestaCorrecta = ko.observable(false);
-        }
-        
-        function Pregunta() {
-            var textoPregunta = ko.observable("");
-            var respuestas = ko.observableArray([]);
-        }
-        
-        function Examen() {
-            var cursoId = "";
-            var preguntas = ko.observableArray([]);
-        }
-    </script>
     
     <script id="modulesDdlTmpl" type="text/x-jsrender">
         <select id='moduleId' name='moduleId' class="form-control">
@@ -144,8 +113,6 @@
     
     <script id="viewFunctions" type="text/javascript">
         function populateModules(courseId) {
-            // TODO: $.ajax() call to /modulos//course/{cursoId}
-            // Render the <select> using modulesDdlTmpl
             var actionUrl = '../modulos/course/' + courseId;
             
             $.ajax({

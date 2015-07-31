@@ -1,12 +1,27 @@
 package com.jcs.goboax.aulavirtual.viewmodel;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class ExamModel {
     private Integer id;
+    
+    @NotNull
     private Integer courseId;
+    
+    @NotNull
     private Integer moduleId;
+    
     private String courseName;
-    private short numOfQuestions;
-    private short numAnswersPerQuestion;
+    
+    @NotEmpty
+    //@Min(1)
+    private int numOfQuestions;
+    
+    @NotEmpty
+    //@Min(1)
+    private int numAnswersPerQuestion;
 
     /**
      * @return the id
@@ -39,28 +54,28 @@ public class ExamModel {
     /**
      * @return the numOfQuestions
      */
-    public short getNumOfQuestions() {
+    public int getNumOfQuestions() {
         return numOfQuestions;
     }
 
     /**
      * @param numOfQuestions the numOfQuestions to set
      */
-    public void setNumOfQuestions(short numOfQuestions) {
+    public void setNumOfQuestions(int numOfQuestions) {
         this.numOfQuestions = numOfQuestions;
     }
 
     /**
      * @return the numAnswersPerQuestion
      */
-    public short getNumAnswersPerQuestion() {
+    public int getNumAnswersPerQuestion() {
         return numAnswersPerQuestion;
     }
 
     /**
      * @param numAnswersPerQuestion the numAnswersPerQuestion to set
      */
-    public void setNumAnswersPerQuestion(short numAnswersPerQuestion) {
+    public void setNumAnswersPerQuestion(int numAnswersPerQuestion) {
         this.numAnswersPerQuestion = numAnswersPerQuestion;
     }
 

@@ -48,9 +48,9 @@ public class Examen
 
     private int modificadoPor;
 
-    private short numPreguntas;
+    private int numPreguntas;
 
-    private short numRespuestasPregunta;
+    private int numRespuestasPregunta;
 
     /*
     // bi-directional many-to-one association to Curso
@@ -122,22 +122,22 @@ public class Examen
         this.modificadoPor = modificadoPor;
     }
 
-    public short getNumPreguntas()
+    public int getNumPreguntas()
     {
         return this.numPreguntas;
     }
 
-    public void setNumPreguntas(short numPreguntas)
+    public void setNumPreguntas(int numPreguntas)
     {
         this.numPreguntas = numPreguntas;
     }
 
-    public short getNumRespuestasPregunta()
+    public int getNumRespuestasPregunta()
     {
         return this.numRespuestasPregunta;
     }
 
-    public void setNumRespuestasPregunta(short numRespuestasPregunta)
+    public void setNumRespuestasPregunta(int numRespuestasPregunta)
     {
         this.numRespuestasPregunta = numRespuestasPregunta;
     }

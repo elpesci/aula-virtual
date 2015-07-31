@@ -133,3 +133,7 @@ ul.pagination > .active > a, .pagination > .active > span, .pagination > .active
     margin-bottom: 5px;
     padding-left: 15px;
 }
+
+textarea.exam-qa {
+    resize: vertical;
+}

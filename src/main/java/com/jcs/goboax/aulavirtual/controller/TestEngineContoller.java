@@ -6,6 +6,7 @@ import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.Examen;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.ExamenService;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -44,6 +47,9 @@ public class TestEngineContoller {
 
     @Autowired
     private ConversionService conversionService;
+
+    @Autowired
+    private FlashMessage flashMessage;
     
     @RequestMapping(method = RequestMethod.GET)
     public String motorEval(HttpServletRequest aServletRequest) throws IOException
@@ -106,6 +112,26 @@ public class TestEngineContoller {
         aModel.put("target", NavigationTargets.EXAM_ADD);
         aModel.put("action", "add");
         return "testEngine/add";
+    }
+
+    @RequestMapping(params = "save", value = "/add", method = RequestMethod.POST)
+    public String examenAddDo(@Validated ExamModel examModel,
+                              BindingResult result, Map<String, Object> aModel)
+    {
+        
+        LOG.debug("Adding Examen ...");
+        if (result.hasErrors())
+        {
+            aModel.put("target", NavigationTargets.EXAM_ADD);
+            aModel.put("action", "add");
+            return "testEngine/add";
+        }
+        
+        examenService.createExam(examModel);
+        flashMessage.success("testEngine.addExam.success.label");
+        aModel.put("examModel", examModel);
+        return "testEngine/addQuestionsAnswers";
+        
     }
 
     @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)
