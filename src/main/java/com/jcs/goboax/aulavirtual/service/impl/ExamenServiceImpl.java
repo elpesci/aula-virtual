@@ -1,6 +1,7 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.ExamenDao;
+import com.jcs.goboax.aulavirtual.dao.api.ModuloDao;
 
 import com.jcs.goboax.aulavirtual.model.Examen;
 
@@ -22,6 +23,9 @@ public class ExamenServiceImpl
 {    
     @Autowired
     private ExamenDao examenDao;
+    
+    @Autowired
+    private ModuloDao moduloDao;
 
     @Autowired
     private ConversionService conversionService;
@@ -42,6 +46,7 @@ public class ExamenServiceImpl
     public void createExam(ExamModel anExamModel) {
         
         Examen myExamen = conversionService.convert(anExamModel, Examen.class);
+        myExamen.setModulo(moduloDao.findByKey(anExamModel.getModuleId()));
         myExamen.setFechaCreacion(new Date());
         myExamen.setCreadoPor(authenticationService.getUsuario().getUsuarioId());
         
