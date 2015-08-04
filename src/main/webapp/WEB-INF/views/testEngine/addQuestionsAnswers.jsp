@@ -13,5 +13,15 @@
     </div>
     <div class="panel-body">
         Preguntas y respuestas Placeholder....
+        <div class="row">
+            <form:form method="POST" commandName="exam" action="${target}" class="form-horizontal">
+                <form:hidden path="exam.examenId" />
+                <form:hidden path="exam.modulo.moduloId" />
+                <form:hidden path="exam.numPreguntas" />
+                <form:hidden path="exam.numRespuestasPregunta" />
+                    
+            </form:form>
+        </div>
     </div>
 </div>
+

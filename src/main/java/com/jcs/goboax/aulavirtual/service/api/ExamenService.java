@@ -20,4 +20,10 @@ public interface ExamenService {
      */
     void createExam(ExamModel anExamModel);
     
+    /**
+     * Save an Exam
+     * @param anExamModel
+     * @return
+     */
+    Examen insertExam(ExamModel anExamModel);
 }

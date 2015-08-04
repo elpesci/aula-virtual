@@ -45,12 +45,27 @@ public class ExamenServiceImpl
     @Override
     public void createExam(ExamModel anExamModel) {
         
+        examenDao.persist(createForInsert(anExamModel));
+    }
+    
+    @Transactional
+    @Override
+    public Examen insertExam(ExamModel anExamModel) {
+        
+        Examen myExamen = createForInsert(anExamModel);
+        
+        examenDao.persist(myExamen);
+        
+        return myExamen;
+    }
+    
+    private Examen createForInsert(ExamModel anExamModel) {
+        
         Examen myExamen = conversionService.convert(anExamModel, Examen.class);
         myExamen.setModulo(moduloDao.findByKey(anExamModel.getModuleId()));
         myExamen.setFechaCreacion(new Date());
         myExamen.setCreadoPor(authenticationService.getUsuario().getUsuarioId());
         
-        examenDao.persist(myExamen);
+        return myExamen;
     }
-    
 }

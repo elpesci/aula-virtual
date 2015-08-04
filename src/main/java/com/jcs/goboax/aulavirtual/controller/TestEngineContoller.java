@@ -127,11 +127,14 @@ public class TestEngineContoller {
             return "testEngine/add";
         }
         
-        examenService.createExam(examModel);
-        flashMessage.success("testEngine.addExam.success.label");
-        aModel.put("examModel", examModel);
-        return "testEngine/addQuestionsAnswers";
+        Examen newExamen = examenService.insertExam(examModel);
         
+        flashMessage.success("testEngine.addExam.success.label");
+        aModel.put("target", NavigationTargets.EXAM_ADD_QA);
+        aModel.put("action", "add_qa");
+        aModel.put("exam", newExamen);
+        
+        return "testEngine/addQuestionsAnswers";
     }
 
     @RequestMapping(params = "cancel", value = "/add", method = RequestMethod.POST)

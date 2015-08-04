@@ -13,5 +13,7 @@ public abstract class NavigationTargets
     public static final String MODULE_EDIT = "/modulos/edit";
     
     public static final String EXAM_ADD = "/motorEval/add";
+    
+    public static final String EXAM_ADD_QA = "/motorEval/addQA";
 
 }
