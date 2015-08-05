@@ -196,12 +196,12 @@ public class ModuleController
     }
     
     @RequestMapping(value = "/course/{cursoId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
-    public @ResponseBody String getModulesByCourseId(HttpServletRequest request,
+    public @ResponseBody String getModulesByCourseIdNoExam(HttpServletRequest request,
                        @PathVariable("cursoId") Integer aCourseId) throws IOException 
     {
         List<Modulo> myModulos = new ArrayList<Modulo>();
-        // Get only active modules
-        myModulos = moduleService.readModulesByCourse(aCourseId, Boolean.TRUE);
+        // Get only modules that don't have exam
+        myModulos = moduleService.readModulesByCourseNoExam(aCourseId);
         
         List<SlimCatalogModel> slimModulesCatalog = new ArrayList<SlimCatalogModel>();
         

@@ -8,18 +8,31 @@
     <div class="panel-heading">
         <h3>
             <i class="fa fa-cogs fa-lg"></i>
-              Agregar Preguntas y Respuestas
+            <spring:message javaScriptEscape="true" code="testEngine.addQuestionsAnswers.heading.label" />
         </h3>
     </div>
     <div class="panel-body">
-        Preguntas y respuestas Placeholder....
+        <div class="row">
+            <div class="col-sm-11 well well-sm centre">
+                <span class="row">
+                    <spring:message javaScriptEscape="true" code="testEngine.addQuestionsAnswers.info.label" />:
+                </span>
+                <span class="row">
+                    <strong><spring:message javaScriptEscape="true" code="course.course.label" />: </strong>
+                    ${exam.modulo.curso.nombre}
+                </span>
+                <span class="row">
+                    <strong><spring:message javaScriptEscape="true" code="module.name.label" />: </strong>
+                    ${exam.modulo.nombre}
+                </span>
+            </div>
+        </div>
         <div class="row">
             <form:form method="POST" commandName="exam" action="${target}" class="form-horizontal">
-                <form:hidden path="exam.examenId" />
-                <form:hidden path="exam.modulo.moduloId" />
-                <form:hidden path="exam.numPreguntas" />
-                <form:hidden path="exam.numRespuestasPregunta" />
-                    
+                <form:hidden path="examenId" />
+                <form:hidden path="modulo.moduloId" />
+                <form:hidden path="numPreguntas" />
+                <form:hidden path="numRespuestasPregunta" />
             </form:form>
         </div>
     </div>

@@ -30,7 +30,12 @@ import java.util.List;
             query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER),
         @NamedQuery(name = Modulo.MODULE_ACTIVE_BY_COURSE,
             query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER
-                    + " AND m.habilitado = true")
+                    + " AND m.habilitado = true"),
+        @NamedQuery(name = Modulo.MODULE_BY_COURSE_WITHOUT_EXAM,
+            query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER
+                    + " AND m.moduloId NOT IN (SELECT e.modulo.moduloId FROM Examen e)"
+                    + " AND m.habilitado = true"
+                    + " ORDER BY m.nombre")
 })
 public class Modulo implements Serializable
 {
@@ -38,7 +43,10 @@ public class Modulo implements Serializable
     public final static String MODULE_BY_COURSE = "modulo.byCourse";
     public final static String MODULE_ACTIVE_BY_COURSE = "modulo.activeByCourse";
     public final static String MODULE_COURSE_PARAMETER = "course";
+    public final static String MODULE_BY_COURSE_WITHOUT_EXAM = "module.byCourseNoExam";
+    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int moduloId;

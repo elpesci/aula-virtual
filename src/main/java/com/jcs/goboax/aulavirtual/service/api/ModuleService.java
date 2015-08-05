@@ -19,5 +19,7 @@ public interface ModuleService
     ModuleModelForm updateModule(ModuleModelForm aModuleModelForm);
 
     void disableModule(Integer moduleId);
+    
+    List<Modulo> readModulesByCourseNoExam(Integer aCourseId);
 
 }
