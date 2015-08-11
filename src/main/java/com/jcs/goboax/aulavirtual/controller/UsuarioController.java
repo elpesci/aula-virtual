@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.Constants;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
 import com.jcs.goboax.aulavirtual.viewmodel.UsuarioModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +20,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class UsuarioController
 {
+    private static final Logger LOG = LoggerFactory
+            .getLogger(CursosController.class);
 
     @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
     private ConversionService conversionService;
+
+    @Autowired
+    private FlashMessage flashMessage;
 
     @RequestMapping("/usuario")
     public String listUsuarios()
@@ -58,5 +70,26 @@ public class UsuarioController
         String myJsonResponse = gson.toJson(myUsuarioToJsonObject);
 
         return myJsonResponse;
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String usuarioEdit(HttpServletRequest request,
+                            @PathVariable("id") Integer aUserId,
+                            Map<String, Object> aModel)
+    {
+        LOG.info("Resolved /usuario/edit/" + aUserId);
+        Usuario myUsuario = usuarioService.readById(aUserId);
+
+        if (myUsuario == null)
+        {
+            flashMessage.error("registration.user.not.exists");
+            return "redirect:/usuarios";
+        }
+        
+        aModel.put("user", myUsuario);
+        aModel.put(Constants.TARGET, NavigationTargets.USER_EDIT);
+        aModel.put(Constants.ACTION, Constants.EDIT);
+
+        return "usuario/edit";
     }
 }

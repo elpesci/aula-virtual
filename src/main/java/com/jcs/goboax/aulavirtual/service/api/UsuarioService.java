@@ -61,4 +61,8 @@ public interface UsuarioService
      * @return
      */
     List<Usuario> readUsuarios();
+    
+    Usuario readById(Integer aUserId);
+    
+    Usuario updateUser(Usuario aUsuario);
 }

@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@ include file="/WEB-INF/views/common/datatable_options.jsp" %>
 
@@ -21,12 +22,34 @@
             "bServerSide": false,
             "sort": "position",
             "sAjaxSource": "usuario/list",
+            "createdRow": function (row, data, index) {
+                <sec:authorize access="hasRole('SUPER_ADMIN')">
+                var editIcon = '<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x"></i></span>';
+
+                var editLink = $('<a/>');
+                myLink = "<c:url value='/usuario/edit/" + data.id + "'/>";
+                editLink.attr('href', myLink);
+                editLink.attr('title', 'Actualizar información del usuaio');
+                editLink.html(editIcon);
+
+                $(row).find('.acciones-control').append(editLink);
+                $(row).find('.acciones-control').append('&nbsp;&nbsp;');
+                </sec:authorize>
+            },
             "pagingType": "simple_numbers",
             "aoColumns": [
                 { "mData": "name" },
                 { "mData": "username" },
                 { "mData": "profile"},
-                { "mData": "status"}
+                { "mData": "status"},
+                { "mData": "id",
+                    "mRender": function (id) {
+                        return  '<div id="contentLink_' + id + '"/>';
+                    },
+                    "class": "acciones-control",
+                    "orderable": false,
+                    "width": "20%"
+                }
             ]
         });
 
@@ -55,6 +78,7 @@
                                 <th><spring:message javaScriptEscape="true" code="usuario.fullName.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="usuario.profile.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="usuario.status.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="label.actions"/></th>
                             </tr>
                             </thead>
                         </table>

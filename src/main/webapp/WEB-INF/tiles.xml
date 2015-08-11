@@ -98,6 +98,11 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/usuarios/usuarios.jsp"/>
     </definition>
 
+    <definition extends="base.definition" name="usuario/edit">
+        <put-attribute name="title" value="Aula Virtual - Actualizar información de usuario"/>
+        <put-attribute name="body" value="/WEB-INF/views/admin/usuarios/usuarioedit.jsp"/>
+    </definition>
+
     <definition extends="base.definition" name="accessdenied">
         <put-attribute name="title" value="Aula Virtual - Permiso Negado"/>
         <put-attribute name="body" value="/WEB-INF/views/accessdenied.jsp"/>

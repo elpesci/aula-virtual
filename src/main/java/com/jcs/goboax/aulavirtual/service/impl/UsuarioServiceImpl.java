@@ -184,4 +184,15 @@ public class UsuarioServiceImpl
     {
         return usuarioDao.findWithNamedQuery(Usuario.USUARIO_NOT_SUPERADMIN);
     }
+
+    @Override
+    public Usuario readById(Integer aUserId) {
+        return usuarioDao.findByKey(aUserId);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public Usuario updateUser(Usuario aUsuario) {
+        return usuarioDao.update(aUsuario);
+    }
 }
