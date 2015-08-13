@@ -20,10 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = UsuarioPerfil.USUARIOPERFIL_ALL, query = "SELECT u FROM UsuarioPerfil u"),
-    @NamedQuery(name = UsuarioPerfil.USUARIOPERFIL_PERFIL_BY_USUER, 
-            query = "SELECT p FROM UsuarioPerfil up JOIN up.perfil p WHERE up.usuario = : " + 
-                    UsuarioPerfil.USUARIOPERFIL_USER_PARAMETER)
+    @NamedQuery(name = UsuarioPerfil.USUARIOPERFIL_ALL, query = "SELECT u FROM UsuarioPerfil u")
 })
 @Table(name = "UsuarioPerfil")
 public class UsuarioPerfil
@@ -32,7 +29,6 @@ public class UsuarioPerfil
     public final static String USUARIOPERFIL_USER_PARAMETER = "user";
     
     public final static String USUARIOPERFIL_ALL = "UsuarioPerfil.findAll";
-    public final static String USUARIOPERFIL_PERFIL_BY_USUER = "UsuarioPerfil.PerfilByUser";
     
     private static final long serialVersionUID = 1L;
 
