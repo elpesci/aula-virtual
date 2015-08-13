@@ -7,62 +7,67 @@
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h1><spring:message javaScriptEscape="true" code="registration.admin.header"/></h1>
+        <h1><spring:message javaScriptEscape="true" code="usuario.update.header"/></h1>
     </div>
     <div class="panel panel-body">
         <p class="info">
-            <spring:message javaScriptEscape="true" code="registration.admin.info"/>
+            <spring:message javaScriptEscape="true" code="usuario.update.info"/>
         </p>
-        
-        <form:form method="POST" action="${target}" commandName="user" cssClass="form-horizontal">
-            <div class="form-group">
-                <form:label path="persona.nombre" cssClass="col-sm-4 control-label">
-                    <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.name.label"/>
-                </form:label>
-                <div class="col-sm-8">
-                    <form:input path="persona.nombre" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="persona.nombre"/></span>
-                </div>
-            </div>
 
+        <form:form method="POST" action="/usuario/edit" commandName="usuarioUpdateModel" cssClass="form-horizontal">
             <div class="form-group">
-                <form:label path="persona.apellidoPaterno" cssClass="col-sm-4 control-label">
-                    <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.lastName.label"/>
-                </form:label>
-                <div class="col-sm-8">
-                    <form:input path="persona.apellidoPaterno" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="persona.apellidoPaterno"/></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <form:label path="persona.apellidoMaterno" cssClass="col-sm-4 control-label">
-                    <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.secondLastName.label"/>
-                </form:label>
-                <div class="col-sm-8">
-                    <form:input path="persona.apellidoMaterno" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="persona.apellidoMaterno"/></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <form:label path="persona.correoElectronico" cssClass="col-sm-4 control-label">
+                <form:label path="email" cssClass="col-sm-4 control-label">
                     <spring:message htmlEscape="true" javaScriptEscape="true" code="label.email"/>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="persona.correoElectronico" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="persona.correoElectronico"/></span>
+                    <form:label path="email" cssClass="form-control-static">
+                        <c:out value="${usuarioUpdateModel.email}" />
+                    </form:label>
+                    <form:hidden readonly="true" path="email" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="email"/></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <form:label path="name" cssClass="col-sm-4 control-label">
+                    <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.name.label"/>
+                </form:label>
+                <div class="col-sm-8">
+                    <form:input path="name" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="name"/></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <form:label path="lastName" cssClass="col-sm-4 control-label">
+                    <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.lastName.label"/>
+                </form:label>
+                <div class="col-sm-8">
+                    <form:input path="lastName" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="lastName"/></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <form:label path="secondLastName" cssClass="col-sm-4 control-label">
+                    <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.secondLastName.label"/>
+                </form:label>
+                <div class="col-sm-8">
+                    <form:input path="secondLastName" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="secondLastName"/></span>
                 </div>
             </div>
 
             <div class="form-group">
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
-                    <form:label path="status" cssClass="col-sm-4 control-label">
+                    <form:label path="profile" cssClass="col-sm-4 control-label">
                         <spring:message javaScriptEscape="true" code="label.profile"/>:
                         <span class="error"><form:errors path="profile"/></span>
                     </form:label>
                     <div class="col-sm-8">
-                        <form:select path="status" cssClass="form-control" items="${profiles}"/>
+                        <form:select path="profile" cssClass="form-control">
+                            <form:options items="${profiles}"/>
+                        </form:select>
                     </div>
                 </sec:authorize>
             </div>
@@ -72,8 +77,9 @@
                     <input type="submit" name="save" class="btn btn-primary"
                            value="<spring:message htmlEscape="true" javaScriptEscape="true" code="save"/>"/>
                     <sec:authorize access="hasRole('SUPER_ADMIN')">
-                        <input type=button class="btn btn-danger" value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"
-                         onCLick="history.back()">
+                        <input type=button class="btn btn-danger"
+                               value="<spring:message htmlEscape="true" javaScriptEscape="true" code="cancel"/>"
+                               onCLick="history.back()">
                     </sec:authorize>
                     <sec:authorize access="!hasRole('SUPER_ADMIN')">
                         <input type="submit" name="cancel" class="btn btn-danger"
@@ -82,6 +88,7 @@
                 </div>
             </div>
         </form:form>
-        
+
+
     </div>
 </div>

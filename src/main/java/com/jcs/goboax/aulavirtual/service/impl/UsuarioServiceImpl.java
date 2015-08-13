@@ -1,22 +1,28 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
 import com.jcs.goboax.aulavirtual.dao.api.PerfilDao;
+import com.jcs.goboax.aulavirtual.dao.api.PersonaDao;
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioDao;
 import com.jcs.goboax.aulavirtual.dao.api.UsuarioPerfilDao;
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualPersistenceException;
+import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
 import com.jcs.goboax.aulavirtual.model.Perfil;
+import com.jcs.goboax.aulavirtual.model.Persona;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
 import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
+import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.Utils;
+import com.jcs.goboax.aulavirtual.viewmodel.UsuarioUpdateModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,6 +30,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 @Service("usuarioService")
@@ -31,6 +38,9 @@ public class UsuarioServiceImpl
         implements UsuarioService
 {
     private static final Logger LOG = LoggerFactory.getLogger(UsuarioServiceImpl.class);
+
+    @Autowired
+    private PersonaDao personaDao;
 
     @Autowired
     private UsuarioDao usuarioDao;
@@ -194,5 +204,49 @@ public class UsuarioServiceImpl
     @Override
     public Usuario updateUser(Usuario aUsuario) {
         return usuarioDao.update(aUsuario);
+    }
+
+    @Transactional
+    @Override
+    public void updateRegistration(UsuarioUpdateModel aRegistration, ConversionService conversionService)
+    {
+        try
+        {
+            Usuario myUsuario = readByEmail(aRegistration.getEmail());
+            Persona myPersona =myUsuario.getPersona();
+            myPersona.setApellidoPaterno(aRegistration.getLastName());
+            myPersona.setApellidoMaterno(aRegistration.getSecondLastName());
+            myPersona.setNombre(aRegistration.getName());
+            myPersona.setFechaModificacion(new Date());
+            LOG.debug("Convert to Usuario {}", aRegistration.getEmail());
+            Perfil myPerfil = conversionService.convert(aRegistration, Perfil.class);
+            LOG.debug("Profile to assign {}", myPerfil.getCodigo());
+
+            LOG.debug("Update Persona {}", myPersona.getCorreoElectronico());
+            personaDao.update(myPersona);
+            myUsuario.setPersona(myPersona);
+            LOG.debug("Updating Usuario [{}]",
+                    myUsuario.getUsername());
+
+            updateUser(myUsuario);
+
+            for (UsuarioPerfil myUsuarioPerfil : myUsuario.getUsuarioPerfils())
+            {
+                usuarioPerfilDao.remove(myUsuarioPerfil.getId());
+            }
+
+            UsuarioPerfil myUsuarioPerfil = new UsuarioPerfil();
+            myUsuarioPerfil.setCreadoPor(Constants.SUPER_USER_ID);
+            myUsuarioPerfil.setFechaCreacion(new Date());
+            myUsuarioPerfil.setUsuario(myUsuario);
+            myUsuarioPerfil.setPerfil(myPerfil);
+
+            createUserProfile(myUsuarioPerfil);
+        }
+        catch (RuntimeException e)
+        {
+            LOG.error("The system can not save the Registration request", e);
+            throw new AulaVirtualRegistrationException("The system can not save the Registration request", e);
+        }
     }
 }
