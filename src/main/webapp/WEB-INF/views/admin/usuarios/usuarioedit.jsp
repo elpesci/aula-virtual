@@ -13,76 +13,56 @@
         <p class="info">
             <spring:message javaScriptEscape="true" code="registration.admin.info"/>
         </p>
-        <!--
+        
         <form:form method="POST" action="${target}" commandName="user" cssClass="form-horizontal">
             <div class="form-group">
-                <form:label path="persona.name" cssClass="col-sm-4 control-label">
+                <form:label path="persona.nombre" cssClass="col-sm-4 control-label">
                     <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.name.label"/>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="persona.name" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="persona.name"/></span>
+                    <form:input path="persona.nombre" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="persona.nombre"/></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <form:label path="lastName" cssClass="col-sm-4 control-label">
+                <form:label path="persona.apellidoPaterno" cssClass="col-sm-4 control-label">
                     <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.lastName.label"/>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="lastName" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="lastName"/></span>
+                    <form:input path="persona.apellidoPaterno" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="persona.apellidoPaterno"/></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <form:label path="secondLastName" cssClass="col-sm-4 control-label">
+                <form:label path="persona.apellidoMaterno" cssClass="col-sm-4 control-label">
                     <spring:message htmlEscape="true" javaScriptEscape="true" code="registration.secondLastName.label"/>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="secondLastName" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="secondLastName"/></span>
+                    <form:input path="persona.apellidoMaterno" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="persona.apellidoMaterno"/></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <form:label path="email" cssClass="col-sm-4 control-label">
+                <form:label path="persona.correoElectronico" cssClass="col-sm-4 control-label">
                     <spring:message htmlEscape="true" javaScriptEscape="true" code="label.email"/>
                 </form:label>
                 <div class="col-sm-8">
-                    <form:input path="email" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="email"/></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <form:label path="password" cssClass="col-sm-4 control-label">
-                    <spring:message htmlEscape="true" javaScriptEscape="true" code="label.password"/>
-                </form:label>
-                <div class="col-sm-8">
-                    <form:password path="password" autocomplete="off" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="password"/></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <form:label path="confirmPassword" cssClass="col-sm-4 control-label">
-                    <spring:message htmlEscape="true" javaScriptEscape="true" code="label.confirmPassword"/>
-                </form:label>
-                <div class="col-sm-8">
-                    <form:password path="confirmPassword" autocomplete="off" cssClass="form-control" cssErrorClass="fieldError"/>
-                    <span class="error"><form:errors path="confirmPassword"/></span>
+                    <form:input path="persona.correoElectronico" cssClass="form-control" cssErrorClass="fieldError"/>
+                    <span class="error"><form:errors path="persona.correoElectronico"/></span>
                 </div>
             </div>
 
             <div class="form-group">
                 <sec:authorize access="hasRole('SUPER_ADMIN')">
-                    <form:label path="profile" cssClass="col-sm-4 control-label">
+                    <form:label path="status" cssClass="col-sm-4 control-label">
                         <spring:message javaScriptEscape="true" code="label.profile"/>:
                         <span class="error"><form:errors path="profile"/></span>
                     </form:label>
                     <div class="col-sm-8">
-                        <form:select path="profile" cssClass="form-control" items="${profiles}"/>
+                        <form:select path="status" cssClass="form-control" items="${profiles}"/>
                     </div>
                 </sec:authorize>
             </div>
@@ -102,6 +82,6 @@
                 </div>
             </div>
         </form:form>
-        -->
+        
     </div>
 </div>

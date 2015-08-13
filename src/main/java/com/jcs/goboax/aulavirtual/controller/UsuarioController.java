@@ -2,7 +2,9 @@ package com.jcs.goboax.aulavirtual.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jcs.goboax.aulavirtual.model.Perfil;
 import com.jcs.goboax.aulavirtual.model.Usuario;
+import com.jcs.goboax.aulavirtual.service.api.RegistrationService;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
@@ -38,7 +40,12 @@ public class UsuarioController
     private ConversionService conversionService;
 
     @Autowired
+    private RegistrationService registrationService;
+
+    @Autowired
     private FlashMessage flashMessage;
+
+    private Map<String, String> profiles;
 
     @RequestMapping("/usuario")
     public String listUsuarios()
@@ -72,12 +79,16 @@ public class UsuarioController
         return myJsonResponse;
     }
     
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "usuario/edit/{id}", method = RequestMethod.GET)
     public String usuarioEdit(HttpServletRequest request,
                             @PathVariable("id") Integer aUserId,
                             Map<String, Object> aModel)
     {
         LOG.info("Resolved /usuario/edit/" + aUserId);
+        
+        List<Perfil> myProfiles = usuarioService.readPerfiles();
+        profiles = registrationService.convertProfilesToMap(myProfiles);
+        
         Usuario myUsuario = usuarioService.readById(aUserId);
 
         if (myUsuario == null)
@@ -87,6 +98,7 @@ public class UsuarioController
         }
         
         aModel.put("user", myUsuario);
+        aModel.put("profiles", profiles);
         aModel.put(Constants.TARGET, NavigationTargets.USER_EDIT);
         aModel.put(Constants.ACTION, Constants.EDIT);
 

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,11 +19,21 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@NamedQuery(name = "UsuarioPerfil.findAll", query = "SELECT u FROM UsuarioPerfil u")
+@NamedQueries({
+    @NamedQuery(name = UsuarioPerfil.USUARIOPERFIL_ALL, query = "SELECT u FROM UsuarioPerfil u"),
+    @NamedQuery(name = UsuarioPerfil.USUARIOPERFIL_PERFIL_BY_USUER, 
+            query = "SELECT p FROM UsuarioPerfil up JOIN up.perfil p WHERE up.usuario = : " + 
+                    UsuarioPerfil.USUARIOPERFIL_USER_PARAMETER)
+})
 @Table(name = "UsuarioPerfil")
 public class UsuarioPerfil
         implements Serializable
 {
+    public final static String USUARIOPERFIL_USER_PARAMETER = "user";
+    
+    public final static String USUARIOPERFIL_ALL = "UsuarioPerfil.findAll";
+    public final static String USUARIOPERFIL_PERFIL_BY_USUER = "UsuarioPerfil.PerfilByUser";
+    
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
