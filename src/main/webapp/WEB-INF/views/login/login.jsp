@@ -57,21 +57,15 @@
                                        value="<spring:message javaScriptEscape="true" code="send"/>"
                                        id="submitBtn"/>
                                 </div>
-                            </div>
+                        </div>
 
                         <div>
-                            <spring:message javaScriptEscape="true" code="login.forgetpassword.label"/>
+                            <spring:message javaScriptEscape="true" code="login.forgotOrChangePassword.label"/>
                             <a href="<c:url value="/login/forgetPassword"/>">
-                                <spring:message htmlEscape="true" javaScriptEscape="true" code="login.resetPassword.label"/>
+                                <spring:message htmlEscape="true" javaScriptEscape="true" code="click"/>
                                 <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
                             </a>
                         </div>
-                        <spring:message javaScriptEscape="true" code="login.newuser.label"/>
-                        <a href="<c:url value="/login/registration"/>">
-                            <spring:message javaScriptEscape="true" code="login.register.label"/>
-                            <spring:message javaScriptEscape="true" code="here"/>
-                        </a>
-
                     </form>
                 </div>
             </div>

@@ -6,11 +6,11 @@
 
 <div class="panel panel-warning">
     <div class="panel panel-heading">
-        <h1>¡Recupera tu contrase&ntilde;a para entrar a Aula Virtual!</h1>
+        <h1><i class="fa fa-lock"></i> ¡Restablece tu contrase&ntilde;a para entrar a Aula Virtual!</h1>
     </div>
     <div class="panel panel-body">
         <p class="info">
-            ¿Olvidaste tu contrase&ntilde;a para entrar a Aula Virtual? ¡No te preocupes! Aqu&iacute;
+            ¿Olvidaste tu contrase&ntilde;a para entrar a Aula Virtual, o quieres cambiar tu contrase&ntilde;a actual? ¡No te preocupes! Aqu&iacute;
             puedes restablecer una nueva contrase&ntilde;a para seguir gozando los beneficios de Aula Virtual.
         </p>
 
