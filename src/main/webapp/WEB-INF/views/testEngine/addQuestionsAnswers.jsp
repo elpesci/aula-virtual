@@ -131,7 +131,6 @@
     function Pregunta(data) {
         var self = this;
 
-        self.folio = data.folioPregunta;
         self.preguntaId = data.preguntaId;
         self.textoPregunta = data.textoPregunta;
         self.respuestas = ko.observableArray([]);
@@ -145,9 +144,9 @@
             var esLaCorrecta = self.esCorrecta();
             if(laRespuesta !== "") {
                 var myRespuesta = new Respuesta({
+                    respuestaId: '',
                     textoRespuesta: laRespuesta,
-                    respuestaCorrecta: esLaCorrecta,
-                    folioPregunta: self.folio
+                    respuestaCorrecta: esLaCorrecta
                 });
 
                 self.respuestas.push(myRespuesta);
@@ -186,15 +185,11 @@
 
         self.nuevaPregunta = ko.observable("");
         self.preguntas = ko.observableArray([]);
-        
-        self.folio = self.preguntas().length;
 
         self.agregarPregunta = function() {
             var laPregunta = self.nuevaPregunta();
             if(laPregunta !== "") {
-                self.folio += 1;
-
-                var myPregunta = new Pregunta({textoPregunta: laPregunta, folio: self.folio});
+                var myPregunta = new Pregunta({preguntaId: '', textoPregunta: laPregunta, folio: self.folio});
 
                 self.preguntas.push(myPregunta);
 
@@ -210,13 +205,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var addExamMVVM = new examMVVM({
+        var Examen = new examMVVM({
             examenId: ${exam.examenId},
             moduloId: ${exam.modulo.moduloId},
             numPreguntas: ${exam.numPreguntas},
             numRespuestasPregunta: ${exam.numRespuestasPregunta}
         });
         
-        ko.applyBindings(addExamMVVM);
+        ko.applyBindings(Examen);
     });
 </script>
