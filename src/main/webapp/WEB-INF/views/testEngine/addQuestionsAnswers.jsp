@@ -36,7 +36,7 @@
                 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">
-                        <spring:message javaScriptEscape="true" code="testEngine.writeQuestionAnswers.label"/>:
+                        <spring:message javaScriptEscape="true" code="testEngine.writeQuestion.label"/>:
                     </label>
                     <div class="col-sm-10">
                         <textarea data-bind="value: nuevaPregunta" class="form-control exam-qa" rows="5"></textarea>
@@ -61,13 +61,51 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading clearfix">
                                     <div class="btn-group pull-right">
-                                        <button type="button" data-bind="click: agregarRespuesta" class="btn btn-success btn-xs" title="Agregar Respuesta"><i class="fa fa-check-circle-o"></i></button>
-                                        <button type="button" data-bind="click: $root.removerPregunta" class="btn btn-danger btn-xs" title="Remover pregunta"><i class="fa fa-minus-square"></i></button>
+                                        <!-- <button type="button" data-bind="click: agregarRespuesta" class="btn btn-success btn-sm" title="Agregar Respuesta"><i class="fa fa-check-circle-o"></i></button> -->
+                                        <button type="button" data-bind="click: $root.removerPregunta" class="btn btn-danger btn-sm" title="Remover pregunta"><i class="fa fa-minus-square"></i></button>
                                     </div>
                                     <h6 class="panel-title" data-bind="text: textoPregunta"></h6>
                                 </div>
                                 <div class="panel-body">
-                                  Answers Panel Body
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            <spring:message javaScriptEscape="true" code="testEngine.writeAnswer.label"/>:
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <textarea data-bind="value: nuevaRespuesta" class="form-control exam-qa" cols="40" rows="3"></textarea>
+                                            
+                                            <label data-bind="visible: showSetRespuestaCorrecta">
+                                                <input type="checkbox" data-bind="checked: esCorrecta" />
+                                                <spring:message javaScriptEscape="true" code="testEngine.answer.isCorrect.label" />
+                                            </label>
+                                            
+                                            <button type="button" data-bind="click: agregarRespuesta" class="btn btn-success">
+                                                <i class="fa fa-plus-square"></i>&nbsp;
+                                                <spring:message javaScriptEscape="true" code="testEngine.addAnswer.label"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="answersPlaceholder" data-bind="visible: $data.respuestas().length > 0 ">
+                                        <label class="col-sm-2 control-label">
+                                            <spring:message javaScriptEscape="true" code="testEngine.answers.label" />:
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <ol data-bind="foreach: $data.respuestas" class="list-group">
+                                                <li class="list-group-item">
+                                                    <button type="button" data-bind="click: $parent.removerRespuesta" class="btn btn-danger btn-sm" title="Remover respuesta">
+                                                        <i class="fa fa-minus-square"></i>
+                                                    </button>
+                                                    <span data-bind="text: $data.textoRespuesta"></span>
+                                                    <span data-bind="if: $data.esRespuestaCorrecta" class="bg-success">
+                                                        <label class="text-success" style="display: inline-block;">
+                                                            <i class="fa fa-check-circle-o"></i>
+                                                            Es la respuesta correcta
+                                                        </label>
+                                                    </span>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -82,33 +120,58 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 
 <script id="koObjects" type="text/javascript">
+    function Respuesta(data) {
+        var self = this;
+        
+        self.respuestaId = data.respuestaId;
+        self.textoRespuesta = data.textoRespuesta;
+        self.esRespuestaCorrecta = data.respuestaCorrecta;
+    }
+    
     function Pregunta(data) {
         var self = this;
 
-        self.folio = data.folio;
+        self.folio = data.folioPregunta;
         self.preguntaId = data.preguntaId;
         self.textoPregunta = data.textoPregunta;
         self.respuestas = ko.observableArray([]);
         
         self.nuevaRespuesta = ko.observable("");
+        self.esCorrecta = ko.observable(false);
 
         
         self.agregarRespuesta = function(){
             var laRespuesta = self.nuevaRespuesta();
+            var esLaCorrecta = self.esCorrecta();
             if(laRespuesta !== "") {
                 var myRespuesta = new Respuesta({
                     textoRespuesta: laRespuesta,
+                    respuestaCorrecta: esLaCorrecta,
                     folioPregunta: self.folio
                 });
 
                 self.respuestas.push(myRespuesta);
+                
+                self.nuevaRespuesta("");
+                self.esCorrecta(false);
             }
         };
-        /*
+        
         self.removerRespuesta = function(respuesta) {
             self.respuestas.remove(respuesta);
         };
-        */
+        
+        self.showSetRespuestaCorrecta = ko.computed(function() {
+            var show = true;
+            for(index = 0; index < self.respuestas().length; index++) {
+                if(self.respuestas()[index].esRespuestaCorrecta) {
+                    show = false;
+                    break;
+                }
+            }
+            return show;
+        });
+        
     };
 </script>
 

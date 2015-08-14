@@ -137,3 +137,9 @@ ul.pagination > .active > a, .pagination > .active > span, .pagination > .active
 textarea.exam-qa {
     resize: vertical;
 }
+
+#content #answersPlaceholder li {
+    padding: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+}
