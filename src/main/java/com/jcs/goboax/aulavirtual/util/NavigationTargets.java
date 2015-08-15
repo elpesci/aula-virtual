@@ -14,6 +14,8 @@ public abstract class NavigationTargets
     
     public static final String EXAM_ADD = "/motorEval/add";
     
+    public static final String EXAM_DO_SAVE = "/motorEval/saveExam";
+    
     public static final String EXAM_ADD_QA = "/motorEval/addQA";
     
     public static final String USER_EDIT = "/usuario/edit";
