@@ -263,7 +263,7 @@
             moduloId: ${exam.modulo.moduloId},
             numPreguntas: ${exam.numPreguntas},
             numRespuestasPregunta: ${exam.numRespuestasPregunta},
-            postUrl: '/motorEval/saveExam'
+            postUrl: '<c:url value="/motorEval/saveExam"/>'
         });
         
         ko.applyBindings(Examen);
