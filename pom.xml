@@ -444,7 +444,7 @@
             <properties>
                 <eclipselink.logging.level>FINE</eclipselink.logging.level>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-                <db.connectionURL>jdbc:mysql://localhost:3306/aula_virtual?zeroDateTimeBehavior=convertToNull
+                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull
                 </db.connectionURL>
                 <db.username>avDev</db.username>
                 <db.password>Password#1</db.password>
