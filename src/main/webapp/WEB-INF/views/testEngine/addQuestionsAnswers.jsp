@@ -247,7 +247,8 @@
                 type: "POST",
                 data: ko.toJSON({"Examen" : self}),
                 async: false,
-                dataType: "json"
+                dataType: "json",
+                contentType: "application/json"
               })
             .done(function(data, textStatus, xhrObj){})
             .fail(function(xhrObj, textStatus, errThrown){});

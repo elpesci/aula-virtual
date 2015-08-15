@@ -3,74 +3,85 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class ExamModel {
+public class ExamModel
+{
     private Integer id;
-    
+
     @NotNull
     private Integer courseId;
-    
+
     @NotNull
     private Integer moduleId;
-    
+
     private String courseName;
-    
+
     @Min(1)
     @NotNull
     private int numOfQuestions;
-    
+
     @NotNull
     @Min(1)
     private int numAnswersPerQuestion;
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId()
+    {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
 
-	public Integer getCourseId() {
-		return courseId;
-	}
+    public Integer getCourseId()
+    {
+        return courseId;
+    }
 
-	public void setCourseId(Integer courseId) {
-		this.courseId = courseId;
-	}
+    public void setCourseId(Integer courseId)
+    {
+        this.courseId = courseId;
+    }
 
-	public Integer getModuleId() {
-		return moduleId;
-	}
+    public Integer getModuleId()
+    {
+        return moduleId;
+    }
 
-	public void setModuleId(Integer moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Integer moduleId)
+    {
+        this.moduleId = moduleId;
+    }
 
-	public String getCourseName() {
-		return courseName;
-	}
+    public String getCourseName()
+    {
+        return courseName;
+    }
 
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
+    public void setCourseName(String courseName)
+    {
+        this.courseName = courseName;
+    }
 
-	public int getNumOfQuestions() {
-		return numOfQuestions;
-	}
+    public int getNumOfQuestions()
+    {
+        return numOfQuestions;
+    }
 
-	public void setNumOfQuestions(int numOfQuestions) {
-		this.numOfQuestions = numOfQuestions;
-	}
+    public void setNumOfQuestions(int numOfQuestions)
+    {
+        this.numOfQuestions = numOfQuestions;
+    }
 
-	public int getNumAnswersPerQuestion() {
-		return numAnswersPerQuestion;
-	}
+    public int getNumAnswersPerQuestion()
+    {
+        return numAnswersPerQuestion;
+    }
 
-	public void setNumAnswersPerQuestion(int numAnswersPerQuestion) {
-		this.numAnswersPerQuestion = numAnswersPerQuestion;
-	}
+    public void setNumAnswersPerQuestion(int numAnswersPerQuestion)
+    {
+        this.numAnswersPerQuestion = numAnswersPerQuestion;
+    }
 
 
-    
-    
 }

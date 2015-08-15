@@ -1,5 +1,30 @@
 package com.jcs.goboax.aulavirtual.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.jcs.goboax.aulavirtual.viewmodel.ExamenModel;
+import com.jcs.goboax.aulavirtual.viewmodel.ExamenModelWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Curso;
@@ -10,38 +35,19 @@ import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.TypeDescriptor;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/motorEval")
 @Scope(value = "session")
-public class TestEngineContoller {
-    
+public class TestEngineContoller
+{
+
     private static final Logger LOG = LoggerFactory
             .getLogger(TestEngineContoller.class);
-    
+
     @Autowired
     private ExamenService examenService;
-    
+
     @Autowired
     private CursoService cursoService;
 
@@ -50,7 +56,7 @@ public class TestEngineContoller {
 
     @Autowired
     private FlashMessage flashMessage;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String motorEval(HttpServletRequest aServletRequest) throws IOException
     {
@@ -64,18 +70,18 @@ public class TestEngineContoller {
             return "accessdenied";
         }
     }
-    
+
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public
     @ResponseBody
     String testList(HttpServletRequest request) throws IOException
     {
         List<Examen> exams = new ArrayList<Examen>();
-        if (request.isUserInRole("SUPER_ADMIN") || request.isUserInRole("COORDINADOR")) 
+        if (request.isUserInRole("SUPER_ADMIN") || request.isUserInRole("COORDINADOR"))
         {
             exams = examenService.readExams();
         }
-        
+
         @SuppressWarnings("unchecked")
         List<ExamModel> myExamModels = (List<ExamModel>) conversionService.convert(
                 exams,
@@ -83,7 +89,7 @@ public class TestEngineContoller {
                         TypeDescriptor.valueOf(Examen.class)),
                 TypeDescriptor.collection(List.class,
                         TypeDescriptor.valueOf(ExamModel.class)));
-        
+
         ObjectToJsonObject<ExamModel> myExamToJsonObject = new ObjectToJsonObject<ExamModel>();
 
         myExamToJsonObject.setiTotalDisplayRecords(exams.size());
@@ -101,11 +107,12 @@ public class TestEngineContoller {
     {
         List<Curso> myCursos = cursoService.readCourses();
         Map<Integer, String> myCursosMap = new HashMap<Integer, String>();
-        
-        for(Curso aCurso : myCursos){
+
+        for (Curso aCurso : myCursos)
+        {
             myCursosMap.put(aCurso.getCursoId(), aCurso.getNombre());
         }
-        
+
         ExamModel myExamModel = new ExamModel();
         aModel.put("courses", myCursosMap);
         aModel.put("examModel", myExamModel);
@@ -118,7 +125,7 @@ public class TestEngineContoller {
     public String examenAddDo(@Validated ExamModel examModel,
                               BindingResult result, Map<String, Object> aModel)
     {
-        
+
         LOG.debug("Adding Examen ...");
         if (result.hasErrors())
         {
@@ -126,14 +133,14 @@ public class TestEngineContoller {
             aModel.put("action", "add");
             return "testEngine/add";
         }
-        
+
         Examen newExamen = examenService.insertExam(examModel);
-        
+
         flashMessage.success("testEngine.addExam.success.label");
         aModel.put("target", NavigationTargets.EXAM_ADD_QA);
         aModel.put("action", "add_qa");
         aModel.put("exam", newExamen);
-        
+
         return "testEngine/addQuestionsAnswers";
     }
 
@@ -141,5 +148,18 @@ public class TestEngineContoller {
     public String cancelExamenAdd()
     {
         return "redirect:/motorEval";
+    }
+
+    @RequestMapping(value = "/saveExam", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ExamenModel saveExam(@RequestBody ExamenModelWrapper examen)
+    {
+        LOG.debug("{}", examen);
+        ExamenModel myExamenModel = examen.getExamen();
+        Examen myExamen = conversionService.convert(myExamenModel, Examen.class);
+        LOG.debug("{}", myExamen);
+        Examen myExamenUpdated = examenService.updateExam(myExamen);
+        return conversionService.convert(myExamenUpdated, ExamenModel.class);
     }
 }

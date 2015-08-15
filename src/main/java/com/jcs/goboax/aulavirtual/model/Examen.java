@@ -1,9 +1,11 @@
 package com.jcs.goboax.aulavirtual.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -65,7 +67,7 @@ public class Examen
     private Modulo modulo;
 
     // bi-directional many-to-one association to Pregunta
-    @OneToMany(mappedBy = "examen")
+    @OneToMany(mappedBy = "examen", cascade = CascadeType.PERSIST)
     private List<Pregunta> preguntas;
 
     public Examen()
@@ -156,6 +158,10 @@ public class Examen
 
     public List<Pregunta> getPreguntas()
     {
+        if (preguntas == null)
+        {
+            preguntas = new ArrayList<Pregunta>();
+        }
         return this.preguntas;
     }
 

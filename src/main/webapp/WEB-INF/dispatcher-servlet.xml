@@ -152,6 +152,8 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.ExamModelToExamenConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.UsuarioUpdateToPerfilConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.UsuarioToUsuarioUpdateModel"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ExamenModelToExamenConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ExamenToExamenModelConverter"/>
             </list>
         </property>
     </bean>
@@ -185,6 +187,19 @@
 
     <bean id="flash" class="com.jcs.goboax.aulavirtual.util.FlashMessage" scope="session">
         <aop:scoped-proxy/>
+    </bean>
+
+    <!-- Configure to plugin JSON as request and response in method handler -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jsonMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Configure bean to convert JSON to POJO and vice versa -->
+    <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>

@@ -19,7 +19,14 @@ public interface ExamenService {
      * @param anExamModel 
      */
     void createExam(ExamModel anExamModel);
-    
+
+    /**
+     *
+     * @param anExamen
+     * @return
+     */
+    Examen updateExam(Examen anExamen);
+
     /**
      * Save an Exam
      * @param anExamModel

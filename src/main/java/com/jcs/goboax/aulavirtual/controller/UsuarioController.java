@@ -1,5 +1,26 @@
 package com.jcs.goboax.aulavirtual.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualRegistrationException;
@@ -11,35 +32,8 @@ import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
-import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 import com.jcs.goboax.aulavirtual.viewmodel.UsuarioModel;
 import com.jcs.goboax.aulavirtual.viewmodel.UsuarioUpdateModel;
-import net.tanesha.recaptcha.ReCaptcha;
-import net.tanesha.recaptcha.ReCaptchaFactory;
-import net.tanesha.recaptcha.ReCaptchaResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.TypeDescriptor;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class UsuarioController
@@ -130,12 +124,10 @@ public class UsuarioController
     @RequestMapping(params = "save", value = "usuario/edit", method = RequestMethod.POST)
     public String processRegistration(@Validated UsuarioUpdateModel usuarioUpdateModel,
                                       BindingResult result,
-                                      ServletRequest aServletRequest,
                                       Model aModel)
     {
         try
         {
-            String remoteAddress = aServletRequest.getRemoteAddr();
 
             if (result.hasErrors())
             {

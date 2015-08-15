@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Date;
 
 @Service
+@Transactional
 public class ExamenServiceImpl 
     implements ExamenService
 {    
@@ -47,7 +48,14 @@ public class ExamenServiceImpl
         
         examenDao.persist(createForInsert(anExamModel));
     }
-    
+
+    @Override
+    public Examen updateExam(Examen anExamen)
+    {
+        anExamen.setFechaCreacion(new Date());
+        return examenDao.update(anExamen);
+    }
+
     @Transactional
     @Override
     public Examen insertExam(ExamModel anExamModel) {
