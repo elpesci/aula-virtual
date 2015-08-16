@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ExamenModel
 {
-    private int examenId;
+    private Integer examenId;
     private int moduloId;
     private int numPreguntas;
     private int numRespuestasPregunta;
@@ -14,12 +14,12 @@ public class ExamenModel
     private List<PreguntasModel> preguntas;
     private boolean canSave;
 
-    public int getExamenId()
+    public Integer getExamenId()
     {
         return examenId;
     }
 
-    public void setExamenId(int examenId)
+    public void setExamenId(Integer examenId)
     {
         this.examenId = examenId;
     }

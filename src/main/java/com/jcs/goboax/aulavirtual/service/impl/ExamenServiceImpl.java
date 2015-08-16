@@ -52,7 +52,6 @@ public class ExamenServiceImpl
     @Override
     public Examen updateExam(Examen anExamen)
     {
-        anExamen.setFechaCreacion(new Date());
         return examenDao.update(anExamen);
     }
 

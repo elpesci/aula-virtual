@@ -11,6 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public class ExamenToExamenModelConverter
     implements Converter<Examen, ExamenModel>
 {
+
     @Override
     public ExamenModel convert(Examen examen)
     {
