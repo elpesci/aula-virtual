@@ -242,6 +242,15 @@
         });
         
         self.doSave = function () {
+            var pleaseWait = $('#blockUI');
+            var actionLink = $(".dismissFlash");
+            var flashMsgBox = $("#flashMessagesBox");
+            var flashMsgContainer = $(".remsg");
+            var flashMsgContainerParagraph = $(".remsg p");
+            
+            if(flashMsgContainerParagraph.length === 0) { flashMsgContainer.append("<p></p>"); }
+            
+            pleaseWait.show();
             var  jqXHR = $.ajax({
                 url: self.postUrl,
                 type: "POST",
@@ -250,8 +259,24 @@
                 dataType: "json",
                 contentType: "application/json"
               })
-            .done(function(data, textStatus, xhrObj){})
-            .fail(function(xhrObj, textStatus, errThrown){});
+            .done(function(data, textStatus, xhrObj) {
+                if(flashMsgContainer.hasClass("error")) { flashMsgContainer.removeClass("error") };
+                if(!flashMsgContainer.hasClass("success")) { flashMsgContainer.addClass("success") };
+                flashMsgContainer.text('<spring:message code="testEngine.addQA.success.label" />').append(' ').append(actionLink);
+            })
+            .fail(function(xhrObj, textStatus, errThrown) {
+                if(flashMsgContainer.hasClass("success")) { flashMsgContainer.removeClass("success") };
+                if(!flashMsgContainer.hasClass("error")) { flashMsgContainer.addClass("error") };
+                flashMsgContainer.text('<spring:message code="testEngine.addQA.fail.label" />').append(' ').append(actionLink);
+            })
+            .always(function() {
+               pleaseWait.hide();
+               flashMsgBox.show();
+            });
+            
+            jqXHR.then(function () {
+                window.location.replace('<c:url value="/motorEval"/>');
+            });
         }
     }
 </script>

@@ -47,15 +47,16 @@
             },
             "pagingType": "simple_numbers",
             "aoColumns": [
-                { "mData": "courseName", "width": "40%" },
-                { "mData": "settings", "width": "40%", "orderable": false },
+                { "mData": "courseName", "width": "30%" },
+                { "mData": "moduleName", "width": "30%" },
+                { "mData": "settings", "width": "30%", "orderable": false },
                 { "mData": "id",
                     "mRender": function (id) {
                         return  '<div id="testLink_' + id + '"/>';
                     },
                     "class": "acciones-control",
                     "orderable": false,
-                    "width": "20%"
+                    "width": "10%"
                 }
             ]
         });
@@ -87,6 +88,7 @@
                                 <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col1Header.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col2Header.label"/></th>
                                 <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col3Header.label"/></th>
+                                <th><spring:message javaScriptEscape="true" code="testEngine.landing.dataTable.col4Header.label"/></th>
                             </tr>
                             </thead>
                         </table>

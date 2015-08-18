@@ -17,8 +17,17 @@ public class ExamenToExamModelConverter
         myExamModel.setCourseId(aExamen.getModulo().getCurso().getCursoId());
         myExamModel.setCourseName(aExamen.getModulo().getCurso().getNombre());
         myExamModel.setModuleId(aExamen.getModulo().getModuloId());
+        myExamModel.setModuleName(aExamen.getModulo().getNombre());
         myExamModel.setNumOfQuestions(aExamen.getNumPreguntas());
         myExamModel.setNumAnswersPerQuestion(aExamen.getNumRespuestasPregunta());
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("Preguntas en el examen: ")
+                .append(myExamModel.getNumOfQuestions())
+                .append(" - Opciones de respuesta: ")
+                .append(myExamModel.getNumAnswersPerQuestion());
+        
+        myExamModel.setSettings(sb.toString());
         
         return myExamModel;
     }

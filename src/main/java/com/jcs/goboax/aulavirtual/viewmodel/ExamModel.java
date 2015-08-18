@@ -14,6 +14,10 @@ public class ExamModel
     private Integer moduleId;
 
     private String courseName;
+    
+    private String moduleName;
+    
+    private String settings;
 
     @Min(1)
     @NotNull
@@ -81,6 +85,22 @@ public class ExamModel
     public void setNumAnswersPerQuestion(int numAnswersPerQuestion)
     {
         this.numAnswersPerQuestion = numAnswersPerQuestion;
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
+    public String getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String settings) {
+        this.settings = settings;
     }
 
 
