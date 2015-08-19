@@ -83,7 +83,7 @@
                         <div class="col-sm-offset-4 col-sm-8">
                             <c:if test="${action eq 'add'}">
                                 <input type="submit" name="save" class="btn btn-primary"
-                                       value="<spring:message javaScriptEscape="true" code="testEngine.question.saveAndContinue.label"/>"/>
+                                       value="<spring:message javaScriptEscape="true" code="label.continue"/>"/>
                             </c:if>
                             <c:if test="${action eq 'edit'}">
                                 <input type="submit" name="save" class="btn btn-primary"

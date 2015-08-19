@@ -26,27 +26,23 @@
                     ${exam.modulo.nombre}
                 </span>
             </div>
-        </div>
+        </div>        
+        <p class="info-md">
+            <spring:message javaScriptEscape="true" code="testEngine.settings.info2.label"/>
+        </p>
         <div class="row">
-            <form:form method="POST" commandName="exam" action="${target}" class="form-horizontal">
-                <form:hidden path="examenId" />
-                <form:hidden path="modulo.moduloId" />
-                <form:hidden path="numPreguntas" />
-                <form:hidden path="numRespuestasPregunta" />
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">
-                        <spring:message javaScriptEscape="true" code="testEngine.writeQuestion.label"/>:
-                    </label>
-                    <div class="col-sm-10">
-                        <textarea data-bind="value: nuevaPregunta" class="form-control exam-qa" rows="5"></textarea>
-                        <button type="button" data-bind="click: agregarPregunta" class="btn btn-success">
-                            <i class="fa fa-plus-square"></i>&nbsp;
-                            <spring:message javaScriptEscape="true" code="testEngine.addQuestion.label"/>
-                        </button>
-                    </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <spring:message javaScriptEscape="true" code="testEngine.writeQuestion.label"/>:
+                </label>
+                <div class="col-sm-10">
+                    <textarea data-bind="value: nuevaPregunta" class="form-control exam-qa" rows="5"></textarea>
+                    <button type="button" data-bind="click: agregarPregunta" class="btn btn-success">
+                        <i class="fa fa-plus-square"></i>&nbsp;
+                        <spring:message javaScriptEscape="true" code="testEngine.addQuestion.label"/>
+                    </button>
                 </div>
-            </form:form>
+            </div>
         </div>
         
         <div class="row" data-bind="visible: preguntas().length > 0">
@@ -54,8 +50,11 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading clearfix">
                         <div class="btn-group pull-right">
-                            <button id="saveExam" data-bind="enabled: canSave, click: doSave" class="btn btn-sm btn-success  text-success" href="javascript:void(0);">
-                                <i class="fa fa-download fa-2x pull-left"></i> <spring:message code="save" />
+                            <button id="saveExam" data-bind="enable: $root.canSave, click: doSave" class="btn btn-sm btn-success  text-success" href="javascript:void(0);">
+                                <i class="fa fa-download fa-2x pull-left"></i> <spring:message javaScriptEscape="true" code="save" />
+                            </button>
+                            <button id="cancel" class="btn btn-sm btn-danger text-danger" href="javascript:void(0);">
+                                <i class="fa fa-ban fa-2x pull-left"></i> <spring:message javaScriptEscape="true" code="cancel"/>
                             </button>
                         </div>
                         <h5 class="panel-title">
@@ -172,7 +171,7 @@
             self.respuestas.remove(respuesta);
         };
         
-        self.isValid = function() {
+        self.esValida = ko.computed(function() {
           var hasRespuestaCorrecta = false;
           for(index = 0; index < self.respuestas().length; index++) {
                 if(self.respuestas()[index].esRespuestaCorrecta) {
@@ -182,7 +181,7 @@
             }
           
           return hasRespuestaCorrecta && self.textoPregunta !== '';
-        };
+        });
         
         self.showSetRespuestaCorrecta = ko.computed(function() {
             var show = true;
@@ -229,12 +228,14 @@
         
         
         self.canSave = ko.computed(function () {
-            var result = true;
+            var result = false;
             
             for(index = 0; index < self.preguntas().length; index++) {
-                if(!self.preguntas()[index].isValid) {
+                if(self.preguntas()[index].esValida()) {
+                    result = true;
+                    continue;
+                } else {
                     result = false;
-                    break;
                 }
             }
             
@@ -284,7 +285,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var Examen = new examMVVM({
-            examenId: ${exam.examenId},
+            examenId: '',
             moduloId: ${exam.modulo.moduloId},
             numPreguntas: ${exam.numPreguntas},
             numRespuestasPregunta: ${exam.numRespuestasPregunta},
@@ -292,5 +293,9 @@
         });
         
         ko.applyBindings(Examen);
+        
+        $("#cancel").on('click', function () {
+            window.location.replace('<c:url value="/motorEval"/>');
+        });
     });
 </script>

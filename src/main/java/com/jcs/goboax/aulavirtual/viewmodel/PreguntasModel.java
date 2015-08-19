@@ -10,6 +10,7 @@ public class PreguntasModel
     private List<RespuestasModel> respuestas;
     private String nuevaRespuesta;
     private boolean esCorrecta;
+    private boolean esValida;
     private boolean showSetRespuestaCorrecta;
 
     public Integer getPreguntaId()
@@ -74,5 +75,13 @@ public class PreguntasModel
     public void setShowSetRespuestaCorrecta(boolean showSetRespuestaCorrecta)
     {
         this.showSetRespuestaCorrecta = showSetRespuestaCorrecta;
+    }
+
+    public boolean isEsValida() {
+        return esValida;
+    }
+    
+    public void setEsValida(boolean esValida) {
+        this.esValida = esValida;
     }
 }

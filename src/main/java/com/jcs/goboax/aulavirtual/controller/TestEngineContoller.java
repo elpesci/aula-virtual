@@ -31,6 +31,7 @@ import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.Examen;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.ExamenService;
+import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
@@ -50,6 +51,9 @@ public class TestEngineContoller
 
     @Autowired
     private CursoService cursoService;
+    
+    @Autowired
+    private ModuleService moduloService;
 
     @Autowired
     private ConversionService conversionService;
@@ -133,9 +137,12 @@ public class TestEngineContoller
             aModel.put("action", "add");
             return "testEngine/add";
         }
-
-        Examen newExamen = examenService.insertExam(examModel);
-
+        
+        Examen newExamen = new Examen();
+        newExamen.setModulo(moduloService.readModuleById(examModel.getModuleId()));
+        newExamen.setNumPreguntas(examModel.getNumOfQuestions());
+        newExamen.setNumRespuestasPregunta(examModel.getNumAnswersPerQuestion());
+        
         flashMessage.success("testEngine.addExam.success.label");
         aModel.put("target", NavigationTargets.EXAM_ADD_QA);
         aModel.put("action", "add_qa");

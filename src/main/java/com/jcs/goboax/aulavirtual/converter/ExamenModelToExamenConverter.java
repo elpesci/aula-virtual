@@ -37,6 +37,11 @@ public class ExamenModelToExamenConverter
             myExamen.setFechaModificacion(new Date());
             myExamen.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
         }
+        else
+        {
+            myExamen.setCreadoPor(authenticationService.getUsuario().getUsuarioId());
+            myExamen.setFechaCreacion(new Date());
+        }
         myExamen.setModulo(moduloDao.findByKey(examenModel.getModuloId()));
         myExamen.setNumPreguntas(examenModel.getNumPreguntas());
         myExamen.setNumRespuestasPregunta(examenModel.getNumRespuestasPregunta());
