@@ -21,11 +21,11 @@ public class ExamModel
 
     @NotNull
     @Min(1)
-    private int numOfQuestions;
+    private Integer numOfQuestions;
 
     @NotNull
     @Min(1)
-    private int numAnswersPerQuestion;
+    private Integer numAnswersPerQuestion;
 
     public Integer getId()
     {
@@ -67,22 +67,22 @@ public class ExamModel
         this.courseName = courseName;
     }
 
-    public int getNumOfQuestions()
+    public Integer getNumOfQuestions()
     {
         return numOfQuestions;
     }
 
-    public void setNumOfQuestions(int numOfQuestions)
+    public void setNumOfQuestions(Integer numOfQuestions)
     {
         this.numOfQuestions = numOfQuestions;
     }
 
-    public int getNumAnswersPerQuestion()
+    public Integer getNumAnswersPerQuestion()
     {
         return numAnswersPerQuestion;
     }
 
-    public void setNumAnswersPerQuestion(int numAnswersPerQuestion)
+    public void setNumAnswersPerQuestion(Integer numAnswersPerQuestion)
     {
         this.numAnswersPerQuestion = numAnswersPerQuestion;
     }
