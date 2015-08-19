@@ -19,8 +19,8 @@ public class ExamModel
     
     private String settings;
 
-    @Min(1)
     @NotNull
+    @Min(1)
     private int numOfQuestions;
 
     @NotNull

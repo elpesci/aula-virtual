@@ -133,6 +133,15 @@ public class TestEngineContoller
         LOG.debug("Adding Examen ...");
         if (result.hasErrors())
         {
+            List<Curso> myCursos = cursoService.readCourses();
+            Map<Integer, String> myCursosMap = new HashMap<Integer, String>();
+
+            for (Curso aCurso : myCursos)
+            {
+                myCursosMap.put(aCurso.getCursoId(), aCurso.getNombre());
+            }
+            
+            aModel.put("courses", myCursosMap);
             aModel.put("target", NavigationTargets.EXAM_ADD);
             aModel.put("action", "add");
             return "testEngine/add";
