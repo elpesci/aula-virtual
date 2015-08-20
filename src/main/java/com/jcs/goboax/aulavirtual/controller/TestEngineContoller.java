@@ -32,10 +32,13 @@ import com.jcs.goboax.aulavirtual.model.Examen;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.ExamenService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
+import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
+import com.jcs.goboax.aulavirtual.viewmodel.ExamenConfigModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/motorEval")
@@ -177,5 +180,55 @@ public class TestEngineContoller
         LOG.debug("{}", myExamen);
         Examen myExamenUpdated = examenService.updateExam(myExamen);
         return conversionService.convert(myExamenUpdated, ExamenModel.class);
+    }
+    
+    @RequestMapping(value = "/configEdit/{examenId}", method = RequestMethod.GET)
+    public String updateConfigParams(@PathVariable(value = "examenId") Integer anExamId,
+                               Map<String, Object> aModel)
+    {
+        Examen myExamen = examenService.readExamById(anExamId);
+        
+        ExamenConfigModel myExamenConfig = conversionService.convert(myExamen, ExamenConfigModel.class);
+        
+        aModel.put("examModel", myExamenConfig);
+        aModel.put(Constants.TARGET, NavigationTargets.EXAM_CONFIG_DO_EDIT);
+        aModel.put("action", Constants.EDIT);
+        
+        return "testEngine/editConfig";
+    }
+    
+    @RequestMapping(params = "save", value = "/updExamConfig", method = RequestMethod.POST)
+    public String updateConfigParamsDo(@Validated ExamenConfigModel examModel,
+                              BindingResult result, Map<String, Object> aModel)
+    {
+        LOG.debug("Updating config parameters for Examen ...");
+        if (result.hasErrors())
+        {
+            aModel.put(Constants.TARGET, NavigationTargets.EXAM_CONFIG_DO_EDIT);
+            aModel.put("action", Constants.EDIT);
+            
+            return "testEngine/editConfig";
+        }
+        
+        Examen updatableExamen = conversionService.convert(examModel, Examen.class);
+        
+        examenService.updateExam(updatableExamen);
+        
+        flashMessage.success("testEngine.updateExamConfigParams.success.label");
+        
+        return "redirect:/motorEval";
+    }
+    
+    @RequestMapping(params = "cancel", value = "/updExamConfig", method = RequestMethod.POST)
+    public String cancelUpdateConfigParams()
+    {
+        return "redirect:/motorEval";
+    }
+    
+    @RequestMapping(value = "/preguntasEdit/{examenId}", method = RequestMethod.GET)
+    public String updatePreguntas(@PathVariable(value = "examenId") Integer anExamId,
+                               Map<String, Object> aModel)
+    {
+        return "redirect:/motorEval";
     }
 }

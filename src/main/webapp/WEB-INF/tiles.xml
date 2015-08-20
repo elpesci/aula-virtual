@@ -132,4 +132,9 @@
         <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Agregar Examen"/>
         <put-attribute name="body" value="/WEB-INF/views/testEngine/addQuestionsAnswers.jsp"/>
     </definition>
+    
+    <definition extends="base.definition" name="testEngine/editConfig">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Agregar Examen"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/editConfig.jsp"/>
+    </definition>
 </tiles-definitions>

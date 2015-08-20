@@ -75,4 +75,13 @@ public class ExamenServiceImpl
         
         return myExamen;
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Examen readExamById(Integer anExamId) {
+        
+        Examen myExamen = examenDao.findByKey(anExamId);
+        
+        return myExamen;
+    }
 }

@@ -154,6 +154,8 @@
                 <bean class="com.jcs.goboax.aulavirtual.converter.UsuarioToUsuarioUpdateModel"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.ExamenModelToExamenConverter"/>
                 <bean class="com.jcs.goboax.aulavirtual.converter.ExamenToExamenModelConverter"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ExamenToExamenConfigModel"/>
+                <bean class="com.jcs.goboax.aulavirtual.converter.ExamenConfigModelToExamen"/>
             </list>
         </property>
     </bean>

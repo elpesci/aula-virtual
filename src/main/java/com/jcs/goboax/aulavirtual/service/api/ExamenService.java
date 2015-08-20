@@ -33,4 +33,12 @@ public interface ExamenService {
      * @return
      */
     Examen insertExam(ExamModel anExamModel);
+    
+    
+    /**
+     * Retrieve an Exam by its Id
+     * @param anExamId
+     * @return
+     */
+    Examen readExamById(Integer anExamId);
 }
