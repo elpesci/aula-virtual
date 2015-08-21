@@ -12,7 +12,8 @@ public class ExamenModel
     private String postUrl;
     private String nuevaPregunta;
     private List<PreguntasModel> preguntas;
-    private boolean canSave;
+    
+    private Boolean canSave;
 
     public Integer getExamenId()
     {
@@ -78,16 +79,6 @@ public class ExamenModel
         this.preguntas = preguntas;
     }
 
-    public boolean isCanSave()
-    {
-        return canSave;
-    }
-
-    public void setCanSave(boolean canSave)
-    {
-        this.canSave = canSave;
-    }
-
     public String getPostUrl()
     {
         return postUrl;
@@ -96,5 +87,13 @@ public class ExamenModel
     public void setPostUrl(String postUrl)
     {
         this.postUrl = postUrl;
+    }
+
+    public Boolean getCanSave() {
+        return canSave;
+    }
+
+    public void setCanSave(Boolean canSave) {
+        this.canSave = canSave;
     }
 }

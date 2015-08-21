@@ -20,11 +20,17 @@ public class ExamenToExamenModelConverter
         myExamenModel.setModuloId(examen.getModulo().getModuloId());
         myExamenModel.setNumPreguntas(examen.getNumPreguntas());
         myExamenModel.setNumRespuestasPregunta(examen.getNumRespuestasPregunta());
+        myExamenModel.setCanSave(null);
         for (Pregunta myPregunta : examen.getPreguntas())
         {
             PreguntasModel myPreguntasModel = new PreguntasModel();
             myPreguntasModel.setPreguntaId(myPregunta.getPreguntaId());
             myPreguntasModel.setTextoPregunta(myPregunta.getTextoPregunta());
+            
+            myPreguntasModel.setEsCorrecta(null);
+            myPreguntasModel.setEsValida(null);
+            myPreguntasModel.setShowSetRespuestaCorrecta(null);
+            
             for (Respuesta myRespuesta : myPregunta.getRespuestas())
             {
                 RespuestasModel myRespuestasModel = new RespuestasModel();

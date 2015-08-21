@@ -9,9 +9,9 @@ public class PreguntasModel
     private String textoPregunta;
     private List<RespuestasModel> respuestas;
     private String nuevaRespuesta;
-    private boolean esCorrecta;
-    private boolean esValida;
-    private boolean showSetRespuestaCorrecta;
+    private Boolean esCorrecta;
+    private Boolean esValida;
+    private Boolean showSetRespuestaCorrecta;
 
     public Integer getPreguntaId()
     {
@@ -57,31 +57,27 @@ public class PreguntasModel
         this.nuevaRespuesta = nuevaRespuesta;
     }
 
-    public boolean isEsCorrecta()
-    {
+    public Boolean getEsCorrecta() {
         return esCorrecta;
     }
 
-    public void setEsCorrecta(boolean esCorrecta)
-    {
+    public void setEsCorrecta(Boolean esCorrecta) {
         this.esCorrecta = esCorrecta;
     }
 
-    public boolean isShowSetRespuestaCorrecta()
-    {
+    public Boolean getEsValida() {
+        return esValida;
+    }
+
+    public void setEsValida(Boolean esValida) {
+        this.esValida = esValida;
+    }
+
+    public Boolean getShowSetRespuestaCorrecta() {
         return showSetRespuestaCorrecta;
     }
 
-    public void setShowSetRespuestaCorrecta(boolean showSetRespuestaCorrecta)
-    {
+    public void setShowSetRespuestaCorrecta(Boolean showSetRespuestaCorrecta) {
         this.showSetRespuestaCorrecta = showSetRespuestaCorrecta;
-    }
-
-    public boolean isEsValida() {
-        return esValida;
-    }
-    
-    public void setEsValida(boolean esValida) {
-        this.esValida = esValida;
     }
 }

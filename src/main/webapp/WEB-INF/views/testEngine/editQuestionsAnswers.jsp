@@ -131,6 +131,7 @@
 
 
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/ko.mapping.2.4.1.min.js" />"</script>
 
 <script id="koObjects" type="text/javascript">
     function Respuesta(data) {
@@ -220,7 +221,7 @@
                 method: 'GET'
             })
             .done(function (data, textStatus, jqXHR) {
-                self.preguntas(data.Examen.preguntas);
+                ko.mapping.fromJSON(data.Examen, {}, self));
             })
             .fail(function (jqXHR, textStatus, errorThrown) {})
             .always(function () {});
