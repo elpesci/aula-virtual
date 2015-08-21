@@ -134,7 +134,12 @@
     </definition>
     
     <definition extends="base.definition" name="testEngine/editConfig">
-        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Agregar Examen"/>
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Actualizar Configuración Examen"/>
         <put-attribute name="body" value="/WEB-INF/views/testEngine/editConfig.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="testEngine/editExam">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Actualizar Examen"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/editQuestionsAnswers.jsp"/>
     </definition>
 </tiles-definitions>

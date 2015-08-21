@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +39,6 @@ import com.jcs.goboax.aulavirtual.util.NavigationTargets;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamenConfigModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/motorEval")
@@ -229,6 +229,34 @@ public class TestEngineContoller
     public String updatePreguntas(@PathVariable(value = "examenId") Integer anExamId,
                                Map<String, Object> aModel)
     {
-        return "redirect:/motorEval";
+        Examen myExamen = examenService.readExamById(anExamId);
+        
+        aModel.put("cursoNombre", myExamen.getModulo().getCurso().getNombre());
+        aModel.put("moduloNombre", myExamen.getModulo().getNombre());
+        aModel.put("examenId", myExamen.getExamenId());
+        aModel.put("moduloId", myExamen.getModulo().getModuloId());
+        aModel.put("numPreguntas", myExamen.getNumPreguntas());
+        aModel.put("numRespuestasPregunta", myExamen.getNumRespuestasPregunta());
+        
+        return "testEngine/editExam";
+    }
+    
+    @RequestMapping(value = "/examenJson/{examenId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public
+    @ResponseBody
+    String examenJsonSerialized(HttpServletRequest request,
+            @PathVariable(value = "examenId") Integer anExamId) throws IOException
+    {
+        Examen myExamen = examenService.readExamById(anExamId);
+        
+        ExamenModel myExamenModel = conversionService.convert(myExamen, ExamenModel.class);
+        
+        Map<String, ExamenModel> examToJsonMap = new HashMap<String, ExamenModel>();
+        examToJsonMap.put("Examen", myExamenModel);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json2 = gson.toJson(examToJsonMap);
+
+        return json2;
     }
 }
