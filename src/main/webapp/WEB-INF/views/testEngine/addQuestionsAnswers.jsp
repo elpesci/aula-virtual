@@ -108,7 +108,7 @@
                                                     <span data-bind="if: $data.esRespuestaCorrecta" class="bg-success">
                                                         <label class="text-success" style="display: inline-block;">
                                                             <i class="fa fa-check-circle-o"></i>
-                                                            Es la respuesta correcta
+                                                            <spring:message javaScriptEscape="true" code="testEngine.settings.isCorrectAnswer.label" />
                                                         </label>
                                                     </span>
                                                 </li>
