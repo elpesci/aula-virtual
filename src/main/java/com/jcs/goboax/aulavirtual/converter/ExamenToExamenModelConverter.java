@@ -45,21 +45,22 @@ public class ExamenToExamenModelConverter
         return myExamenModel;
     }
     
-    private boolean checkIsValid(Pregunta aPregunta) {
+    private boolean checkIsValid(Pregunta aPregunta)
+    {
+        boolean result;
+        boolean hasDescription;
         String textoPregunta;
         textoPregunta = aPregunta.getTextoPregunta();
-        
-        boolean result = false;
-        boolean hasDescription = false;
-        
-        hasDescription = textoPregunta != null ? (textoPregunta != "" ? true : false) : false;
+                
+        hasDescription = textoPregunta != null ? (!"".equals(textoPregunta.trim())) : false;
         
         result = hasDescription && hasRightAnswer(aPregunta);
         
         return result;
     }
     
-    private boolean hasRightAnswer(Pregunta aPregunta) {
+    private boolean hasRightAnswer(Pregunta aPregunta)
+    {
         boolean result = false;
         
         for (Respuesta aRespuesta : aPregunta.getRespuestas()) {
