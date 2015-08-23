@@ -27,9 +27,9 @@ public class ExamenToExamenModelConverter
             myPreguntasModel.setPreguntaId(myPregunta.getPreguntaId());
             myPreguntasModel.setTextoPregunta(myPregunta.getTextoPregunta());
             
-            myPreguntasModel.setEsCorrecta(null);
-            myPreguntasModel.setEsValida(null);
-            myPreguntasModel.setShowSetRespuestaCorrecta(null);
+            myPreguntasModel.setEsCorrecta(false);
+            myPreguntasModel.setEsValida(checkIsValid(myPregunta));
+            myPreguntasModel.setShowSetRespuestaCorrecta(!hasRightAnswer(myPregunta));
             
             for (Respuesta myRespuesta : myPregunta.getRespuestas())
             {
@@ -43,5 +43,32 @@ public class ExamenToExamenModelConverter
 
         }
         return myExamenModel;
+    }
+    
+    private boolean checkIsValid(Pregunta aPregunta) {
+        String textoPregunta;
+        textoPregunta = aPregunta.getTextoPregunta();
+        
+        boolean result = false;
+        boolean hasDescription = false;
+        
+        hasDescription = textoPregunta != null ? (textoPregunta != "" ? true : false) : false;
+        
+        result = hasDescription && hasRightAnswer(aPregunta);
+        
+        return result;
+    }
+    
+    private boolean hasRightAnswer(Pregunta aPregunta) {
+        boolean result = false;
+        
+        for (Respuesta aRespuesta : aPregunta.getRespuestas()) {
+                if(aRespuesta.getEsRespuestaCorrecta()) {
+                    result = true;
+                    break;
+                }
+            }
+        
+        return result;
     }
 }

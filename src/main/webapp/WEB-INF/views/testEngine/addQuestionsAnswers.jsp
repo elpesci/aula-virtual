@@ -104,6 +104,7 @@
                                                     <button type="button" data-bind="click: $parent.removerRespuesta" class="btn btn-danger btn-sm" title="Remover respuesta">
                                                         <i class="fa fa-minus-square"></i>
                                                     </button>
+                                                    &nbsp;
                                                     <span data-bind="text: $data.textoRespuesta"></span>
                                                     <span data-bind="if: $data.esRespuestaCorrecta" class="bg-success">
                                                         <label class="text-success" style="display: inline-block;">
