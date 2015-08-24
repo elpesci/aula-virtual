@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -198,7 +199,7 @@ public class TestEngineContoller
     }
     
     @RequestMapping(params = "save", value = "/updExamConfig", method = RequestMethod.POST)
-    public String updateConfigParamsDo(@Validated ExamenConfigModel examModel,
+    public String updateConfigParamsDo(@Validated @ModelAttribute("examModel")ExamenConfigModel examModel,
                               BindingResult result, Map<String, Object> aModel)
     {
         LOG.debug("Updating config parameters for Examen ...");
