@@ -229,16 +229,15 @@
         
         
         self.canSave = ko.computed(function () {
-            var result = false;
+            var result = true;
             
-            for(index = 0; index < self.preguntas().length; index++) {
-                if(self.preguntas()[index].esValida()) {
-                    result = true;
-                    continue;
-                } else {
-                    result = false;
-                }
-            }
+            result = self.preguntas().every(function(pregunta, index, array) {
+                return pregunta.textoPregunta !== ''
+                        &&
+                       pregunta.respuestas().some(function (respuesta, idx, arr) {
+                                                        return respuesta.esRespuestaCorrecta;
+                                                  }); 
+            });
             
             return result;
         });

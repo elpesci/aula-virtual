@@ -6,6 +6,8 @@ import com.jcs.goboax.aulavirtual.model.Respuesta;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamenModel;
 import com.jcs.goboax.aulavirtual.viewmodel.PreguntasModel;
 import com.jcs.goboax.aulavirtual.viewmodel.RespuestasModel;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.core.convert.converter.Converter;
 
 public class ExamenToExamenModelConverter
@@ -27,9 +29,10 @@ public class ExamenToExamenModelConverter
             myPreguntasModel.setPreguntaId(myPregunta.getPreguntaId());
             myPreguntasModel.setTextoPregunta(myPregunta.getTextoPregunta());
             
+            myPreguntasModel.setNuevaRespuesta("");
             myPreguntasModel.setEsCorrecta(false);
             myPreguntasModel.setEsValida(checkIsValid(myPregunta));
-            myPreguntasModel.setShowSetRespuestaCorrecta(!hasRightAnswer(myPregunta));
+            myPreguntasModel.setShowSetRespuestaCorrecta(!hasRightAnswer(myPregunta));            
             
             for (Respuesta myRespuesta : myPregunta.getRespuestas())
             {

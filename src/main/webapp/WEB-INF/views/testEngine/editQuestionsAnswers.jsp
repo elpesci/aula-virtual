@@ -44,11 +44,21 @@
                 <div class="panel panel-warning">
                     
                     <div class="panel-heading clearfix">
-                        <div class="btn-group pull-right">
-                            <button id="newQuestionBtn" type="button" class="btn btn-success">
-                                <i class="fa fa-check-square-o"></i>&nbsp;
-                                <spring:message javaScriptEscape="true" code="testEngine.NewQuestion.label"/>
-                            </button>
+                        <div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button id="newQuestionBtn" type="button" class="btn btn-sm btn-success">
+                                    <i class="fa fa-pencil-square-o fa-2x pull-left"></i>&nbsp;
+                                    <spring:message javaScriptEscape="true" code="testEngine.NewQuestion.label"/>
+                                </button>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button data-bind="enable: $root.canSave, click: doSave" class="btn btn-sm btn-success  text-success" href="javascript:void(0);">
+                                    <i class="fa fa-download fa-2x pull-left"></i> <spring:message javaScriptEscape="true" code="save" />
+                                </button>
+                                <button class="btn btn-sm btn-danger text-danger actionCancel" href="javascript:void(0);">
+                                    <i class="fa fa-ban fa-2x pull-left"></i> <spring:message javaScriptEscape="true" code="cancel"/>
+                                </button>
+                            </div>
                         </div>
                         <h5 class="panel-title">
                             <spring:message javaScriptEscape="true" code="testEngine.addQuestionsAnswers.heading2.label" />
@@ -83,6 +93,24 @@
                                 <div class="panel-body">
                                     
                                     <!-- Add answers placeholder -->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            <spring:message javaScriptEscape="true" code="testEngine.writeAnswer.label"/>:
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <textarea data-bind="value: nuevaRespuesta" class="form-control exam-qa" cols="40" rows="3"></textarea>
+                                            
+                                            <label data-bind="visible: showSetRespuestaCorrecta">
+                                                <input type="checkbox" data-bind="checked: esCorrecta" />
+                                                <spring:message javaScriptEscape="true" code="testEngine.answer.isCorrect.label" />
+                                            </label>
+                                            
+                                            <button type="button" data-bind="click: agregarRespuesta" class="btn btn-success">
+                                                <i class="fa fa-plus-square"></i>&nbsp;
+                                                <spring:message javaScriptEscape="true" code="testEngine.addAnswer.label"/>
+                                            </button>
+                                        </div>
+                                    </div>
                                     
                                     <div id="answersPlaceholder" data-bind="visible: $data.respuestas().length > 0 ">
                                         <label class="col-sm-2 control-label">
@@ -91,7 +119,7 @@
                                         <div class="col-sm-10">
                                             <ol data-bind="foreach: $data.respuestas" class="list-group">
                                                 <li class="list-group-item">
-                                                    <button type="button" class="btn btn-danger btn-sm" title="Remover respuesta">
+                                                    <button type="button" data-bind="click: $parent.removerRespuesta" class="btn btn-danger btn-sm" title="Remover respuesta">
                                                         <i class="fa fa-minus-square"></i>
                                                     </button>
                                                     &nbsp;
@@ -114,10 +142,10 @@
                                         
                     <div class="panel-footer clearfix">
                         <div class="btn-group pull-right">
-                            <button id="saveExam" class="btn btn-sm btn-success  text-success" href="javascript:void(0);">
+                            <button data-bind="enable: $root.canSave, click: doSave" class="btn btn-sm btn-success  text-success" href="javascript:void(0);">
                                 <i class="fa fa-download fa-2x pull-left"></i> <spring:message javaScriptEscape="true" code="save" />
                             </button>
-                            <button id="cancel" class="btn btn-sm btn-danger text-danger" href="javascript:void(0);">
+                            <button class="btn btn-sm btn-danger text-danger actionCancel" href="javascript:void(0);">
                                 <i class="fa fa-ban fa-2x pull-left"></i> <spring:message javaScriptEscape="true" code="cancel"/>
                             </button>
                         </div>
@@ -225,14 +253,31 @@
 </script>
 
 <script id="koObjectsEdit" type="text/javascript">
-    function examWrapper(examFromServer) {
+    function examWrapper(examFromServer, saveUrl) {
         self = this;
+        self.postUrl = saveUrl;
         
         self.examenId = examFromServer.examenId;
         self.moduloId = examFromServer.moduloId;
         self.numPreguntas = examFromServer.numPreguntas;
         self.numRespuestasPregunta = examFromServer.numRespuestasPregunta;
-        self.preguntas = examFromServer.preguntas;
+        self.preguntas = ko.observableArray([]);
+        
+        examFromServer.preguntas().forEach(function(pregunta, index, array) {
+            var qtn = new Pregunta({preguntaId: pregunta.preguntaId(), textoPregunta: pregunta.textoPregunta()});
+            
+            pregunta.respuestas().forEach(function(respuesta, indexR, arrayR) {
+                var ans = new Respuesta({
+                    respuestaId: respuesta.respuestaId(),
+                    textoRespuesta: respuesta.textoRespuesta(),
+                    respuestaCorrecta: respuesta.esRespuestaCorrecta()
+                });
+                
+                qtn.respuestas.push(ans);
+            });
+            
+            self.preguntas.push(qtn);
+        });
 
         self.nuevaPregunta = ko.observable("");
 
@@ -252,6 +297,58 @@
         self.removerPregunta = function (pregunta) {
             self.preguntas.remove(pregunta);
         };
+        
+        self.canSave = ko.computed(function () {
+            var result = true;
+            
+            result = self.preguntas().every(function(pregunta, index, array) {
+                return pregunta.textoPregunta !== ''
+                        &&
+                       pregunta.respuestas().some(function (respuesta, idx, arr) {
+                                                        return respuesta.esRespuestaCorrecta;
+                                                  }); 
+            });
+            
+            return result;
+        });
+        
+        self.doSave = function () {
+            var pleaseWait = $('#blockUI');
+            var actionLink = $(".dismissFlash");
+            var flashMsgBox = $("#flashMessagesBox");
+            var flashMsgContainer = $(".remsg");
+            var flashMsgContainerParagraph = $(".remsg p");
+            
+            if(flashMsgContainerParagraph.length === 0) { flashMsgContainer.append("<p></p>"); }
+            
+            pleaseWait.show();
+            var  jqXHR = $.ajax({
+                url: self.postUrl,
+                type: "POST",
+                data: ko.toJSON({"Examen" : self}),
+                async: false,
+                dataType: "json",
+                contentType: "application/json"
+              })
+            .done(function(data, textStatus, xhrObj) {
+                if(flashMsgContainer.hasClass("error")) { flashMsgContainer.removeClass("error") };
+                if(!flashMsgContainer.hasClass("success")) { flashMsgContainer.addClass("success") };
+                flashMsgContainer.text('<spring:message code="testEngine.addQA.success.label" />').append(' ').append(actionLink);
+            })
+            .fail(function(xhrObj, textStatus, errThrown) {
+                if(flashMsgContainer.hasClass("success")) { flashMsgContainer.removeClass("success") };
+                if(!flashMsgContainer.hasClass("error")) { flashMsgContainer.addClass("error") };
+                flashMsgContainer.text('<spring:message code="testEngine.addQA.fail.label" />').append(' ').append(actionLink);
+            })
+            .always(function() {
+               pleaseWait.hide();
+               flashMsgBox.show();
+            });
+            
+            jqXHR.then(function () {
+                window.location.replace('<c:url value="/motorEval"/>');
+            });
+        }
     }
 </script>
 
@@ -260,11 +357,14 @@
         var saveUrl = '<c:url value="/motorEval/saveExam"/>';
         $("#newQuestionPlaceholder").hide();
         
-        var mvvm = new examWrapper(getFromServer('<c:url value="/motorEval/examenJson"/>', ${examenId}));
+        var mvvm = new examWrapper(
+            getFromServer('<c:url value="/motorEval/examenJson"/>', ${examenId}), 
+            saveUrl
+        );
         
         ko.applyBindings(mvvm);
         
-        $("#cancel").on('click', function () {
+        $(".actionCancel").on('click', function () {
             window.location.replace('<c:url value="/motorEval"/>');
         });
         
