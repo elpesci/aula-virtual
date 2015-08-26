@@ -63,6 +63,15 @@
                         </div>
                         <br/>
                         <div class="row">
+                            <div class="col-xs-3 text-right"><spring:message code="module.tasks.label"/>:</div>
+                            <div class="col-xs-9">
+                                <div class="tasks">
+                                <c:out value="${module.tareas}" escapeXml="false"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
                             <div class="col-xs-3 text-right">Apoyos:</div>
                             <div class="col-xs-9">
                                 <ul class="temario">

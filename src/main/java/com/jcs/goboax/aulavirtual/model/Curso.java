@@ -16,9 +16,14 @@ import java.util.Date;
 import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, query = "SELECT c FROM Curso c"),
+        @NamedQuery(name = Curso.CURSO_ALL_QUERYNAME, 
+                query = "SELECT c FROM Curso c"),
         @NamedQuery(name = Curso.CURSO_ALL_TO_USERS_QUERYNAME,
-                query = "SELECT c FROM Curso c WHERE c.habilitado = true")
+                query = "SELECT c FROM Curso c WHERE c.habilitado = true"),
+        @NamedQuery(name = Curso.CURSO_ALL_SORTBY_NAME_DESC,
+                query = "SELECT c FROM Curso c ORDER BY c.nombre DESC"),
+        @NamedQuery(name = Curso.CURSO_ALL_SORTBY_NAME_ASC,
+                query = "SELECT c FROM Curso c ORDER BY c.nombre ASC")
 })
 @Entity
 @Cacheable
@@ -29,6 +34,9 @@ public class Curso
 
     public final static String CURSO_ALL_QUERYNAME = "curso.all";
     public final static String CURSO_ALL_TO_USERS_QUERYNAME = "curso.allToUsers";
+    public final static String CURSO_ALL_SORTBY_NAME_ASC = "curso.allSortByNameAsc";
+    public final static String CURSO_ALL_SORTBY_NAME_DESC = "curso.allSortByNameDesc";
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,9 +64,11 @@ public class Curso
     @OneToMany(mappedBy = "curso")
     private List<Modulo> modulos;
 
+    /*
     // bi-directional many-to-one association to Examen
     @OneToMany(mappedBy = "curso")
     private List<Examen> examens;
+    */
 
     // bi-directional many-to-one association to Sesion
     @OneToMany(mappedBy = "curso")
@@ -185,6 +195,7 @@ public class Curso
         return modulo;
     }
 
+    /*
     public List<Examen> getExamens()
     {
         return this.examens;
@@ -210,6 +221,7 @@ public class Curso
 
         return examen;
     }
+    */
 
     public List<Sesion> getSesions()
     {

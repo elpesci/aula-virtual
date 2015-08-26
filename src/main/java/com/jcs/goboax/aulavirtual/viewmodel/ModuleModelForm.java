@@ -16,6 +16,8 @@ public class ModuleModelForm
     private String specificGoal;
     @NotEmpty
     private String sylabus;
+    @NotEmpty
+    private String tasks;
     @NotNull
     private Integer courseId;
 
@@ -89,5 +91,13 @@ public class ModuleModelForm
     public void setActive(Boolean active)
     {
         this.active = active;
+    }
+
+    public String getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(String tasks) {
+        this.tasks = tasks;
     }
 }

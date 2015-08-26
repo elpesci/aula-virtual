@@ -3,7 +3,11 @@ package com.jcs.goboax.aulavirtual.service.api;
 import com.jcs.goboax.aulavirtual.model.Perfil;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
+import com.jcs.goboax.aulavirtual.viewmodel.Registration;
+import com.jcs.goboax.aulavirtual.viewmodel.UsuarioUpdateModel;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -61,4 +65,10 @@ public interface UsuarioService
      * @return
      */
     List<Usuario> readUsuarios();
+    
+    Usuario readById(Integer aUserId);
+    
+    Usuario updateUser(Usuario aUsuario);
+
+    void updateRegistration(UsuarioUpdateModel aRegistration, ConversionService conversionService);
 }

@@ -11,5 +11,15 @@ public abstract class NavigationTargets
     public static final String MODULE_ADD = "/modulos/add";
 
     public static final String MODULE_EDIT = "/modulos/edit";
+    
+    public static final String EXAM_ADD = "/motorEval/add";
+    
+    public static final String EXAM_DO_SAVE = "/motorEval/saveExam";
+    
+    public static final String EXAM_ADD_QA = "/motorEval/addQA";
+    
+    public static final String EXAM_CONFIG_DO_EDIT = "/motorEval/updExamConfig";
+    
+    public static final String USER_EDIT = "/usuario/edit";
 
 }

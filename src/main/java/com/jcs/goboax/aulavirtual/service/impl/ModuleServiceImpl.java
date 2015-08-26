@@ -1,6 +1,8 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
+import com.jcs.goboax.aulavirtual.dao.api.CursoDao;
 import com.jcs.goboax.aulavirtual.dao.api.ModuloDao;
+import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
@@ -19,6 +21,9 @@ public class ModuleServiceImpl
 {
     @Autowired
     private ModuloDao moduloDao;
+    
+    @Autowired
+    private CursoDao cursoDao;
 
     @Autowired
     private ConversionService conversionService;
@@ -83,5 +88,14 @@ public class ModuleServiceImpl
 
             moduloDao.update(myModulo);
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Modulo> readModulesByCourseNoExam(Integer aCourseId) {
+        
+        Curso myCourse = cursoDao.findByKey(aCourseId);
+        
+        return moduloDao.readByCourseNoExam(myCourse);
     }
 }

@@ -14,6 +14,7 @@ public class UsuarioToUsuarioModelConverter
     {
         UsuarioModel myUsuarioModel = new UsuarioModel();
 
+        myUsuarioModel.setId(usuario.getUsuarioId());
         myUsuarioModel.setUsername(usuario.getUsername());
         StringBuilder myFullName = new StringBuilder();
         myFullName.append(usuario.getPersona().getNombre()).append(Constants.SPACE)
