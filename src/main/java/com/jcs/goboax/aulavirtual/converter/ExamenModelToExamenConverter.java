@@ -2,6 +2,8 @@ package com.jcs.goboax.aulavirtual.converter;
 
 import com.jcs.goboax.aulavirtual.dao.api.ExamenDao;
 import com.jcs.goboax.aulavirtual.dao.api.ModuloDao;
+import com.jcs.goboax.aulavirtual.dao.api.PreguntaDao;
+import com.jcs.goboax.aulavirtual.dao.api.RespuestaDao;
 import com.jcs.goboax.aulavirtual.model.Examen;
 import com.jcs.goboax.aulavirtual.model.Pregunta;
 import com.jcs.goboax.aulavirtual.model.Respuesta;
@@ -27,6 +29,12 @@ public class ExamenModelToExamenConverter
     @Autowired
     private ExamenDao examenDao;
 
+    @Autowired
+    private PreguntaDao preguntaDao;
+
+    @Autowired
+    private RespuestaDao respuestaDao;
+
     @Override
     public Examen convert(ExamenModel examenModel)
     {
@@ -51,7 +59,7 @@ public class ExamenModelToExamenConverter
             Pregunta myPregunta = new Pregunta();
             if (myPreguntasModel.getPreguntaId() != null )
             {
-                myPregunta.setPreguntaId(myPreguntasModel.getPreguntaId());
+                myPregunta = preguntaDao.findByKey(myPreguntasModel.getPreguntaId());
                 myPregunta.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
                 myPregunta.setFecha(new Date());
             }
@@ -67,7 +75,7 @@ public class ExamenModelToExamenConverter
                 Respuesta myRespuesta = new Respuesta();
                 if (myRespuestasModel.getRespuestaId() != null)
                 {
-                    myRespuesta.setRespuestaId(myRespuestasModel.getRespuestaId());
+                    myRespuesta = respuestaDao.findByKey(myRespuestasModel.getRespuestaId());
                     myRespuesta.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
                     myRespuesta.setFechaModificacion(new Date());
                 }
