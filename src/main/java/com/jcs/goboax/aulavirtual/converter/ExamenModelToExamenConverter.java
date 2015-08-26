@@ -53,7 +53,7 @@ public class ExamenModelToExamenConverter
         myExamen.setModulo(moduloDao.findByKey(examenModel.getModuloId()));
         myExamen.setNumPreguntas(examenModel.getNumPreguntas());
         myExamen.setNumRespuestasPregunta(examenModel.getNumRespuestasPregunta());
-
+        myExamen.setPreguntas(null);
         for (PreguntasModel myPreguntasModel : examenModel.getPreguntas())
         {
             Pregunta myPregunta = new Pregunta();
@@ -70,6 +70,7 @@ public class ExamenModelToExamenConverter
             }
             myPregunta.setExamen(myExamen);
             myPregunta.setTextoPregunta(myPreguntasModel.getTextoPregunta());
+            myPregunta.setRespuestas(null);
             for (RespuestasModel myRespuestasModel : myPreguntasModel.getRespuestas())
             {
                 Respuesta myRespuesta = new Respuesta();
