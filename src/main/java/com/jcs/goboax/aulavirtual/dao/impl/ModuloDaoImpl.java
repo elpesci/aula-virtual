@@ -54,4 +54,13 @@ public class ModuloDaoImpl
         Curso myCurso = cursoDao.findByKey(aCourseId);
         return readByCourse(myCurso, onlyActives);
     }
+
+    @Override
+    public List<Modulo> readByCourseNoExam(Curso aCurso) {
+        
+        TypedQuery<Modulo> myQuery = entityManager.createNamedQuery(Modulo.MODULE_BY_COURSE_WITHOUT_EXAM, Modulo.class);
+        myQuery.setParameter(Modulo.MODULE_COURSE_PARAMETER, aCurso);
+        
+        return myQuery.getResultList();
+    }
 }

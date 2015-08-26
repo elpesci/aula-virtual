@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +30,12 @@ import java.util.List;
             query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER),
         @NamedQuery(name = Modulo.MODULE_ACTIVE_BY_COURSE,
             query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER
-                    + " AND m.habilitado = true")
+                    + " AND m.habilitado = true"),
+        @NamedQuery(name = Modulo.MODULE_BY_COURSE_WITHOUT_EXAM,
+            query = "SELECT m FROM Modulo m WHERE m.curso = :" + Modulo.MODULE_COURSE_PARAMETER
+                    + " AND m.moduloId NOT IN (SELECT e.modulo.moduloId FROM Examen e)"
+                    + " AND m.habilitado = true"
+                    + " ORDER BY m.nombre")
 })
 public class Modulo implements Serializable
 {
@@ -37,7 +43,10 @@ public class Modulo implements Serializable
     public final static String MODULE_BY_COURSE = "modulo.byCourse";
     public final static String MODULE_ACTIVE_BY_COURSE = "modulo.activeByCourse";
     public final static String MODULE_COURSE_PARAMETER = "course";
+    public final static String MODULE_BY_COURSE_WITHOUT_EXAM = "module.byCourseNoExam";
+    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int moduloId;
@@ -59,6 +68,8 @@ public class Modulo implements Serializable
     private String objetivoGeneral;
 
     private String temario;
+    
+    private String tareas;
 
     private boolean habilitado;
 
@@ -70,6 +81,10 @@ public class Modulo implements Serializable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cursoId")
     private Curso curso;
+    
+    //bi-directional one-to-one association to Examen
+    @OneToOne(mappedBy = "modulo")
+    private Examen examen;
 
     public Modulo()
     {
@@ -211,4 +226,35 @@ public class Modulo implements Serializable
         this.curso = curso;
     }
 
+    public String getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(String tareas) {
+        this.tareas = tareas;
+    }
+
+    public Examen getExamen() {
+        return examen;
+    }
+
+    public void setExamen(Examen examen) {
+        this.examen = examen;
+    }
+    
+    public Examen addExamen(Examen anExamen)
+    {
+        anExamen.setModulo(this);
+        setExamen(anExamen);
+
+        return anExamen;
+    }
+
+    public Examen removeExamen(Examen anExamen)
+    {
+        anExamen.setModulo(null);
+        setExamen(null);
+
+        return anExamen;
+    }
 }

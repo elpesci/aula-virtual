@@ -10,9 +10,9 @@
     </script>
 </c:if>
                 
-<div class="container theme-showcase" role="main">
+<div class="container-fluid theme-showcase" role="main">
     <div class="row">
-        <div class="col-xs-5">
+        <div class="col-lg-6">
             <div class="jumbotron">
                 <h1>¡Bienvenido a Aula Virtual!</h1>
                 <p class="info">
@@ -20,7 +20,8 @@
                 </p>
             </div>
         </div>
-        <div class="col-xs-4">
+        <div class="clearfix" />
+        <div class="col-lg-6">
                 
             <div class="panel panel-warning">
                 <div class="panel-heading">
@@ -56,21 +57,15 @@
                                        value="<spring:message javaScriptEscape="true" code="send"/>"
                                        id="submitBtn"/>
                                 </div>
-                            </div>
+                        </div>
 
                         <div>
-                            <spring:message javaScriptEscape="true" code="login.forgetpassword.label"/>
+                            <spring:message javaScriptEscape="true" code="login.forgotOrChangePassword.label"/>
                             <a href="<c:url value="/login/forgetPassword"/>">
-                                <spring:message htmlEscape="true" javaScriptEscape="true" code="login.resetPassword.label"/>
+                                <spring:message htmlEscape="true" javaScriptEscape="true" code="click"/>
                                 <spring:message htmlEscape="true" javaScriptEscape="true" code="here"/>
                             </a>
                         </div>
-                        <spring:message javaScriptEscape="true" code="login.newuser.label"/>
-                        <a href="<c:url value="/login/registration"/>">
-                            <spring:message javaScriptEscape="true" code="login.register.label"/>
-                            <spring:message javaScriptEscape="true" code="here"/>
-                        </a>
-
                     </form>
                 </div>
             </div>

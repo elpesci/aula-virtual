@@ -98,6 +98,11 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/usuarios/usuarios.jsp"/>
     </definition>
 
+    <definition extends="base.definition" name="usuario/edit">
+        <put-attribute name="title" value="Aula Virtual - Actualizar información de usuario"/>
+        <put-attribute name="body" value="/WEB-INF/views/admin/usuarios/usuarioedit.jsp"/>
+    </definition>
+
     <definition extends="base.definition" name="accessdenied">
         <put-attribute name="title" value="Aula Virtual - Permiso Negado"/>
         <put-attribute name="body" value="/WEB-INF/views/accessdenied.jsp"/>
@@ -111,5 +116,30 @@
     <definition extends="base.definition" name="500">
         <put-attribute name="title" value="Aula Virtual - Error General"/>
         <put-attribute name="body" value="/WEB-INF/views/markup500.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="testEngine">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/index.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="testEngine/add">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Agregar Examen"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/addExam.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="testEngine/addQuestionsAnswers">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Agregar Examen"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/addQuestionsAnswers.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="testEngine/editConfig">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Actualizar Configuración Examen"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/editConfig.jsp"/>
+    </definition>
+    
+    <definition extends="base.definition" name="testEngine/editExam">
+        <put-attribute name="title" value="Aula Virtual - Motor de Evaluaciones - Actualizar Examen"/>
+        <put-attribute name="body" value="/WEB-INF/views/testEngine/editQuestionsAnswers.jsp"/>
     </definition>
 </tiles-definitions>

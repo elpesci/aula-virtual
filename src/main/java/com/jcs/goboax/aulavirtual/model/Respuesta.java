@@ -35,7 +35,7 @@ public class Respuesta
 
     private int creadoPor;
 
-    private byte esRespuestaCorrecta;
+    private boolean esRespuestaCorrecta;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
@@ -80,12 +80,12 @@ public class Respuesta
         this.creadoPor = creadoPor;
     }
 
-    public byte getEsRespuestaCorrecta()
+    public boolean getEsRespuestaCorrecta()
     {
         return this.esRespuestaCorrecta;
     }
 
-    public void setEsRespuestaCorrecta(byte esRespuestaCorrecta)
+    public void setEsRespuestaCorrecta(boolean esRespuestaCorrecta)
     {
         this.esRespuestaCorrecta = esRespuestaCorrecta;
     }

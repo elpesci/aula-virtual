@@ -4,10 +4,19 @@ import com.jcs.goboax.aulavirtual.model.Usuario;
 
 public class UsuarioModel
 {
+    private Integer id;
     private String username;
     private String name;
     private String profile;
     private Usuario.UsuarioStatus status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUsername()
     {

@@ -15,7 +15,7 @@ public interface ModuloDao
     /**
      * Retrieve all the modules given a course
      * @param aCurso Course to filter the modules.
-     * @param onlyActives When it's true retrieve only actives, otherwise retrieve all of them.
+     * @param onlyActives When it's true retrieve only active, otherwise retrieve all of them.
      * @return
      */
     List<Modulo> readByCourse(Curso aCurso, Boolean onlyActives);
@@ -23,8 +23,15 @@ public interface ModuloDao
     /**
      * Retreive
      * @param aCourseId
-     * @param onlyActives When it's true retrieve only actives, otherwise retrieve all of them.
+     * @param onlyActives When it's true retrieve only active, otherwise retrieve all of them.
      * @return
      */
     List<Modulo> readByCourse(Integer aCourseId, Boolean onlyActives);
+    
+    /**
+     * Returns all Modules for a particular course that do not have an exam
+     * @param aCourseId
+     * @return
+     */
+    List<Modulo> readByCourseNoExam(Curso aCurso);
 }
