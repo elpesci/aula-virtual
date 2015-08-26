@@ -67,7 +67,7 @@ public class Examen
     private Modulo modulo;
 
     // bi-directional many-to-one association to Pregunta
-    @OneToMany(mappedBy = "examen", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "examen", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pregunta> preguntas;
 
     public Examen()

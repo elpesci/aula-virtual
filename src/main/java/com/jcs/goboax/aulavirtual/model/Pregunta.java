@@ -53,7 +53,7 @@ public class Pregunta
     private Examen examen;
 
     // bi-directional many-to-one association to Respuesta
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas;
 
     public Pregunta()
