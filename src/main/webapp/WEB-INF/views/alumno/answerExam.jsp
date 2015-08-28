@@ -6,7 +6,7 @@
 <div class="container-fliud">
     <div clas="row">
 
-        <!-- Detalle de curso -->
+        <!-- Examen de evaluación -->
         <div class="col-xs-9">
             <!-- <div class="thumbnail">-->
             <div class="panel panel-default">
@@ -105,7 +105,7 @@
                             <div class="col-xs-3 text-right"><spring:message code="module.advice.label"/>:</div>
                             <div class="col-xs-9">
                                 <div><spring:message code="module.advice.info.message.label"/></div>
-                                <a href='mailto:${adviceEmailAddress}?subject=<c:out value="${emailSubject}"/>' class="btn btn-sm btn-warning cta" title="<spring:message code="module.advice.cta.label"/>">
+                                <a href='mailto:dev.salsasoft@gmail.com?subject="<c:out value="Solicito asesoria de Aula Virtual"/>"' class="btn btn-sm btn-warning cta" title="<spring:message code="module.advice.cta.label"/>">
                                     <i class="fa fa-envelope-o fa-2x pull-left"></i>
                                     <spring:message code="module.advice.cta.label"/>
                                 </a>

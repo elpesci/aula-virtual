@@ -73,6 +73,13 @@
         <put-attribute name="menu" value="/WEB-INF/tiles/leftMenu.jsp"/>
     </definition>
 
+    <definition extends="base.definition" name="modulo/appraise"
+                preparer="com.jcs.goboax.aulavirtual.ViewPreparer.CourseMenuViewPreparer">
+        <put-attribute name="title" value="Aula Virtual - Examen de evaluación"/>
+        <put-attribute name="body" value="/WEB-INF/views/alumno/answerExam.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/tiles/leftMenu.jsp"/>
+    </definition>
+
     <definition extends="base.definition" name="contenido/add">
         <put-attribute name="title" value="Aula Virtual - Agegar Contenido"/>
         <put-attribute name="body" value="/WEB-INF/views/coordinador/addContenido.jsp"/>

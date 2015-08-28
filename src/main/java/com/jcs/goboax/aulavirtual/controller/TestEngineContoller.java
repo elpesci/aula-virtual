@@ -260,4 +260,11 @@ public class TestEngineContoller
 
         return json2;
     }
+    
+    @RequestMapping(value = "/evalModulo/{moduloId}", method = RequestMethod.GET)
+    public String answerAppraisalTest(@PathVariable(value="moduloId") Integer aModuleId,
+                                    Map<String, Object> aModel)
+    {
+        return "modulo/appraise";
+    }
 }

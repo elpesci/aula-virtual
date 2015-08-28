@@ -143,3 +143,12 @@ textarea.exam-qa {
     margin-bottom: 0;
     padding-left: 0;
 }
+
+#content a.cta {
+    color: #8b5e3c;
+}
+
+#content a.cta:hover {
+    text-decoration: none;
+    font-weight: bold;
+}

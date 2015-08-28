@@ -41,6 +41,10 @@ public class CursosController
 {
     private static final Logger LOG = LoggerFactory
             .getLogger(CursosController.class);
+    
+    // TODO: read values from .properties file
+    private final String appAdminEmailAddress = "fer.rios.lopez@gmail.com";
+    private final String adviceEmailSubject = "[Aula Virtual] - Solicitud de ayuda/asesoría";
 
     @Autowired
     private CursoService cursoService;
@@ -89,6 +93,8 @@ public class CursosController
     {
         Curso myCurso = cursoService.readCourseById(aCourseId);
         aModel.put("course", myCurso);
+        aModel.put("adviceEmailAddress", this.appAdminEmailAddress);
+        aModel.put("emailSubject", this.adviceEmailSubject);
 
         return "cursos/detail";
     }
