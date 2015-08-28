@@ -18,6 +18,7 @@
 
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="/login" access="permitAll"/>
+        <intercept-url pattern="/login/registration" access="hasAnyRole('SUPER_ADMIN','COORDINADOR')"/>
         <intercept-url pattern="/login/**" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll"/>
         <intercept-url pattern="/cursos" access="isAuthenticated()"/>
