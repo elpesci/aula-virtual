@@ -26,7 +26,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = Examen.EXAMEN_ALL_QUERYNAME, query = "SELECT e FROM Examen e")
+    @NamedQuery(name = Examen.EXAMEN_ALL_QUERYNAME, query = "SELECT e FROM Examen e"),
+    @NamedQuery(name = Examen.EXAMEN_BY_MODULO_QUERYNAME,
+            query="SELECT e FROM Examen e WHERE e.modulo = :" + Examen.EXAMEN_MODULE_PARAMETER)
 })
 @Table(name="Examen")
 public class Examen
@@ -35,6 +37,9 @@ public class Examen
     private static final long serialVersionUID = 1L;
     
     public static final String EXAMEN_ALL_QUERYNAME = "Examen.findAll";
+    public static final String EXAMEN_BY_MODULO_QUERYNAME = "Examen.findByModule";
+    
+    public final static String EXAMEN_MODULE_PARAMETER = "module";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

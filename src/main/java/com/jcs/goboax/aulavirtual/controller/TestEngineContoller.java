@@ -31,12 +31,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.Examen;
+import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.ExamenService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
+import com.jcs.goboax.aulavirtual.viewmodel.AppraisalModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamenConfigModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
@@ -262,9 +264,26 @@ public class TestEngineContoller
     }
     
     @RequestMapping(value = "/evalModulo/{moduloId}", method = RequestMethod.GET)
-    public String answerAppraisalTest(@PathVariable(value="moduloId") Integer aModuleId,
-                                    Map<String, Object> aModel)
-    {
+    public String getExamenForAppraisal(HttpServletRequest request,
+                                        @PathVariable(value="moduloId") Integer aModuleId,
+                                        Map<String, Object> aModel)
+    {            
+        Modulo myModule = moduloService.readModuleById(aModuleId);
+        Examen appraisalExam = examenService.getExamForAppraisalByModule(myModule);
+        
+        AppraisalModel appraisalExamModel = conversionService.convert(appraisalExam, AppraisalModel.class);
+        
+        aModel.put("exam", appraisalExamModel);
+        aModel.put(Constants.TARGET, NavigationTargets.RATE_APPRAISAL);
+        aModel.put(Constants.ACTION, Constants.ADD);
+        
         return "modulo/appraise";
+    }
+    
+    @RequestMapping(params = "save", value = "/scoreExam", method = RequestMethod.POST)
+    public String scoreExamDo(@Validated AppraisalModel appraisalModel,
+                              BindingResult result, Map<String, Object> aModel)
+    {
+        return "cursos/welcome";
     }
 }

@@ -91,6 +91,7 @@
                             </div>
                         </div>
                         <br/>
+                        <c:if test="${not empty module.examen}">
                         <div class="row">
                             <div class="col-xs-3 text-right"><spring:message code="module.appraise.label"/>:</div>
                             <div class="col-xs-9">
@@ -101,6 +102,7 @@
                             </div>
                         </div>
                         <br/>
+                        </c:if>
                         <div class="row">
                             <div class="col-xs-3 text-right"><spring:message code="module.advice.label"/>:</div>
                             <div class="col-xs-9">

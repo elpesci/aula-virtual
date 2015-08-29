@@ -1,6 +1,7 @@
 package com.jcs.goboax.aulavirtual.service.api;
 
 import com.jcs.goboax.aulavirtual.model.Examen;
+import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
      
 
@@ -41,4 +42,20 @@ public interface ExamenService {
      * @return
      */
     Examen readExamById(Integer anExamId);
+    
+    
+    /**
+     * Retrieve an Exam by ModuleId
+     * @param anExamId
+     * @return
+     */
+    Examen readExamByModule(Modulo aModule);
+    
+    /**
+     * Retrieve an Appraisal Exam with the number of questions
+     * and number of answers per question according to Exam parameters (Random questions / Random answers)
+     * @param aModule
+     * @return
+     */
+    Examen getExamForAppraisalByModule(Modulo aModule);
 }

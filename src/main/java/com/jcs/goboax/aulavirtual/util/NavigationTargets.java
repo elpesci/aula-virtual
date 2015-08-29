@@ -21,5 +21,6 @@ public abstract class NavigationTargets
     public static final String EXAM_CONFIG_DO_EDIT = "/motorEval/updExamConfig";
     
     public static final String USER_EDIT = "/usuario/edit";
-
+    
+    public static final String RATE_APPRAISAL = "/motorEval/scoreExam";
 }
