@@ -50,9 +50,26 @@
                             </div>
                             <div class="panel panel-body">
                                 <c:forEach items="${pregunta.respuestas}" var="respuesta">
-                                    <div>
-                                        <input type="radio" name="<c:out value="${pregunta.preguntaId}"/>" value="<c:out value="${respuesta.respuestaId}" />" />&nbsp;<c:out value="${respuesta.textoRespuesta}"/>
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <div class="panel-title clearfix">
+                                            <i class="fa fa-question fa-2x pull-right"></i>
+                                            <c:out value="${pregunta.textoPregunta}"/>
+                                        </div>
                                     </div>
+                                    <div class="panel panel-body">
+                                        <c:forEach items="${pregunta.respuestas}" var="respuesta">
+                                            <div class="row">
+                                                <div class="col-sm-1" style="padding-left:30px;">
+                                                    <input type="radio" class="alveolo" name="<c:out value="${pregunta.preguntaId}"/>" value="<c:out value="${respuesta.respuestaId}" />" />
+                                                </div>
+                                                <div class="col-sm-11" style="padding-left:0;">
+                                                    <c:out value="${respuesta.textoRespuesta}"/>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
                                 </c:forEach>
                             </div>
                         </div>
