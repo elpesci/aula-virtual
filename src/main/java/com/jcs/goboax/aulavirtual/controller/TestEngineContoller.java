@@ -264,16 +264,16 @@ public class TestEngineContoller
     }
     
     @RequestMapping(value = "/evalModulo/{moduloId}", method = RequestMethod.GET)
-    public String getExamenForAppraisal(HttpServletRequest request,
-                                        @PathVariable(value="moduloId") Integer aModuleId,
+    public String getExamenForAppraisal(@PathVariable(value = "moduloId") Integer aModuleId,
                                         Map<String, Object> aModel)
     {            
-        Modulo myModule = moduloService.readModuleById(aModuleId);
-        Examen appraisalExam = examenService.getExamForAppraisalByModule(myModule);
+        Modulo aModule = moduloService.readModuleById(aModuleId);
+        Examen myAppraisalExam = examenService.getExamForAppraisalByModule(aModule);
         
-        AppraisalModel appraisalExamModel = conversionService.convert(appraisalExam, AppraisalModel.class);
+        AppraisalModel anAppraisalExamModel = conversionService.convert(myAppraisalExam,
+                                                                        AppraisalModel.class);
         
-        aModel.put("exam", appraisalExamModel);
+        aModel.put("exam", anAppraisalExamModel);
         aModel.put(Constants.TARGET, NavigationTargets.RATE_APPRAISAL);
         aModel.put(Constants.ACTION, Constants.ADD);
         

@@ -8,25 +8,25 @@
     <div clas="row">
 
         <!-- Examen de evaluación -->
-        <div class="col-xs-9">
+        <div class="col-sm-9">
             
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <i class="fa fa-list-alt pull-left"></i>
                         <spring:message code="testEngine.appraisal.heading.label" />
-                        <c:out value="${exam.courseName}"/> - <c:out value="${exam.moduleName}"/>
+                        <c:out value="${exam.moduleName}"/> - (<c:out value="${exam.courseName}"/>) 
                     </h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-10 col-sm-offset-2">
-                            <spring:message code="testEngine.appraisal.info1.label" arguments="${exam.numPreguntas}; ${exam.numRespuestasPregunta}" argumentSeparator=";"/>
+                        <div class="col-sm-12">
+                            <spring:message code="testEngine.appraisal.info1.label" arguments="${exam.numPreguntas};${exam.numRespuestasPregunta}" argumentSeparator=";"/>
                         </div>
                     </div>
                     <br/>
                     <div class="row">
-                        <div class="col-sm-10 col-sm-offset-2">
+                        <div class="col-sm-12">
                             <spring:message code="testEngine.appraisal.info2.label" />
                         </div>
                     </div>
@@ -37,20 +37,21 @@
 
             <div class="well">
                 <form:form method="POST" action="${target}" commandName="exam" cssClass="form-horizontal">
-                    <form:hidden path="${exam.examenId}" />
-                    <form:hidden path="${exam.moduloId}" />
-                    <form:hidden path="${exam.usuarioId}" />
+                    <form:hidden path="examenId" />
+                    <form:hidden path="moduloId" />
+                    <form:hidden path="usuarioId" />
                     <c:forEach items="${exam.preguntas}" var="pregunta">
-                        <div class="panel panel-default">
+                        <div class="panel panel-warning">
                             <div class="panel-heading">
-                                <div class="panel-title">
+                                <div class="panel-title clearfix">
+                                    <i class="fa fa-question pull-right"></i>
                                     <c:out value="${pregunta.textoPregunta}"/>
                                 </div>
                             </div>
                             <div class="panel panel-body">
                                 <c:forEach items="${pregunta.respuestas}" var="respuesta">
                                     <div>
-                                        <input type="radio" name="${pregunta.preguntaId}" value="${respuesta.respuestaId}" />&nbsp;<c:out value="{$respuesta.textoRespuesta}"/>
+                                        <input type="radio" name="<c:out value="${pregunta.preguntaId}"/>" value="<c:out value="${respuesta.respuestaId}" />" />&nbsp;<c:out value="${respuesta.textoRespuesta}"/>
                                     </div>
                                 </c:forEach>
                             </div>

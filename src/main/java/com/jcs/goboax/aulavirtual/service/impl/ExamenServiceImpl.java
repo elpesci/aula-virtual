@@ -104,6 +104,8 @@ public class ExamenServiceImpl
     @Override
     public Examen getExamForAppraisalByModule(Modulo aModule) 
     {
+        int fromStart = 0;
+        
         Examen myAppraisalExam = new Examen();
         Examen masterExam = examenDao.readByModule(aModule);
         
@@ -117,7 +119,16 @@ public class ExamenServiceImpl
         // Ramdomize all exam questions
         Collections.shuffle(questionsUniverse);
         
-        List<Pregunta> questionsSample = questionsUniverse.subList(0, masterExam.getNumPreguntas()-1);
+        // TODO: Agregar lógica para validar 
+        // questionsUniverse.length() > masterExam.getNumPreguntas()
+        // Si questionsUniverse.length() <= masterExam.getNumPreguntas(),
+        // entonces, la muestra de preguntas será questionsUniverse
+        // 
+        // Si questionsUniverse.length() > masterExam.getNumPreguntas(),
+        // entonces, la muestra de preguntas será questionsUniverse.subList(0, masterExam.getNumPreguntas());
+        // NOTA: Lo mismo aplica para determinar la muestra de respuestas incorrectas de cada pregunta.
+        
+        List<Pregunta> questionsSample = questionsUniverse.subList(fromStart, masterExam.getNumPreguntas());
         
         for(Pregunta selectedQuestion : questionsSample)
         {
@@ -149,7 +160,7 @@ public class ExamenServiceImpl
             // Wrong answers subset length = Examen.NumOfAnswersPerQuestion - 1,
             // since we already have right answer.
             List<Respuesta> answersSubset;
-            answersSubset = ListUtils.union(rightAns, wrongAns.subList(0, masterExam.getNumRespuestasPregunta() - 2));
+            answersSubset = ListUtils.union(rightAns, wrongAns.subList(fromStart, masterExam.getNumRespuestasPregunta() - 2));
             
             // Ramdomize answers subset
             Collections.shuffle(answersSubset);
