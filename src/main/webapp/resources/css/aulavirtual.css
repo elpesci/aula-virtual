@@ -154,9 +154,6 @@ textarea.exam-qa {
 }
 
 input[type="radio"].alveolo {
-    display:none;
-}
-input[type="radio"].alveolo + label span {
     display:inline-block;
     width:15px;
     height:15px;
@@ -165,6 +162,6 @@ input[type="radio"].alveolo + label span {
     background:url(../img/radiobutton_square.png) left top no-repeat;
     cursor:pointer;
 }
-input[type="radio"].alveolo:checked + label span {
+input[type="radio"].alveolo:checked {
     background:url(../img/radiobutton_square.png) -25px top no-repeat;
 }
