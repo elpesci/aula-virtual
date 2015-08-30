@@ -39,7 +39,6 @@
                 <form:form method="POST" action="${target}" commandName="exam" cssClass="form-horizontal">
                     <form:hidden path="examenId" />
                     <form:hidden path="moduloId" />
-                    <form:hidden path="usuarioId" />
                     <c:forEach items="${exam.preguntas}" var="pregunta">
                         <div class="panel panel-warning">
                             <div class="panel-heading">
@@ -52,7 +51,7 @@
                             <c:forEach items="${pregunta.respuestas}" var="respuesta">
                                 <div class="row">
                                     <div class="col-sm-1" style="padding-left:30px;">
-                                        <input type="radio" class="alveolo" name="<c:out value="${pregunta.preguntaId}"/>" value="<c:out value="${respuesta.respuestaId}" />" />
+                                        <input type="radio" class="alveolo" name="preguntaId_<c:out value="${pregunta.preguntaId}"/>" value="<c:out value="${respuesta.respuestaId}" />" />
                                     </div>
                                     <div class="col-sm-11" style="padding-left:0;">
                                         <label><c:out value="${respuesta.textoRespuesta}"/></label>

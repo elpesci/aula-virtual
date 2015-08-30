@@ -3,6 +3,7 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 import com.jcs.goboax.aulavirtual.model.Pregunta;
 
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 public class AppraisalModel {
     
@@ -15,6 +16,9 @@ public class AppraisalModel {
 
     private String courseName;    
     private String moduleName;
+    
+    @NotNull
+    private List<AppraisalQuestionAnswerModel> respuestas;
 
     public int getExamenId() {
         return examenId;
@@ -78,5 +82,13 @@ public class AppraisalModel {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public List<AppraisalQuestionAnswerModel> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<AppraisalQuestionAnswerModel> respuestas) {
+        this.respuestas = respuestas;
     }
 }

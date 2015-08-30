@@ -32,6 +32,7 @@ import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Curso;
 import com.jcs.goboax.aulavirtual.model.Examen;
 import com.jcs.goboax.aulavirtual.model.Modulo;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
 import com.jcs.goboax.aulavirtual.service.api.ExamenService;
 import com.jcs.goboax.aulavirtual.service.api.ModuleService;
@@ -66,6 +67,9 @@ public class TestEngineContoller
 
     @Autowired
     private FlashMessage flashMessage;
+    
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String motorEval(HttpServletRequest aServletRequest) throws IOException
@@ -284,6 +288,8 @@ public class TestEngineContoller
     public String scoreExamDo(@Validated AppraisalModel appraisalModel,
                               BindingResult result, Map<String, Object> aModel)
     {
+        appraisalModel.setUsuarioId(authenticationService.getUsuario().getUsuarioId());
+        
         return "cursos/welcome";
     }
 }
