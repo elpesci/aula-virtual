@@ -55,7 +55,7 @@
                                         <input type="radio" class="alveolo" name="<c:out value="${pregunta.preguntaId}"/>" value="<c:out value="${respuesta.respuestaId}" />" />
                                     </div>
                                     <div class="col-sm-11" style="padding-left:0;">
-                                        <c:out value="${respuesta.textoRespuesta}"/>
+                                        <label><c:out value="${respuesta.textoRespuesta}"/></label>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -65,12 +65,13 @@
                 </form:form>
             </div>
             <div class="pull-right btn-group" role="group" aria-label="...">
-                <button class="btn btn-success actionSubmit" name="save">
+                <button  type="submit" form="exam" class="btn btn-success" name="save" >
                     <i class="fa fa-share-square-o fa-fw"></i>
                     <spring:message javaScriptEscape="true" code="testEngine.appraisal.sendAnswers.cta.label"/>
                 </button>
                 <button class="btn btn-danger actionCancel" href="javascript:void(0);">
-                    <i class="fa fa-ban fa-fw pull-left"></i> <spring:message javaScriptEscape="true" code="cancel"/>
+                    <i class="fa fa-ban fa-fw pull-left"></i>
+                    <spring:message javaScriptEscape="true" code="cancel"/>
                 </button>
             </div>
         </div>
@@ -80,10 +81,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#menu_${course.cursoId}').addClass('active');
-        
-        $('.actionSubmit').on('click', function() {
-            $("#exam").submit();
-        });
         
         $('.actionCancel').on('click', function () {
             window.location.replace('<c:url value="/cursos/detail"/>');

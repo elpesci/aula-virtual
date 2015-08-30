@@ -119,16 +119,25 @@ public class ExamenServiceImpl
         // Ramdomize all exam questions
         Collections.shuffle(questionsUniverse);
         
-        // TODO: Agregar lógica para validar 
-        // questionsUniverse.length() > masterExam.getNumPreguntas()
-        // Si questionsUniverse.length() <= masterExam.getNumPreguntas(),
-        // entonces, la muestra de preguntas será questionsUniverse
-        // 
-        // Si questionsUniverse.length() > masterExam.getNumPreguntas(),
-        // entonces, la muestra de preguntas será questionsUniverse.subList(0, masterExam.getNumPreguntas());
-        // NOTA: Lo mismo aplica para determinar la muestra de respuestas incorrectas de cada pregunta.
+        int questionsUniverseCount = 0;
+        for(Pregunta question : questionsUniverse)
+        {
+            questionsUniverseCount += 1;
+        }
         
-        List<Pregunta> questionsSample = questionsUniverse.subList(fromStart, masterExam.getNumPreguntas());
+        // Fault back: if questions universe count is less than
+        // the number of questions per exam (parameter)
+        // then take questions universe as sample.
+        // Else, take a subset
+        List<Pregunta> questionsSample = new ArrayList();
+        if(questionsUniverseCount <= masterExam.getNumPreguntas())
+        {
+            questionsSample = questionsUniverse;
+        }
+        else
+        {
+            questionsSample = questionsUniverse.subList(fromStart, masterExam.getNumPreguntas());
+        }
         
         for(Pregunta selectedQuestion : questionsSample)
         {
@@ -145,22 +154,38 @@ public class ExamenServiceImpl
             
             // Retrieve all wrong answers and add them to temporal collection
             List<Respuesta> wrongAns = new ArrayList<Respuesta>();
+            int wrongAnswersCount = 0;
             for(Respuesta answer : selectedQuestion.getRespuestas())
             {
                 if(!answer.getEsRespuestaCorrecta())
                 {
                     wrongAns.add(answer);
+                    wrongAnswersCount += 1;
                 }
             }
             
             // Ramdomize wrong answers
             Collections.shuffle(wrongAns);
             
+            // Fault back: if wrong answers count is less than
+            // the number of available answers per question (parameter)
+            // then take all wrong answers as sample.
+            // Else, take a subset
+            List<Respuesta> wrongAnsSample = new ArrayList<Respuesta>();
+            if(wrongAnswersCount <= masterExam.getNumRespuestasPregunta())
+            {
+                wrongAnsSample = wrongAns;
+            }
+            else
+            {
+                wrongAnsSample = wrongAns.subList(fromStart, masterExam.getNumRespuestasPregunta() - 1);
+            }
+            
             // Joining right answer with subset of wrong answers
             // Wrong answers subset length = Examen.NumOfAnswersPerQuestion - 1,
             // since we already have right answer.
             List<Respuesta> answersSubset;
-            answersSubset = ListUtils.union(rightAns, wrongAns.subList(fromStart, masterExam.getNumRespuestasPregunta() - 2));
+            answersSubset = ListUtils.union(rightAns, wrongAnsSample);
             
             // Ramdomize answers subset
             Collections.shuffle(answersSubset);
