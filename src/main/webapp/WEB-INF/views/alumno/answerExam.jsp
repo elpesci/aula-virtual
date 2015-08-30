@@ -44,7 +44,7 @@
                         <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <div class="panel-title clearfix">
-                                    <i class="fa fa-question pull-right"></i>
+                                    <i class="fa fa-question fa-2x pull-right"></i>
                                     <c:out value="${pregunta.textoPregunta}"/>
                                 </div>
                             </div>
