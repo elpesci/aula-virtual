@@ -7,7 +7,7 @@
 Bienvenido y Gracias por registrarse en el Aula Virtual.
 <br/>
 Para finalizar su proceso de registro y obtener acceso al sistema por favor visite la siguiente liga:
- ${serverUrl}.
+<a href="${serverUrl}">Activar Cuenta</a>.
 <br/>
 Gracias.
 </html>
