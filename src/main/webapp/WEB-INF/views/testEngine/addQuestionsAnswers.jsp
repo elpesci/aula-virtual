@@ -68,7 +68,7 @@
                                 
                                 <div class="panel-heading clearfix">
                                     <div class="btn-group pull-right">
-                                        <button type="button" data-bind="click: $root.removerPregunta" class="btn btn-danger btn-sm" title="Remover pregunta"><i class="fa fa-minus-square"></i></button>
+                                        <button type="button" data-bind="click: $root.removerPregunta" class="btn btn-danger btn-sm" title="Eliminar pregunta"><i class="fa fa-2x fa-trash-o"></i></button>
                                     </div>
                                     <h6 class="panel-title" data-bind="text: textoPregunta"></h6>
                                 </div>
@@ -101,8 +101,8 @@
                                         <div class="col-sm-10">
                                             <ol data-bind="foreach: $data.respuestas" class="list-group">
                                                 <li class="list-group-item">
-                                                    <button type="button" data-bind="click: $parent.removerRespuesta" class="btn btn-danger btn-sm" title="Remover respuesta">
-                                                        <i class="fa fa-minus-square"></i>
+                                                    <button type="button" data-bind="click: $parent.removerRespuesta" class="btn btn-danger btn-sm" title="Eliminar respuesta">
+                                                        <i class="fa fa-trash-o"></i>
                                                     </button>
                                                     &nbsp;
                                                     <span data-bind="text: $data.textoRespuesta"></span>

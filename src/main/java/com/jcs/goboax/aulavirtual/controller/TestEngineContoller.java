@@ -1,15 +1,24 @@
 package com.jcs.goboax.aulavirtual.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.model.Examen;
+import com.jcs.goboax.aulavirtual.model.Modulo;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
+import com.jcs.goboax.aulavirtual.service.api.CursoService;
+import com.jcs.goboax.aulavirtual.service.api.ExamenService;
+import com.jcs.goboax.aulavirtual.service.api.ModuleService;
+import com.jcs.goboax.aulavirtual.service.api.ValoracionService;
+import com.jcs.goboax.aulavirtual.util.Constants;
+import com.jcs.goboax.aulavirtual.util.FlashMessage;
+import com.jcs.goboax.aulavirtual.util.NavigationTargets;
+import com.jcs.goboax.aulavirtual.viewmodel.AppraisalModel;
+import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
+import com.jcs.goboax.aulavirtual.viewmodel.ExamenConfigModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamenModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ExamenModelWrapper;
+import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +36,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.jcs.goboax.aulavirtual.model.Curso;
-import com.jcs.goboax.aulavirtual.model.Examen;
-import com.jcs.goboax.aulavirtual.service.api.CursoService;
-import com.jcs.goboax.aulavirtual.service.api.ExamenService;
-import com.jcs.goboax.aulavirtual.service.api.ModuleService;
-import com.jcs.goboax.aulavirtual.util.Constants;
-import com.jcs.goboax.aulavirtual.util.FlashMessage;
-import com.jcs.goboax.aulavirtual.util.NavigationTargets;
-import com.jcs.goboax.aulavirtual.viewmodel.ExamModel;
-import com.jcs.goboax.aulavirtual.viewmodel.ExamenConfigModel;
-import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/motorEval")
@@ -64,6 +66,12 @@ public class TestEngineContoller
 
     @Autowired
     private FlashMessage flashMessage;
+    
+    @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
+    private ValoracionService valoracionService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String motorEval(HttpServletRequest aServletRequest) throws IOException
@@ -259,5 +267,40 @@ public class TestEngineContoller
         String json2 = gson.toJson(examToJsonMap);
 
         return json2;
+    }
+    
+    @RequestMapping(value = "/evalModulo/{moduloId}", method = RequestMethod.GET)
+    public String getExamenForAppraisal(@PathVariable(value = "moduloId") Integer aModuleId,
+                                        Map<String, Object> aModel)
+    {            
+        Modulo aModule = moduloService.readModuleById(aModuleId);
+        Examen myAppraisalExam = examenService.getExamForAppraisalByModule(aModule);
+        
+        AppraisalModel anAppraisalExamModel = conversionService.convert(myAppraisalExam,
+                                                                        AppraisalModel.class);
+        
+        aModel.put("exam", anAppraisalExamModel);
+        aModel.put(Constants.TARGET, NavigationTargets.RATE_APPRAISAL);
+        aModel.put(Constants.ACTION, Constants.ADD);
+        
+        return "modulo/appraise";
+    }
+    
+    @RequestMapping(params = "save", value = "/scoreExam", method = RequestMethod.POST)
+    public String scoreExamDo(@Validated AppraisalModel anAppraisalModel,
+                              BindingResult result, Map<String, Object> aModel)
+    {
+        if (result.hasErrors())
+        {
+            aModel.put("exam", anAppraisalModel);
+            aModel.put(Constants.TARGET, NavigationTargets.RATE_APPRAISAL);
+            aModel.put(Constants.ACTION, Constants.ADD);
+
+            return "modulo/appraise";
+        }
+
+        valoracionService.reviewTest(anAppraisalModel);
+
+        return "appraise/receipt";
     }
 }

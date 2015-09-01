@@ -1,0 +1,10 @@
+<html>
+<p><strong>Estimado ${user.persona.nombre} ${user.persona.apellidoPaterno}:</strong></p>
+<br/>
+<p>
+Tu resultado correspondiente al examen de evaluación del curso/módulo: ${courseName} / ${moduleName}, es <strong>${score}</strong>
+<br/>
+(${correctAnswers} respuestas correctas de ${totalExamQuestions})
+</p>
+Gracias por tu participación. Te invitamos a seguir usando los servicios de Aula Virtual.
+</html>

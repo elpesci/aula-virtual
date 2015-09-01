@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,15 +20,23 @@ import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the Respuesta database table.
- * 
  */
 @Entity
-@NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r")
-@Table(name="Respuesta")
+@NamedQueries({
+        @NamedQuery(name = "Respuesta.findAll",
+                query = "SELECT r FROM Respuesta r"),
+        @NamedQuery(name = Respuesta.RESPUESTA_CORRECTA_BY_PREGUNTA,
+                query = "SELECT r FROM Respuesta r WHERE r.esRespuestaCorrecta = true " +
+                        "AND r.pregunta.preguntaId = :" + Respuesta.RESPUESTA_PREGUNTA_ID)
+})
+@Table(name = "Respuesta")
 public class Respuesta
         implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public static final String RESPUESTA_CORRECTA_BY_PREGUNTA = "respuesta.correctaByPregunta";
+    public static final String RESPUESTA_PREGUNTA_ID = "preguntaId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

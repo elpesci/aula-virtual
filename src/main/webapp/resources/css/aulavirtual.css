@@ -143,3 +143,25 @@ textarea.exam-qa {
     margin-bottom: 0;
     padding-left: 0;
 }
+
+#content a.cta {
+    color: #8b5e3c;
+}
+
+#content a.cta:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+input[type="radio"].alveolo {
+    display:inline-block;
+    width:15px;
+    height:15px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url(../img/radiobutton_square.png) left top no-repeat;
+    cursor:pointer;
+}
+input[type="radio"].alveolo:checked {
+    background:url(../img/radiobutton_square.png) -25px top no-repeat;
+}

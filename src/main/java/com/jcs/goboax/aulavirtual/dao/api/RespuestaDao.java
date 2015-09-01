@@ -5,5 +5,6 @@ import com.jcs.goboax.aulavirtual.model.Respuesta;
 public interface RespuestaDao 
     extends IDao<Integer, Respuesta>
 {
+    Respuesta respuestaCorrectaByPregunta(Integer preguntaId);
     
 }
