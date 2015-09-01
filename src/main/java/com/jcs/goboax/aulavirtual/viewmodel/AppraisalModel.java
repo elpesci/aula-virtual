@@ -2,11 +2,13 @@ package com.jcs.goboax.aulavirtual.viewmodel;
 
 import com.jcs.goboax.aulavirtual.model.Pregunta;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 public class AppraisalModel
+    implements Serializable
 {
 
     private int examenId;

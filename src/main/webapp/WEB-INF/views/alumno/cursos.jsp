@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container-fliud">
     <div clas="row">
@@ -21,6 +22,7 @@
                         <div class="col-xs-9">${course.objetivo}</div>
                     </div>
                     <br/>
+
                     <div class="row">
                         <div class="col-xs-3 text-right"><spring:message code="course.addressedTo.label"/>:</div>
                         <div class="col-xs-9">
@@ -35,86 +37,111 @@
             <div class="well">
                 <c:forEach items="${course.modulos}" var="module">
                     <c:if test="${module.habilitado}">
-                    <!-- Inicia Modulo -->
-                    <div class="row">
-                        <h3><c:out value="${module.nombre}"/></h3>
+                        <!-- Inicia Modulo -->
+                        <div class="row">
+                            <h3><c:out value="${module.nombre}"/></h3>
 
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.goal.label"/>:</div>
-                            <div class="col-xs-9">
-                                <c:out value="${module.objetivoGeneral}"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.specificGoal.label"/>:</div>
-                            <div class="col-xs-9">
-                                <c:out value="${module.objetivoEspecifico}"/>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.sylabus.topics.label"/>:</div>
-                            <div class="col-xs-9">
-                                <div class="syllabus">
-                                <c:out value="${module.temario}" escapeXml="false"/>
+                            <div class="row">
+                                <div class="col-xs-3 text-right"><spring:message code="module.goal.label"/>:</div>
+                                <div class="col-xs-9">
+                                    <c:out value="${module.objetivoGeneral}"/>
                                 </div>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.tasks.label"/>:</div>
-                            <div class="col-xs-9">
-                                <div class="tasks">
-                                <c:out value="${module.tareas}" escapeXml="false"/>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-xs-3 text-right"><spring:message code="module.specificGoal.label"/>:
+                                </div>
+                                <div class="col-xs-9">
+                                    <c:out value="${module.objetivoEspecifico}"/>
                                 </div>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.supportItems.label"/>:</div>
-                            <div class="col-xs-9">
-                                <ul class="temario">
-                                    <c:forEach var="content" items="${module.contenidos}">
-                                        <c:url var="linkDownload"
-                                               value="/modulo/content/download/${content.contenidoId}"/>
-                                        <li><a href="${linkDownload}"
-                                               title="Descargar archivo de apoyo">
-                                            <i class="glyphicon glyphicon-cloud-download"></i>
-                                            <c:out value="${content.descripcion}"/>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-xs-3 text-right"><spring:message code="module.sylabus.topics.label"/>:
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="syllabus">
+                                        <c:out value="${module.temario}" escapeXml="false"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-xs-3 text-right"><spring:message code="module.tasks.label"/>:</div>
+                                <div class="col-xs-9">
+                                    <div class="tasks">
+                                        <c:out value="${module.tareas}" escapeXml="false"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-xs-3 text-right"><spring:message code="module.supportItems.label"/>:
+                                </div>
+                                <div class="col-xs-9">
+                                    <ul class="temario">
+                                        <c:forEach var="content" items="${module.contenidos}">
+                                            <c:url var="linkDownload"
+                                                   value="/modulo/content/download/${content.contenidoId}"/>
+                                            <li><a href="${linkDownload}"
+                                                   title="Descargar archivo de apoyo">
+                                                <i class="glyphicon glyphicon-cloud-download"></i>
+                                                <c:out value="${content.descripcion}"/>
                                             </a>
-                                            &nbsp;
-                                            (<c:out value="${content.nombre}"/>)
-                                        </li>
-                                    </c:forEach>
-                                </ul>
+                                                &nbsp;
+                                                (<c:out value="${content.nombre}"/>)
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br/>
+                            <c:if test="${not empty module.examen}">
+                                <c:forEach var="answered" items="${answeredExams}">
+                                    <c:if test="${answered.id.examenId eq module.examen.examenId}">.
+                                        <fmt:formatNumber var="scoreFull" type="number" maxFractionDigits="1"
+                                                          value="${answered.preguntasCorrectas * 100 / answered.preguntasExamen}"/>
+                                        <c:set var="score" scope="request"
+                                               value="${scoreFull}"/>
+                                    </c:if>
+                                </c:forEach>
+                                <div class="row">
+                                    <div class="col-xs-3 text-right"><spring:message code="module.appraise.label"/>:
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <c:if test="${not empty score}">
+                                            <strong><c:out value="${score}"/></strong>
+                                        </c:if>
+                                        <c:if test="${empty score}">
+                                            <a href='<c:url value="/motorEval/evalModulo/"/><c:out value="${module.moduloId}"/>'
+                                               class="btn btn-sm btn-warning cta"
+                                               title="<spring:message code="module.appraise.cta.label"/>">
+                                                <i class="fa fa-list-alt fa-2x pull-left"></i>
+                                                <spring:message code="module.appraise.cta.label"/>
+                                            </a>
+                                        </c:if>
+                                    </div>
+                                </div>
+                                <br/>
+                            </c:if>
+                            <div class="row">
+                                <div class="col-xs-3 text-right"><spring:message code="module.advice.label"/>:</div>
+                                <div class="col-xs-9">
+                                    <div><spring:message code="module.advice.info.message.label"/></div>
+                                    <a href='mailto:${adviceEmailAddress}?subject=<c:out value="${emailSubject}"/>'
+                                       class="btn btn-sm btn-warning cta"
+                                       title="<spring:message code="module.advice.cta.label"/>">
+                                        <i class="fa fa-envelope-o fa-2x pull-left"></i>
+                                        <spring:message code="module.advice.cta.label"/>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <br/>
-                        <c:if test="${not empty module.examen}">
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.appraise.label"/>:</div>
-                            <div class="col-xs-9">
-                                <a href='<c:url value="/motorEval/evalModulo/"/><c:out value="${module.moduloId}"/>' class="btn btn-sm btn-warning cta" title="<spring:message code="module.appraise.cta.label"/>">
-                                    <i class="fa fa-list-alt fa-2x pull-left"></i>
-                                    <spring:message code="module.appraise.cta.label"/>
-                                </a>
-                            </div>
-                        </div>
-                        <br/>
-                        </c:if>
-                        <div class="row">
-                            <div class="col-xs-3 text-right"><spring:message code="module.advice.label"/>:</div>
-                            <div class="col-xs-9">
-                                <div><spring:message code="module.advice.info.message.label"/></div>
-                                <a href='mailto:${adviceEmailAddress}?subject=<c:out value="${emailSubject}"/>' class="btn btn-sm btn-warning cta" title="<spring:message code="module.advice.cta.label"/>">
-                                    <i class="fa fa-envelope-o fa-2x pull-left"></i>
-                                    <spring:message code="module.advice.cta.label"/>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
+                        <hr>
                     </c:if>
                 </c:forEach>
 

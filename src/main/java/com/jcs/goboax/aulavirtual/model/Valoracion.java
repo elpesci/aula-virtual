@@ -5,6 +5,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,9 +15,15 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Valoracion")
+@NamedQueries({
+        @NamedQuery(name = Valoracion.VALORACION_BY_USER_ID,
+                query = "SELECT v FROM Valoracion v WHERE v.id.usuarioId = :" + Valoracion.VALORACION_USER_ID_PARAM)
+})
 public class Valoracion
     implements Serializable
 {
+    public static final String VALORACION_BY_USER_ID = "valoracion.byUserId";
+    public static final String VALORACION_USER_ID_PARAM = "userId";
 
     @EmbeddedId
     private ValoracionPK id;

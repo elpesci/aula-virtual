@@ -3,11 +3,14 @@ package com.jcs.goboax.aulavirtual.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jcs.goboax.aulavirtual.model.Curso;
+import com.jcs.goboax.aulavirtual.model.Valoracion;
 import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.CursoService;
+import com.jcs.goboax.aulavirtual.service.api.ValoracionService;
 import com.jcs.goboax.aulavirtual.util.Constants;
 import com.jcs.goboax.aulavirtual.util.FlashMessage;
 import com.jcs.goboax.aulavirtual.util.NavigationTargets;
+import com.jcs.goboax.aulavirtual.util.PropertiesUtil;
 import com.jcs.goboax.aulavirtual.validator.CourseModelValidator;
 import com.jcs.goboax.aulavirtual.viewmodel.CourseModel;
 import com.jcs.goboax.aulavirtual.viewmodel.ObjectToJsonObject;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,10 +45,13 @@ public class CursosController
 {
     private static final Logger LOG = LoggerFactory
             .getLogger(CursosController.class);
-    
+
+    @Autowired
+    private PropertiesUtil propertiesUtil;
+
     // TODO: read values from .properties file
-    private final String appAdminEmailAddress = "fer.rios.lopez@gmail.com";
-    private final String adviceEmailSubject = "[Aula Virtual] - Solicitud de ayuda/asesoría";
+    private String appAdminEmailAddress;
+    private String adviceEmailSubject;
 
     @Autowired
     private CursoService cursoService;
@@ -59,12 +66,22 @@ public class CursosController
     private FlashMessage flashMessage;
 
     @Autowired
+    private ValoracionService valoracionService;
+
+    @Autowired
     private AuthenticationService authenticationService;
 
     @InitBinder("courseModel")
     private void initBinder(WebDataBinder binder)
     {
         binder.setValidator(courseModelValidator);
+    }
+
+    @PostConstruct
+    void init()
+    {
+        appAdminEmailAddress = propertiesUtil.getMessage("app.admin.email.address");
+        adviceEmailSubject = propertiesUtil.getMessage("advice.email.subject");
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -92,6 +109,8 @@ public class CursosController
                          Map<String, Object> aModel) throws IOException
     {
         Curso myCurso = cursoService.readCourseById(aCourseId);
+        List<Valoracion> myAnsweredExams = valoracionService.retrieveAnsweredExams(authenticationService.getUsuario().getUsuarioId());
+        aModel.put("answeredExams", myAnsweredExams);
         aModel.put("course", myCurso);
         aModel.put("adviceEmailAddress", this.appAdminEmailAddress);
         aModel.put("emailSubject", this.adviceEmailSubject);
