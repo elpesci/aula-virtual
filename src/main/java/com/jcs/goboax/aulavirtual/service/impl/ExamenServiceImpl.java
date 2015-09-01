@@ -3,6 +3,7 @@ package com.jcs.goboax.aulavirtual.service.impl;
 import com.jcs.goboax.aulavirtual.dao.api.ExamenDao;
 import com.jcs.goboax.aulavirtual.dao.api.ModuloDao;
 
+import com.jcs.goboax.aulavirtual.dao.api.ValoracionDao;
 import com.jcs.goboax.aulavirtual.model.Examen;
 import com.jcs.goboax.aulavirtual.model.Modulo;
 import com.jcs.goboax.aulavirtual.model.Pregunta;
@@ -39,6 +40,9 @@ public class ExamenServiceImpl
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private ValoracionDao valoracionDao;
 
     @Override
     public List<Examen> readExams() {
@@ -200,5 +204,11 @@ public class ExamenServiceImpl
         myAppraisalExam.setPreguntas(questionsSample);
         
         return myAppraisalExam;
+    }
+
+    @Override
+    public void submitAppraisal(Integer myAnswerModel)
+    {
+
     }
 }

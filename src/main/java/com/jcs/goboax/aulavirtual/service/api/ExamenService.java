@@ -46,7 +46,7 @@ public interface ExamenService {
     
     /**
      * Retrieve an Exam by ModuleId
-     * @param anExamId
+     * @param aModule
      * @return
      */
     Examen readExamByModule(Modulo aModule);
@@ -58,4 +58,6 @@ public interface ExamenService {
      * @return
      */
     Examen getExamForAppraisalByModule(Modulo aModule);
+
+    void submitAppraisal(Integer myAnswerModel);
 }
