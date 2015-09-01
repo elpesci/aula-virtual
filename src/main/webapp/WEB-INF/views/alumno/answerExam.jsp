@@ -47,7 +47,7 @@
                                     <c:out value="${pregunta.textoPregunta}"/>
                                 </div>
                             </div>
-                            <div class="panel panel-body">
+                            <div class="panel panel-body answerOptions">
                             <c:forEach items="${pregunta.respuestas}" var="respuesta">
                                 <div class="row">
                                     <div class="col-sm-1" style="padding-left:30px;">
