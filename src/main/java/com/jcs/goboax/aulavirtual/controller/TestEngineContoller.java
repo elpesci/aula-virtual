@@ -292,6 +292,6 @@ public class TestEngineContoller
     {
         valoracionService.reviewTest(appraisalModel);
 
-        return "cursos/welcome";
+        return "appraise/receipt";
     }
 }
