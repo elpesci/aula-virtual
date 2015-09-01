@@ -63,9 +63,14 @@ public class ValoracionServiceImpl
 
         valoracionDao.persist(myValoracion);
 
-        final double myScore = (myCorrectAnswers * 100) / myExamen.getNumPreguntas();
+        final double myScore = (myCorrectAnswers * 100) / anAppraisalModel.getNumPreguntas();
         emailService.sendScoreMail(authenticationService.getUsuario(),
-                myScore, myExamen.getModulo().getNombre());
+                myScore, 
+                myExamen.getModulo().getNombre(), 
+                myExamen.getModulo().getCurso().getNombre(),
+                myCorrectAnswers, 
+                anAppraisalModel.getNumPreguntas()
+        );
 
         return myValoracion;
     }

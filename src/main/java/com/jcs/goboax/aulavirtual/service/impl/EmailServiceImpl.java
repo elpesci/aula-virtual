@@ -97,13 +97,16 @@ public class EmailServiceImpl
     }
 
     @Override
-    public void sendScoreMail(Usuario aUsuario, Double anScore, String anExamen)
+    public void sendScoreMail(Usuario aUsuario, Double anScore, String aModuleName, String aCourseName, Integer anCorrectAnswersCount, Integer anTotalExamQuestions)
     {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("user", aUsuario);
         model.put("score", anScore);
-        model.put("examen", anExamen);
-        LOG.debug("Sending Score Result: {}", anExamen);
+        model.put("moduleName", aModuleName);
+        model.put("courseName", aCourseName);
+        model.put("correctAnswers", anCorrectAnswersCount);
+        model.put("totalExamQuestions", anTotalExamQuestions);
+        LOG.debug("Sending Score Result: {}", aCourseName + " " + aModuleName);
         sendEmail(aUsuario.getUsername(), "score", model, false);
     }
 

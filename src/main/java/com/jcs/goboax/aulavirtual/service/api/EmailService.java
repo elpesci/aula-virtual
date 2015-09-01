@@ -10,5 +10,5 @@ public interface EmailService
 
     void sendWelcomeEmail(Usuario aUsuario);
 
-    void sendScoreMail(Usuario aUsuario, Double anScore, String anExamen);
+    void sendScoreMail(Usuario aUsuario, Double anScore, String aModuleName, String aCourseName, Integer anCorrectAnswersCount, Integer anTotalExamQuestions);
 }
