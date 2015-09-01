@@ -1,7 +1,5 @@
 package com.jcs.goboax.aulavirtual.service.impl;
 
-import com.jcs.goboax.aulavirtual.dao.api.ExamenDao;
-import com.jcs.goboax.aulavirtual.dao.api.PreguntaDao;
 import com.jcs.goboax.aulavirtual.dao.api.RespuestaDao;
 import com.jcs.goboax.aulavirtual.dao.api.ValoracionDao;
 import com.jcs.goboax.aulavirtual.model.Examen;
@@ -9,6 +7,7 @@ import com.jcs.goboax.aulavirtual.model.Respuesta;
 import com.jcs.goboax.aulavirtual.model.Valoracion;
 import com.jcs.goboax.aulavirtual.model.ValoracionPK;
 import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
+import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.service.api.ExamenService;
 import com.jcs.goboax.aulavirtual.service.api.ValoracionService;
 import com.jcs.goboax.aulavirtual.viewmodel.AppraisalModel;
@@ -36,6 +35,9 @@ public class ValoracionServiceImpl
     @Autowired
     private ExamenService examenService;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public Valoracion reviewTest(AppraisalModel anAppraisalModel)
     {
@@ -60,6 +62,10 @@ public class ValoracionServiceImpl
         myValoracion.setFechaCreacion(new Date());
 
         valoracionDao.persist(myValoracion);
+
+        final double myScore = (myCorrectAnswers * 100) / myExamen.getNumPreguntas();
+        emailService.sendScoreMail(authenticationService.getUsuario(),
+                myScore, myExamen.getModulo().getNombre());
 
         return myValoracion;
     }

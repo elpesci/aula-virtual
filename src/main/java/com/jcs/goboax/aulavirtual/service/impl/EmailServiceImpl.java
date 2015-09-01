@@ -2,6 +2,7 @@ package com.jcs.goboax.aulavirtual.service.impl;
 
 import com.google.common.base.Charsets;
 import com.jcs.goboax.aulavirtual.exception.AulaVirtualException;
+import com.jcs.goboax.aulavirtual.model.Evaluacion;
 import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.util.PropertiesUtil;
@@ -93,6 +94,17 @@ public class EmailServiceImpl
         {
             LOG.error("mail ecoding Error", e);
         }
+    }
+
+    @Override
+    public void sendScoreMail(Usuario aUsuario, Double anScore, String anExamen)
+    {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("user", aUsuario);
+        model.put("score", anScore);
+        model.put("examen", anExamen);
+        LOG.debug("Sending Score Result: {}", anExamen);
+        sendEmail(aUsuario.getUsername(), "score", model, false);
     }
 
     private void sendEmail(String aTo, String aTemplate,

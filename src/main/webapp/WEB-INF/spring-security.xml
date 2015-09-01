@@ -21,6 +21,8 @@
         <intercept-url pattern="/login/registration" access="hasAnyRole('SUPER_ADMIN','COORDINADOR')"/>
         <intercept-url pattern="/login/**" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll"/>
+        <intercept-url pattern="/motorEval/evalModulo/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/motorEval/scoreExam/**" access="isAuthenticated()"/>
         <intercept-url pattern="/cursos" access="isAuthenticated()"/>
         <intercept-url pattern="/cursos/detail" access="isAuthenticated()"/>
         <intercept-url pattern="/cursos/add" access="hasAnyRole('SUPER_ADMIN','COORDINADOR')"/>

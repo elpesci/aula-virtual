@@ -1,0 +1,5 @@
+Estimado ${user.persona.nombre} ${user.persona.apellidoPaterno}:
+
+El resultado de la evaluacion de su examen correspondiente al modulo: ${examen}, es ${score}
+
+Gracias.

@@ -9,4 +9,6 @@ public interface EmailService
     void sendActivationComplete(Usuario aUsuario);
 
     void sendWelcomeEmail(Usuario aUsuario);
+
+    void sendScoreMail(Usuario aUsuario, Double anScore, String anExamen);
 }

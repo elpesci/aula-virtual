@@ -1,0 +1,7 @@
+<html>
+Estimado ${user.persona.nombre} ${user.persona.apellidoPaterno}:
+<br/>
+El resultado de la evaluacion del examen correspondiente al modulo: ${examen}, es <strong>${score}</strong>
+<br/>
+Gracias.
+</html>
