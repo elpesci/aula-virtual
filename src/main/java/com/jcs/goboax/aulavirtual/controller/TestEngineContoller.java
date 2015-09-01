@@ -287,10 +287,19 @@ public class TestEngineContoller
     }
     
     @RequestMapping(params = "save", value = "/scoreExam", method = RequestMethod.POST)
-    public String scoreExamDo(@Validated AppraisalModel appraisalModel,
+    public String scoreExamDo(@Validated AppraisalModel anAppraisalModel,
                               BindingResult result, Map<String, Object> aModel)
     {
-        valoracionService.reviewTest(appraisalModel);
+        if (result.hasErrors())
+        {
+            aModel.put("exam", anAppraisalModel);
+            aModel.put(Constants.TARGET, NavigationTargets.RATE_APPRAISAL);
+            aModel.put(Constants.ACTION, Constants.ADD);
+
+            return "modulo/appraise";
+        }
+
+        valoracionService.reviewTest(anAppraisalModel);
 
         return "appraise/receipt";
     }

@@ -101,8 +101,9 @@
                             </div>
                             <br/>
                             <c:if test="${not empty module.examen}">
+                                <c:set var="score" scope="request" value=""/>
                                 <c:forEach var="answered" items="${answeredExams}">
-                                    <c:if test="${answered.id.examenId eq module.examen.examenId}">.
+                                    <c:if test="${answered.id.examenId eq module.examen.examenId}">
                                         <fmt:formatNumber var="scoreFull" type="number" maxFractionDigits="1"
                                                           value="${answered.preguntasCorrectas * 100 / answered.preguntasExamen}"/>
                                         <c:set var="score" scope="request"
