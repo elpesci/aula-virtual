@@ -153,7 +153,7 @@ textarea.exam-qa {
     font-weight: bold;
 }
 
-input[type="radio"].alveolo {
+#content input[type="radio"].alveolo {
     display:inline-block;
     width:15px;
     height:15px;
@@ -162,10 +162,14 @@ input[type="radio"].alveolo {
     background:url(../img/radiobutton_square.png) left top no-repeat;
     cursor:pointer;
 }
-input[type="radio"].alveolo:checked {
+#content input[type="radio"].alveolo:checked {
     background:url(../img/radiobutton_square.png) -25px top no-repeat;
 }
 
-h3.course-title {
-    color: #8b5e3c;
+#content h3.course-title {
+    color: #8B5E3C;
+}
+
+#content h3.syllabus-title {
+    color: #976F32;
 }

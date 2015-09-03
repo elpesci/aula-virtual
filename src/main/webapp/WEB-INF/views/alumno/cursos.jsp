@@ -37,7 +37,7 @@
                 </div>
             </div>
             <!-- </div> -->
-            <h3><spring:message code="module.sylabus.label"/></h3>
+            <h3 class="syllabus-title"><spring:message code="module.sylabus.label"/></h3>
 
             <div id="accordion" class="panel-group">
                 <c:forEach items="${course.modulos}" var="module">

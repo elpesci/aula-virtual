@@ -64,7 +64,7 @@
                 </form:form>
             </div>
             <div class="pull-right btn-group" role="group" aria-label="...">
-                <button  type="submit" form="exam" class="btn btn-success" name="save" >
+                <button  type="submit" form="exam" class="btn btn-success" name="save" id="sendAnswers">
                     <i class="fa fa-share-square-o fa-fw"></i>
                     <spring:message javaScriptEscape="true" code="testEngine.appraisal.sendAnswers.cta.label"/>
                 </button>
@@ -77,12 +77,55 @@
     </div>
 </div>
 
+<div class="modal fade" id="msgModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger" style="padding:35px 50px;">
+                <button type="button" class="close text-danger" data-dismiss="modal" style="font-size: xx-large;">&times;</button>
+                <h4 style="font-size: xx-large;">
+                    <i class="fa fa-2x fa-exclamation-triangle text-danger"></i>
+			<spam class="text-danger">
+                            <spring:message code="appraisal.modal.msg.heading.label"/>
+                        </spam>
+                </h4>
+            </div>
+            <div class="modal-body" style="padding:40px 50px;">
+                <p>
+                    <label style="font-size: large;">
+                        <spring:message code="appraisal.modal.msg.info1.label"/>
+                    </label>
+                </p>
+                <p>
+                    <label style="font-size: large;">
+                        <spring:message code="appraisal.modal.msg.info2.label"/>
+                    </label>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+                
 <script type="text/javascript">
     $(document).ready(function () {
         $('#menu_${course.cursoId}').addClass('active');
         
         $('.actionCancel').on('click', function () {
             window.location.replace('<c:url value="/cursos/detail"/>');
+        });
+        
+        $('#sendAnswers').on('click', function(event) {
+            event.preventDefault();
+            
+            var allAnswered = true;
+            $('input:radio').each(function () {
+                if(eval($("input:checked").length !== ${exam.preguntas.size()}))
+                    allAnswered = false;
+            });
+            
+            if(allAnswered)
+                $("#exam").submit();
+            else
+                $("#msgModal").modal();
         });
     });
 </script>

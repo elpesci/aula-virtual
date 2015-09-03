@@ -286,7 +286,7 @@ public class TestEngineContoller
         return "modulo/appraise";
     }
     
-    @RequestMapping(params = "save", value = "/scoreExam", method = RequestMethod.POST)
+    @RequestMapping(value = "/scoreExam", method = RequestMethod.POST)
     public String scoreExamDo(@Validated AppraisalModel anAppraisalModel,
                               BindingResult result, Map<String, Object> aModel)
     {
