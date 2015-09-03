@@ -165,3 +165,7 @@ input[type="radio"].alveolo {
 input[type="radio"].alveolo:checked {
     background:url(../img/radiobutton_square.png) -25px top no-repeat;
 }
+
+h3.course-title {
+    color: #8b5e3c;
+}
