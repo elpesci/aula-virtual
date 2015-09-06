@@ -13,6 +13,7 @@ import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
 import com.jcs.goboax.aulavirtual.util.Constants;
@@ -54,6 +55,9 @@ public class UsuarioServiceImpl
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @Cacheable(value = "readResults")
     @Transactional(readOnly = true)
     @Override
@@ -77,6 +81,7 @@ public class UsuarioServiceImpl
             String myVerificationKey = Utils.generateVerificationKey(aUsuario.getUsername(), aUsuario.getPassword());
             aUsuario.setVerificationKey(myVerificationKey);
             aUsuario.setStatus(UsuarioStatus.VERIFICATION_PENDING);
+            aUsuario.setHabilitado(Boolean.TRUE);
             LOG.debug("Status set to: {}", UsuarioStatus.VERIFICATION_PENDING);
             usuarioDao.persist(aUsuario);
         }
@@ -145,6 +150,8 @@ public class UsuarioServiceImpl
         {
             myUsuario.setVerificationKey(null);
             myUsuario.setStatus(UsuarioStatus.ACTIVE);
+            myUsuario.setFechaModificacion(new Date());
+            myUsuario.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
             usuarioDao.update(myUsuario);
             sendActivationComplete(myUsuario);
             
@@ -225,6 +232,9 @@ public class UsuarioServiceImpl
             LOG.debug("Update Persona {}", myPersona.getCorreoElectronico());
             personaDao.update(myPersona);
             myUsuario.setPersona(myPersona);
+            myUsuario.setHabilitado(aRegistration.getHabilitado());
+            myUsuario.setFechaModificacion(new Date());
+            myUsuario.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
             LOG.debug("Updating Usuario [{}]",
                     myUsuario.getUsername());
 

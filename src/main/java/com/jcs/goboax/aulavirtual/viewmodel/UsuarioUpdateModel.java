@@ -15,6 +15,7 @@ public class UsuarioUpdateModel
     @Email
     private String email;
     private String profile;
+    private Boolean habilitado;
 
     public String getName()
     {
@@ -64,5 +65,13 @@ public class UsuarioUpdateModel
     public void setProfile(String profile)
     {
         this.profile = profile;
+    }
+
+    public Boolean getHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(Boolean habilitado) {
+        this.habilitado = habilitado;
     }
 }
