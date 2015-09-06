@@ -61,7 +61,7 @@
             ]
         });
 
-        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><span class='glyphicon glyphicon-plus'></span> Registrar Usuario</a>");
+        var buttonPlaceholder = $("#buttonPlaceholder").html("<a id='add'><i class='fa fa-2x fa-user-plus'></i> Registrar Usuario</a>");
         $('#add').attr('href', '<c:url value='/login/registration'/>').attr('class', 'btn btn-primary btn-sm').attr('title', 'Haga click para registrar un nuevo usuario');
         $("#buttonPlaceholder").attr('style', 'float:right; padding-left:10px;');
     });
