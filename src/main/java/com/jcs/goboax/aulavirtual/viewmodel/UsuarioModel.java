@@ -9,6 +9,7 @@ public class UsuarioModel
     private String name;
     private String profile;
     private Usuario.UsuarioStatus status;
+    private Boolean accessGranted;
 
     public Integer getId() {
         return id;
@@ -56,5 +57,13 @@ public class UsuarioModel
     public void setStatus(Usuario.UsuarioStatus status)
     {
         this.status = status;
+    }
+    
+    public Boolean getAccessGranted() {
+        return accessGranted;
+    }
+
+    public void setAccessGranted(Boolean accessGranted) {
+        this.accessGranted = accessGranted;
     }
 }
