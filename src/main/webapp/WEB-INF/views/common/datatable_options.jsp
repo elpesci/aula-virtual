@@ -6,13 +6,13 @@
         "sZeroRecords": "No se encontraron resultados",
         "sInfo": "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
         "sInfoEmpty": "No existen registros",
-        "sInfoFiltered": "(filtrado de un total de _MAX_ líneas)",
+        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
         "sInfoPostFix": "",
         "sSearch": "Buscar:",
         "sUrl": "",
         "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Ultimo",
+            "sFirst": "Inicio",
+            "sLast": "Fin",
             "sNext": "Siguiente",
             "sPrevious": "Anterior"
         }
