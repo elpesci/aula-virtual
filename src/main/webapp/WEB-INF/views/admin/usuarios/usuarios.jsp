@@ -73,7 +73,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <spring:message javaScriptEscape="true" code="course.heading.label"/>
+                        <i class="fa fa-users"></i>
+                        <spring:message javaScriptEscape="true" code="usuario.heading.label"/>
                     </h3>
                 </div>
                 <div class="panel-body">
