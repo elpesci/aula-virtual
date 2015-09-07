@@ -110,7 +110,7 @@ public class RegistrationController
     @RequestMapping(params = "cancel", method = RequestMethod.POST)
     public String cancelRegistration()
     {
-        return "redirect:/login";
+        return "redirect:/usuario";
     }
 
     @RequestMapping(params = "save", method = RequestMethod.POST)
@@ -138,6 +138,7 @@ public class RegistrationController
                     aModel.addAttribute("invalidRecaptcha", true);
                 }
                 aModel.addAttribute("recaptcha", myReCaptchaString);
+                aModel.addAttribute("profiles", profiles);
                 return "login/registration";
             }
             LOG.debug("Processing Registration....");

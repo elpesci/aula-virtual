@@ -248,7 +248,8 @@ public class UsuarioServiceImpl
             personaDao.update(myPersona);
             myUsuario.setPersona(myPersona);
             myUsuario.setHabilitado(aRegistration.getHabilitado());
-            if (aRegistration.getHabilitado()) {
+            if (aRegistration.getHabilitado())
+            {
                 myUsuario.setStatus(UsuarioStatus.ACTIVE);
             }
             else
@@ -264,16 +265,20 @@ public class UsuarioServiceImpl
 
             for (UsuarioPerfil myUsuarioPerfil : myUsuario.getUsuarioPerfils())
             {
-                if (myPerfil == myUsuarioPerfil.getPerfil())
+                if (myUsuarioPerfil.getPerfil() != myPerfil)
                 {
-                    myUsuarioPerfil.setCreadoPor(Constants.SUPER_USER_ID);
-                    myUsuarioPerfil.setFechaCreacion(new Date());
-                    myUsuarioPerfil.setUsuario(myUsuario);
-                    myUsuarioPerfil.setPerfil(myPerfil);
+                    usuarioPerfilDao.remove(myUsuarioPerfil.getId());
 
-                    updateUserProfile(myUsuarioPerfil);
+                    UsuarioPerfil myUsuarioPerfilNew = new UsuarioPerfil();
+                    myUsuarioPerfilNew.setCreadoPor(Constants.SUPER_USER_ID);
+                    myUsuarioPerfilNew.setFechaCreacion(new Date());
+                    myUsuarioPerfilNew.setUsuario(myUsuario);
+                    myUsuarioPerfilNew.setPerfil(myPerfil);
+
+                    createUserProfile(myUsuarioPerfilNew);
                 }
             }
+
 
         }
         catch (RuntimeException e)
