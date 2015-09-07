@@ -7,6 +7,7 @@ import com.jcs.goboax.aulavirtual.viewmodel.Registration;
 import com.jcs.goboax.aulavirtual.viewmodel.UsuarioUpdateModel;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -42,6 +43,9 @@ public interface UsuarioService
      * @param aUsuarioPerfil
      */
     void createUserProfile(UsuarioPerfil aUsuarioPerfil);
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    void updateUserProfile(UsuarioPerfil aUsuarioPerfil);
 
     /**
      * Reset Password, generate one temporal and change the status.
