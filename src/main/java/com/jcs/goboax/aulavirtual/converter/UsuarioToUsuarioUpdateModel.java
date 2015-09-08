@@ -22,6 +22,7 @@ public class UsuarioToUsuarioUpdateModel
             myProfiles.append(myUsuarioPerfil.getPerfil().getCodigo());
         }
         myUsuarioUpdateModel.setProfile(myProfiles.toString());
+        myUsuarioUpdateModel.setHabilitado(usuario.getHabilitado());
         return myUsuarioUpdateModel;
     }
 }

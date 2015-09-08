@@ -49,9 +49,9 @@ public class CursosController
     @Autowired
     private PropertiesUtil propertiesUtil;
 
-    // TODO: read values from .properties file
     private String appAdminEmailAddress;
     private String adviceEmailSubject;
+    private String sendTasksFilesEmailSubject;
 
     @Autowired
     private CursoService cursoService;
@@ -82,6 +82,7 @@ public class CursosController
     {
         appAdminEmailAddress = propertiesUtil.getMessage("app.admin.email.address");
         adviceEmailSubject = propertiesUtil.getMessage("advice.email.subject");
+        sendTasksFilesEmailSubject = propertiesUtil.getMessage("send.deliverables.email.subject");
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -114,6 +115,7 @@ public class CursosController
         aModel.put("course", myCurso);
         aModel.put("adviceEmailAddress", this.appAdminEmailAddress);
         aModel.put("emailSubject", this.adviceEmailSubject);
+        aModel.put("sendDeliverablesSubject", this.sendTasksFilesEmailSubject);
 
         return "cursos/detail";
     }

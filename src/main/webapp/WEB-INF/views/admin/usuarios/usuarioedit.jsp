@@ -71,6 +71,21 @@
                     </div>
                 </sec:authorize>
             </div>
+                
+            <sec:authorize access="hasRole('SUPER_ADMIN')">
+                <div class="form-group">
+                    <form:label path="habilitado" cssClass="col-sm-4 control-label">
+                        <spring:message code="usuario.habilitado.label" />:
+                        <span class="error"><form:errors path="habilitado"/></span>
+                    </form:label>
+                    <div class="col-sm-8">
+                        <form:checkbox path="habilitado" />
+                        <label for="habilitado" style="display: inline; font-weight: normal;">
+                            <spring:message code="usuario.habilitado.help.label"/>
+                        </label>
+                    </div>
+                </div>
+            </sec:authorize>
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">

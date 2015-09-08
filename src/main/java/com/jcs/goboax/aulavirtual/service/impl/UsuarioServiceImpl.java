@@ -13,6 +13,7 @@ import com.jcs.goboax.aulavirtual.model.Usuario;
 import com.jcs.goboax.aulavirtual.model.Usuario.UsuarioStatus;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfil;
 import com.jcs.goboax.aulavirtual.model.UsuarioPerfilPK;
+import com.jcs.goboax.aulavirtual.service.api.AuthenticationService;
 import com.jcs.goboax.aulavirtual.service.api.EmailService;
 import com.jcs.goboax.aulavirtual.service.api.UsuarioService;
 import com.jcs.goboax.aulavirtual.util.Constants;
@@ -54,6 +55,9 @@ public class UsuarioServiceImpl
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private AuthenticationService authenticationService;
+
     @Cacheable(value = "readResults")
     @Transactional(readOnly = true)
     @Override
@@ -77,6 +81,7 @@ public class UsuarioServiceImpl
             String myVerificationKey = Utils.generateVerificationKey(aUsuario.getUsername(), aUsuario.getPassword());
             aUsuario.setVerificationKey(myVerificationKey);
             aUsuario.setStatus(UsuarioStatus.VERIFICATION_PENDING);
+            aUsuario.setHabilitado(Boolean.TRUE);
             LOG.debug("Status set to: {}", UsuarioStatus.VERIFICATION_PENDING);
             usuarioDao.persist(aUsuario);
         }
@@ -97,6 +102,18 @@ public class UsuarioServiceImpl
         myUsuarioPerfilPK.setPerfilId(aUsuarioPerfil.getPerfil().getPerfilId());
         aUsuarioPerfil.setId(myUsuarioPerfilPK);
         usuarioPerfilDao.persist(aUsuarioPerfil);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateUserProfile(UsuarioPerfil aUsuarioPerfil)
+    {
+        UsuarioPerfilPK myUsuarioPerfilPK = new UsuarioPerfilPK();
+        myUsuarioPerfilPK.setUsuarioId(aUsuarioPerfil.getUsuario()
+                .getUsuarioId());
+        myUsuarioPerfilPK.setPerfilId(aUsuarioPerfil.getPerfil().getPerfilId());
+        aUsuarioPerfil.setId(myUsuarioPerfilPK);
+        usuarioPerfilDao.update(aUsuarioPerfil);
     }
 
     @Transactional
@@ -145,12 +162,14 @@ public class UsuarioServiceImpl
         {
             myUsuario.setVerificationKey(null);
             myUsuario.setStatus(UsuarioStatus.ACTIVE);
+            myUsuario.setFechaModificacion(new Date());
+            myUsuario.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
             usuarioDao.update(myUsuario);
             sendActivationComplete(myUsuario);
-            
+
             return myUsuario;
         }
-        
+
         return null;
     }
 
@@ -169,6 +188,7 @@ public class UsuarioServiceImpl
         try
         {
             Usuario myUsuario = usuarioDao.findByEmail(aUsername);
+
             return myUsuario;
         }
         catch (AulaVirtualPersistenceException e)
@@ -196,13 +216,15 @@ public class UsuarioServiceImpl
     }
 
     @Override
-    public Usuario readById(Integer aUserId) {
+    public Usuario readById(Integer aUserId)
+    {
         return usuarioDao.findByKey(aUserId);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public Usuario updateUser(Usuario aUsuario) {
+    public Usuario updateUser(Usuario aUsuario)
+    {
         return usuarioDao.update(aUsuario);
     }
 
@@ -213,7 +235,7 @@ public class UsuarioServiceImpl
         try
         {
             Usuario myUsuario = readByEmail(aRegistration.getEmail());
-            Persona myPersona =myUsuario.getPersona();
+            Persona myPersona = myUsuario.getPersona();
             myPersona.setApellidoPaterno(aRegistration.getLastName());
             myPersona.setApellidoMaterno(aRegistration.getSecondLastName());
             myPersona.setNombre(aRegistration.getName());
@@ -225,6 +247,17 @@ public class UsuarioServiceImpl
             LOG.debug("Update Persona {}", myPersona.getCorreoElectronico());
             personaDao.update(myPersona);
             myUsuario.setPersona(myPersona);
+            myUsuario.setHabilitado(aRegistration.getHabilitado());
+            if (aRegistration.getHabilitado())
+            {
+                myUsuario.setStatus(UsuarioStatus.ACTIVE);
+            }
+            else
+            {
+                myUsuario.setStatus(UsuarioStatus.DISABLED);
+            }
+            myUsuario.setFechaModificacion(new Date());
+            myUsuario.setModificadoPor(authenticationService.getUsuario().getUsuarioId());
             LOG.debug("Updating Usuario [{}]",
                     myUsuario.getUsername());
 
@@ -232,16 +265,21 @@ public class UsuarioServiceImpl
 
             for (UsuarioPerfil myUsuarioPerfil : myUsuario.getUsuarioPerfils())
             {
-                usuarioPerfilDao.remove(myUsuarioPerfil.getId());
+                if (myUsuarioPerfil.getPerfil() != myPerfil)
+                {
+                    usuarioPerfilDao.remove(myUsuarioPerfil.getId());
+
+                    UsuarioPerfil myUsuarioPerfilNew = new UsuarioPerfil();
+                    myUsuarioPerfilNew.setCreadoPor(Constants.SUPER_USER_ID);
+                    myUsuarioPerfilNew.setFechaCreacion(new Date());
+                    myUsuarioPerfilNew.setUsuario(myUsuario);
+                    myUsuarioPerfilNew.setPerfil(myPerfil);
+
+                    createUserProfile(myUsuarioPerfilNew);
+                }
             }
 
-            UsuarioPerfil myUsuarioPerfil = new UsuarioPerfil();
-            myUsuarioPerfil.setCreadoPor(Constants.SUPER_USER_ID);
-            myUsuarioPerfil.setFechaCreacion(new Date());
-            myUsuarioPerfil.setUsuario(myUsuario);
-            myUsuarioPerfil.setPerfil(myPerfil);
 
-            createUserProfile(myUsuarioPerfil);
         }
         catch (RuntimeException e)
         {

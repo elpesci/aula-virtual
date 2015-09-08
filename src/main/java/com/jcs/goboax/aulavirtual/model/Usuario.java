@@ -42,6 +42,7 @@ import java.util.Set;
 public class Usuario
         implements UserDetails, Serializable
 {
+
     public enum UsuarioStatus
     {
         ACTIVE, VERIFICATION_PENDING, CHANGE_PASSWORD, DISABLED, REMOVED
@@ -78,6 +79,8 @@ public class Usuario
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UsuarioStatus status;
+    
+    private Boolean habilitado;
 
     // bi-directional many-to-one association to RegistroAcceso
     @OneToMany(mappedBy = "usuario")
@@ -216,7 +219,15 @@ public class Usuario
     {
         this.status = status;
     }
+    
+    public Boolean getHabilitado() {
+        return habilitado;
+    }
 
+    public void setHabilitado(Boolean habilitado) {
+        this.habilitado = habilitado;
+    }
+    
     public void setUsuarioPerfils(Set<UsuarioPerfil> usuarioPerfils)
     {
         this.usuarioPerfils = usuarioPerfils;

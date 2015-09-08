@@ -138,7 +138,7 @@ public class UsuarioController
 
             flashMessage.success("registration.success");
 
-            return "redirect:/";
+            return "redirect:/usuario";
         }
         catch (AulaVirtualRegistrationException e)
         {

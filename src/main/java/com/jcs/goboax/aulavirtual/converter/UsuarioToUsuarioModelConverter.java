@@ -29,6 +29,7 @@ public class UsuarioToUsuarioModelConverter
         }
         myUsuarioModel.setProfile(myProfiles.toString());
         myUsuarioModel.setStatus(usuario.getStatus());
+        myUsuarioModel.setAccessGranted(usuario.getHabilitado());
 
         return myUsuarioModel;
     }
