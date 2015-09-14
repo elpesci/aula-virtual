@@ -136,7 +136,7 @@
             var cursoId = $("#courseId").val();
             populateModules(cursoId);
             
-            $("#cursoId").on("change", function (event, data) {
+            $("#courseId").on("change", function (event, data) {
                 var cursoId = $(this).val();
                 populateModules(cursoId);
             });
