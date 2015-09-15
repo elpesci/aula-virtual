@@ -5,7 +5,7 @@
 
     <groupId>com.jcs</groupId>
     <artifactId>AulaVirtual</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5</version>
     <packaging>war</packaging>
 
     <name>AulaVirtual</name>
@@ -404,37 +404,6 @@
 
     <!-- Profiles start here -->
     <profiles>
-        <!-- Stage environment @ acardenas.net -->
-        <profile>
-            <id>acardenas</id>
-            <properties>
-                <eclipselink.logging.level>INFO</eclipselink.logging.level>
-                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull
-                </db.connectionURL>
-                <db.username>avDev</db.username>
-                <db.password>Password#1</db.password>
-                <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
-                <url.domain>http://acardenas.net</url.domain>
-                <mail.host>smtp.gmail.com</mail.host>
-                <mail.port>587</mail.port>
-                <mail.username>dev.salsasoft@gmail.com</mail.username>
-                <mail.password>xsw2ZAQ!</mail.password>
-                <mail.transport.protocol>smtp</mail.transport.protocol>
-                <mail.smtp.auth>true</mail.smtp.auth>
-                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
-                <mail.smtp.socketFactory.port>465</mail.smtp.socketFactory.port>
-                <mail.smtp.socketFactory.fallback>false</mail.smtp.socketFactory.fallback>
-                <mail.debug>false</mail.debug>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.mortbay.jetty</groupId>
-                    <artifactId>jsp-2.1-jetty</artifactId>
-                    <version>6.1.26</version>
-                </dependency>
-            </dependencies>
-        </profile>
         <!-- Development environment @ my laptop -->
         <profile>
             <id>development</id>
@@ -444,16 +413,15 @@
             <properties>
                 <eclipselink.logging.level>FINE</eclipselink.logging.level>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull
-                </db.connectionURL>
-                <db.username>avDev</db.username>
-                <db.password>Password#1</db.password>
+                <db.connectionURL>jdbc:mysql://localhost:3306/aulaVirtual?zeroDateTimeBehavior=convertToNull</db.connectionURL>
+                <db.username>[usuario_DB]</db.username>
+                <db.password>[password_DB]</db.password>
                 <db.ddl-generation.output-mode>sql-script</db.ddl-generation.output-mode>
                 <url.domain>http://localhost:8080</url.domain>
-                <mail.host>smtp.gmail.com</mail.host>
+                <mail.host>[servidor_Correo]</mail.host>
                 <mail.port>587</mail.port>
-                <mail.username>dev.salsasoft@gmail.com</mail.username>
-                <mail.password>xsw2ZAQ!</mail.password>
+                <mail.username>[username_Correo]</mail.username>
+                <mail.password>[password_Correo]</mail.password>
                 <mail.transport.protocol>smtp</mail.transport.protocol>
                 <mail.smtp.auth>true</mail.smtp.auth>
                 <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
