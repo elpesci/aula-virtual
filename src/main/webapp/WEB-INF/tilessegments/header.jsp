@@ -4,7 +4,7 @@
 
 <!-- start #header -->
 <div id="header">
-    <ul class="redes">
+    <ul class="redes hide">
         <li><a href="#"> <img src="<c:url value="/resources/img/contacto.png"/>" title="Contacto"/></a></li>
         <li><a href="#"> <img src="<c:url value="/resources/img/mapsite.png"/>" title="Mapa de Sitio"/></a></li>
         <li><a href="#"> <img src="<c:url value="/resources/img/galeria.png"/>" title="galeria"/></a></li>
