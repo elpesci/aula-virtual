@@ -111,6 +111,10 @@
         </select>
     </script>
     
+    <script id="noMoreModulesTmpl" type="text/x-jsrender">
+        <p class='text-danger'><i class='fa fa-2x fa-exclamation-circle'></i>&nbsp;<spring:message code="testEngine.settings.allModulesHaveExam.label" /></p>
+    </script>    
+    
     <script id="viewFunctions" type="text/javascript">
         function populateModules(courseId) {
             var actionUrl = '../modulos/course/' + courseId;
@@ -120,8 +124,17 @@
                 method: 'GET'
             })
             .done(function (data, textStatus, jqXHR) {
-                var markUp = $.render.modulesSelector(data);
-                $("#moduleDdl").html(markUp);
+                if(data.modulos.length !== 0) {
+                    var markUp = $.render.modulesSelector(data);
+                    $("#moduleDdl").html(markUp);
+                    $(".btn-primary").prop("disabled", false);
+                }
+                else
+                {
+                    var markUp = $.render.noMoreModulesLabel(data);
+                    $("#moduleDdl").html(markUp);
+                    $(".btn-primary").prop("disabled", true);
+                }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {})
             .always(function () {});
@@ -132,6 +145,7 @@
         $(document).ready(function () {
             // Registering jsViews template
             $.templates("modulesSelector", "#modulesDdlTmpl");
+            $.templates("noMoreModulesLabel", "#noMoreModulesTmpl")
         
             var cursoId = $("#courseId").val();
             populateModules(cursoId);
